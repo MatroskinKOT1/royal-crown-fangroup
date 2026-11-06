@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="ru">
+<!DOCTYPE html><html lang="ru">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,6 +10,22 @@ main{max-width:850px;margin:auto;padding:20px 14px}
 header{text-align:center;padding:20px 0}
 header h1{color:#e5bd69;font-size:26px;margin:8px 0}
 header p,.muted{color:#aab4c4;font-size:14px}
+.telegram-button{
+display:inline-block;
+margin:16px 0 5px;
+padding:14px 25px;
+background:linear-gradient(135deg,#f0ce7b,#bd8c38);
+color:#171717;
+border:1px solid #f5d993;
+border-radius:10px;
+text-decoration:none;
+font-size:15px;
+font-weight:bold;
+letter-spacing:.3px;
+box-shadow:0 3px 12px rgba(229,189,105,.2);
+transition:transform .2s,filter .2s;
+}
+.telegram-button:hover{filter:brightness(1.1);transform:translateY(-2px)}
 .card{background:#1c2635;border:1px solid #344258;border-radius:14px;padding:17px;margin:14px 0}
 h2{font-size:19px;margin:0 0 15px}
 label{display:block;color:#b9c4d3;font-size:14px;margin-bottom:7px}
@@ -30,7 +45,11 @@ select,input{width:100%;padding:12px;background:#111a27;color:white;border:1px s
 button{padding:12px 16px;border:0;border-radius:9px;background:#a47c37;color:white;font-size:15px;cursor:pointer;margin:5px 5px 5px 0}
 .notice{background:#332e22;border-left:3px solid #d8b15e;padding:12px;border-radius:7px;color:#e8ddc5;font-size:13px;line-height:1.5}
 footer{text-align:center;color:#8995a7;font-size:12px;padding:20px}
-@media(max-width:550px){.grid,.resources{grid-template-columns:1fr}main{padding:12px}}
+@media(max-width:550px){
+.grid,.resources{grid-template-columns:1fr}
+main{padding:12px}
+.telegram-button{display:block;margin:16px auto 5px;max-width:320px}
+}
 </style>
 </head>
 <body>
@@ -39,18 +58,20 @@ footer{text-align:center;color:#8995a7;font-size:12px;padding:20px}
 <div style="font-size:38px">♛</div>
 <h1>ROYAL CROWN</h1>
 <div style="color:#e5bd69">KINGDOM WARS | FANGROUP</div>
-<p>Калькулятор строительства замка</p>
-</header>
+<p>Калькулятор строительства замка</p><a class="telegram-button"
+href="https://t.me/RC_FANGroup"
+target="_blank"
+rel="noopener noreferrer">
+✦ НАШЕ СООБЩЕСТВО В TELEGRAM ✦
+</a>
 
-<section class="card">
+</header><section class="card">
 <h2>🏰 Уровень замка</h2>
 <div class="grid">
 <div><label for="current">Текущий уровень</label><select id="current"></select></div>
 <div><label for="target">Желаемый уровень</label><select id="target"></select></div>
 </div>
-</section>
-
-<section class="card">
+</section><section class="card">
 <h2>📦 Мои ресурсы</h2>
 <div class="resources">
 <div><label for="food">🌾 Еда (млн)</label><input id="food" type="number" min="0" value="0"></div>
@@ -58,9 +79,7 @@ footer{text-align:center;color:#8995a7;font-size:12px;padding:20px}
 <div><label for="iron">⛏️ Железо (млн)</label><input id="iron" type="number" min="0" value="0"></div>
 </div>
 <p class="muted">Например, 150 = 150 миллионов ресурсов.</p>
-</section>
-
-<section class="card">
+</section><section class="card">
 <h2>📊 Расчёт ресурсов</h2>
 <div class="grid">
 <div class="metric"><small>Количество этапов</small><strong id="steps">0</strong></div>
@@ -71,27 +90,19 @@ footer{text-align:center;color:#8995a7;font-size:12px;padding:20px}
 <div class="metric"><small>Не хватает дерева</small><strong id="needWood">0</strong></div>
 <div class="metric"><small>Не хватает железа</small><strong id="needIron">0</strong></div>
 </div>
-</section>
-
-<section class="card">
+</section><section class="card">
 <h2>📋 Очерёдность улучшений</h2>
 <p class="muted">Отмечай выполненные требования. Прогресс сохраняется в браузере.</p>
 <div id="stages"></div>
 <button id="reset">Сбросить отметки</button>
 <button onclick="window.print()">Распечатать план</button>
-</section>
-
-<div class="notice">
+</section><div class="notice">
 <strong>Важно:</strong> это фанатский калькулятор. Часть значений в исходной таблице приблизительная. Перед улучшением обязательно сверяй стоимость с игрой. Для некоторых уровней требования зданий ещё нуждаются в проверке.
-</div>
-
-<footer>
+</div><footer>
 Royal Crown: Kingdom Wars | FANGroup<br>
 Дата проверки исходных данных: 07.11.2026
 </footer>
-</main>
-
-<script>
+</main><script>
 const data=[
 {level:11,req:[["Академия",10],["Центр альянса",10]],f:2.3,w:2.3,i:1.7},
 {level:12,req:[["Академия",11],["Лагерь лучников",11]],f:3.3,w:3.3,i:2.5,est:true},
@@ -112,6 +123,7 @@ const data=[
 
 const $=id=>document.getElementById(id);
 const current=$("current"),target=$("target");
+
 for(let n=10;n<=25;n++){
 current.add(new Option("Уровень "+n,n));
 target.add(new Option("Уровень "+n,n));
@@ -184,6 +196,5 @@ render();
 }
 });
 render();
-</script>
-</body>
+</script></body>
 </html>
