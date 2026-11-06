@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Royal Crown — Калькулятор строительства</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#111722;color:#f2f3f5;font:16px Arial,sans-serif}
+main{max-width:850px;margin:auto;padding:20px 14px}
+header{text-align:center;padding:20px 0}
+header h1{color:#e5bd69;font-size:26px;margin:8px 0}
+header p,.muted{color:#aab4c4;font-size:14px}
+.card{background:#1c2635;border:1px solid #344258;border-radius:14px;padding:17px;margin:14px 0}
+h2{font-size:19px;margin:0 0 15px}
+label{display:block;color:#b9c4d3;font-size:14px;margin-bottom:7px}
+select,input{width:100%;padding:12px;background:#111a27;color:white;border:1px solid #45546b;border-radius:9px;font-size:16px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.resources{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.metric{background:#111a27;border-radius:10px;padding:12px;margin-bottom:9px}
+.metric small{color:#aab4c4}
+.metric strong{display:block;color:#e5bd69;font-size:21px;margin-top:6px}
+.stage{background:#121b29;border:1px solid #35445b;border-radius:11px;padding:14px;margin:12px 0}
+.stage h3{margin:0 0 12px;font-size:17px}
+.req{display:flex;align-items:center;gap:10px;background:#202c3d;padding:11px;border-radius:8px;margin:7px 0}
+.req input{width:20px;height:20px;accent-color:#d4ad61}
+.req label{margin:0;color:#f2f3f5;line-height:1.4}
+.cost{font-size:13px;color:#b9c4d3;margin-top:12px;line-height:1.7}
+.badge{color:#f0c878;font-size:12px}
+button{padding:12px 16px;border:0;border-radius:9px;background:#a47c37;color:white;font-size:15px;cursor:pointer;margin:5px 5px 5px 0}
+.notice{background:#332e22;border-left:3px solid #d8b15e;padding:12px;border-radius:7px;color:#e8ddc5;font-size:13px;line-height:1.5}
+footer{text-align:center;color:#8995a7;font-size:12px;padding:20px}
+@media(max-width:550px){.grid,.resources{grid-template-columns:1fr}main{padding:12px}}
+</style>
+</head>
+<body>
+<main>
+<header>
+<div style="font-size:38px">♛</div>
+<h1>ROYAL CROWN</h1>
+<div style="color:#e5bd69">KINGDOM WARS | FANGROUP</div>
+<p>Калькулятор строительства замка</p>
+</header>
+
+<section class="card">
+<h2>🏰 Уровень замка</h2>
+<div class="grid">
+<div><label for="current">Текущий уровень</label><select id="current"></select></div>
+<div><label for="target">Желаемый уровень</label><select id="target"></select></div>
+</div>
+</section>
+
+<section class="card">
+<h2>📦 Мои ресурсы</h2>
+<div class="resources">
+<div><label for="food">🌾 Еда (млн)</label><input id="food" type="number" min="0" value="0"></div>
+<div><label for="wood">🪵 Дерево (млн)</label><input id="wood" type="number" min="0" value="0"></div>
+<div><label for="iron">⛏️ Железо (млн)</label><input id="iron" type="number" min="0" value="0"></div>
+</div>
+<p class="muted">Например, 150 = 150 миллионов ресурсов.</p>
+</section>
+
+<section class="card">
+<h2>📊 Расчёт ресурсов</h2>
+<div class="grid">
+<div class="metric"><small>Количество этапов</small><strong id="steps">0</strong></div>
+<div class="metric"><small>Еда — всего</small><strong id="totalFood">0</strong></div>
+<div class="metric"><small>Дерево — всего</small><strong id="totalWood">0</strong></div>
+<div class="metric"><small>Железо — всего</small><strong id="totalIron">0</strong></div>
+<div class="metric"><small>Не хватает еды</small><strong id="needFood">0</strong></div>
+<div class="metric"><small>Не хватает дерева</small><strong id="needWood">0</strong></div>
+<div class="metric"><small>Не хватает железа</small><strong id="needIron">0</strong></div>
+</div>
+</section>
+
+<section class="card">
+<h2>📋 Очерёдность улучшений</h2>
+<p class="muted">Отмечай выполненные требования. Прогресс сохраняется в браузере.</p>
+<div id="stages"></div>
+<button id="reset">Сбросить отметки</button>
+<button onclick="window.print()">Распечатать план</button>
+</section>
+
+<div class="notice">
+<strong>Важно:</strong> это фанатский калькулятор. Часть значений в исходной таблице приблизительная. Перед улучшением обязательно сверяй стоимость с игрой. Для некоторых уровней требования зданий ещё нуждаются в проверке.
+</div>
+
+<footer>
+Royal Crown: Kingdom Wars | FANGroup<br>
+Дата проверки исходных данных: 07.11.2026
+</footer>
+</main>
+
+<script>
+const data=[
+{level:11,req:[["Академия",10],["Центр альянса",10]],f:2.3,w:2.3,i:1.7},
+{level:12,req:[["Академия",11],["Лагерь лучников",11]],f:3.3,w:3.3,i:2.5,est:true},
+{level:13,req:[["Академия",12],["Городская стена",12]],f:4.8,w:4.8,i:3.6,est:true},
+{level:14,req:[["Академия",13],["Тренировочная площадка",13]],f:7,w:7,i:5.2,est:true},
+{level:15,req:[["Академия",14],["Центр альянса",14]],f:10.2,w:10.2,i:7.6,est:true},
+{level:16,req:[["Академия",15],["Лагерь магов",15]],f:15,w:15,i:11},
+{level:17,req:[["Академия",16],["Городская стена",16]],f:23,w:23,i:17,est:true},
+{level:18,req:[["Академия",17],["Тренировочная площадка",17]],f:35,w:35,i:26,est:true},
+{level:19,req:[["Академия",18],["Центр альянса",18]],f:53,w:53,i:40},
+{level:20,req:[["Академия",19],["Лагерь лучников",19]],f:110,w:110,i:86},
+{level:21,req:[["Академия",20],["Городская стена",20]],f:190,w:190,i:140},
+{level:22,req:[["Академия",21],["Тренировочная площадка",21]],f:310,w:310,i:230},
+{level:23,req:[["Академия",22],["Центр альянса",22]],f:480,w:480,i:360},
+{level:24,req:[["Академия",23],["Казарма воинов",23]],f:710,w:710,i:540},
+{level:25,req:null,f:1400,w:1400,i:1000,est:true}
+];
+
+const $=id=>document.getElementById(id);
+const current=$("current"),target=$("target");
+for(let n=10;n<=25;n++){
+current.add(new Option("Уровень "+n,n));
+target.add(new Option("Уровень "+n,n));
+}
+current.value=10;
+target.value=25;
+
+let done={};
+try{done=JSON.parse(localStorage.getItem("rcw_done")||"{}")}catch(e){done={}}
+
+function number(id){return Math.max(0,Number($(id).value)||0)}
+function fmt(n){return n.toLocaleString("ru-RU",{maximumFractionDigits:1})+" млн"}
+
+function render(){
+const from=Number(current.value),to=Number(target.value);
+const rows=data.filter(x=>x.level>from&&x.level<=to);
+let f=0,w=0,i=0;
+rows.forEach(x=>{f+=x.f;w+=x.w;i+=x.i});
+
+$("steps").textContent=rows.length;
+$("totalFood").textContent=fmt(f);
+$("totalWood").textContent=fmt(w);
+$("totalIron").textContent=fmt(i);
+$("needFood").textContent=fmt(Math.max(0,f-number("food")));
+$("needWood").textContent=fmt(Math.max(0,w-number("wood")));
+$("needIron").textContent=fmt(Math.max(0,i-number("iron")));
+
+$("stages").innerHTML=rows.map(x=>{
+let requirements=x.req?x.req.map((r,j)=>{
+let id=x.level+"_"+j;
+return `<div class="req">
+<input type="checkbox" data-id="${id}" ${done[id]?"checked":""}>
+<label><b>${r[0]}</b><br>Необходимый уровень: ${r[1]}</label>
+</div>`;
+}).join(""):`<p class="badge">Требования зданий для этого уровня уточняются.</p>`;
+
+return `<article class="stage">
+<h3>🏰 Замок ${x.level} уровня</h3>
+${x.est?'<div class="badge">⚠ Приблизительная стоимость</div>':''}
+${requirements}
+<div class="cost">
+Бюджет этапа:<br>
+🌾 Еда: ${fmt(x.f)}<br>
+🪵 Дерево: ${fmt(x.w)}<br>
+⛏️ Железо: ${fmt(x.i)}
+</div>
+</article>`;
+}).join("")||"<p class='muted'>Выбери целевой уровень выше текущего.</p>";
+
+$("stages").querySelectorAll("input").forEach(cb=>{
+cb.addEventListener("change",()=>{
+done[cb.dataset.id]=cb.checked;
+localStorage.setItem("rcw_done",JSON.stringify(done));
+});
+});
+}
+
+[current,target,$("food"),$("wood"),$("iron")].forEach(el=>{
+el.addEventListener("input",()=>{
+if(Number(target.value)<Number(current.value))target.value=current.value;
+render();
+});
+});
+
+$("reset").addEventListener("click",()=>{
+if(confirm("Сбросить все отметки?")){
+done={};
+localStorage.removeItem("rcw_done");
+render();
+}
+});
+render();
+</script>
+</body>
+</html>
