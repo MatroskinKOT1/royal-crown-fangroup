@@ -2,7 +2,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Royal Crown — Калькулятор строительства</title>
+<title>Royal Crown — FANGroup</title>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#111722;color:#f2f3f5;font:16px Arial,sans-serif}
@@ -11,23 +11,15 @@ header{text-align:center;padding:20px 0}
 header h1{color:#e5bd69;font-size:26px;margin:8px 0}
 header p,.muted{color:#aab4c4;font-size:14px}
 .telegram-button{
-display:inline-block;
-margin:16px 0 5px;
-padding:14px 25px;
+display:inline-block;margin:16px 0 5px;padding:14px 25px;
 background:linear-gradient(135deg,#f0ce7b,#bd8c38);
-color:#171717;
-border:1px solid #f5d993;
-border-radius:10px;
-text-decoration:none;
-font-size:15px;
-font-weight:bold;
-letter-spacing:.3px;
-box-shadow:0 3px 12px rgba(229,189,105,.2);
-transition:transform .2s,filter .2s;
+color:#171717;border:1px solid #f5d993;border-radius:10px;
+text-decoration:none;font-size:15px;font-weight:bold;
+letter-spacing:.3px;box-shadow:0 3px 12px rgba(229,189,105,.2)
 }
-.telegram-button:hover{filter:brightness(1.1);transform:translateY(-2px)}
 .card{background:#1c2635;border:1px solid #344258;border-radius:14px;padding:17px;margin:14px 0}
 h2{font-size:19px;margin:0 0 15px}
+h3{font-size:17px}
 label{display:block;color:#b9c4d3;font-size:14px;margin-bottom:7px}
 select,input{width:100%;padding:12px;background:#111a27;color:white;border:1px solid #45546b;border-radius:9px;font-size:16px}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
@@ -36,7 +28,7 @@ select,input{width:100%;padding:12px;background:#111a27;color:white;border:1px s
 .metric small{color:#aab4c4}
 .metric strong{display:block;color:#e5bd69;font-size:21px;margin-top:6px}
 .stage{background:#121b29;border:1px solid #35445b;border-radius:11px;padding:14px;margin:12px 0}
-.stage h3{margin:0 0 12px;font-size:17px}
+.stage h3{margin:0 0 12px}
 .req{display:flex;align-items:center;gap:10px;background:#202c3d;padding:11px;border-radius:8px;margin:7px 0}
 .req input{width:20px;height:20px;accent-color:#d4ad61}
 .req label{margin:0;color:#f2f3f5;line-height:1.4}
@@ -45,27 +37,105 @@ select,input{width:100%;padding:12px;background:#111a27;color:white;border:1px s
 button{padding:12px 16px;border:0;border-radius:9px;background:#a47c37;color:white;font-size:15px;cursor:pointer;margin:5px 5px 5px 0}
 .notice{background:#332e22;border-left:3px solid #d8b15e;padding:12px;border-radius:7px;color:#e8ddc5;font-size:13px;line-height:1.5}
 footer{text-align:center;color:#8995a7;font-size:12px;padding:20px}
+.event-label{font-size:12px;color:#e5bd69;letter-spacing:1px;font-weight:bold}
+.event-title{font-size:23px;color:#f0ce7b;margin:8px 0}
+.timer{font-size:34px;font-weight:bold;color:#e5bd69;text-align:center;letter-spacing:2px;margin:16px 0}
+.timer-caption{text-align:center;color:#aab4c4;font-size:13px}
+.event-info{background:#111a27;border-radius:10px;padding:14px;margin:12px 0;line-height:1.6}
+.event-info h3{margin:0 0 9px;color:#e5bd69}
+.event-info ul{padding-left:20px;margin:8px 0}
+.event-info li{margin:7px 0;line-height:1.45}
+.event-time{display:flex;justify-content:space-between;gap:10px;color:#b9c4d3;font-size:13px}
+.event-next{border:1px solid #806333;background:#29271f}
+.day-list{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.day-item{background:#111a27;border:1px solid #35445b;border-radius:9px;padding:12px}
+.day-item strong{display:block;color:#e5bd69;margin-bottom:5px}
+.day-item span{font-size:13px;color:#b9c4d3}
 @media(max-width:550px){
 .grid,.resources{grid-template-columns:1fr}
 main{padding:12px}
-.telegram-button{display:block;margin:16px auto 5px;max-width:320px}
+.telegram-button{display:block;margin:16px auto 5px;max-width:320px;text-align:center}
+.timer{font-size:28px}
+.day-list{grid-template-columns:1fr}
 }
 </style>
 </head>
 <body>
-<main>
-<header>
+<main><header>
 <div style="font-size:38px">♛</div>
 <h1>ROYAL CROWN</h1>
 <div style="color:#e5bd69">KINGDOM WARS | FANGROUP</div>
-<p>Калькулятор строительства замка</p><a class="telegram-button"
-href="https://t.me/RC_FANGroup"
-target="_blank"
-rel="noopener noreferrer">
+<p>База знаний и полезные инструменты для игроков</p>
+<a class="telegram-button" href="https://t.me/RC_FANGroup" target="_blank" rel="noopener noreferrer">
 ✦ НАШЕ СООБЩЕСТВО В TELEGRAM ✦
 </a>
+</header><!-- ГОНКА ВООРУЖЕНИЙ --><section class="card" id="armsRace">
+<div class="event-label">СОБЫТИЯ КОРОЛЕВСТВА</div>
+<h2 class="event-title">⚔️ ГОНКА ВООРУЖЕНИЙ</h2>
+<p class="muted">Следи за этапами, планируй развитие и заранее готовь ресурсы.</p><div class="event-info">
+<div class="event-label">СЕЙЧАС ПРОХОДИТ</div>
+<h3 id="raceCurrentName">Загрузка этапа...</h3>
+<div class="event-time">
+<span id="raceCurrentStart">Начало: --:-- МСК</span>
+<span id="raceCurrentEnd">Окончание: --:-- МСК</span>
+</div>
+<div class="timer" id="raceTimer">00:00:00</div>
+<div class="timer-caption">До начала следующего этапа</div>
+</div><div class="event-info">
+<h3>🎯 Что делать сейчас?</h3>
+<div id="raceCurrentAdvice">Загрузка рекомендаций...</div>
+</div><div class="event-info event-next">
+<div class="event-label">СЛЕДУЮЩИЙ ЭТАП</div>
+<h3 id="raceNextName">--</h3>
+<p id="raceNextTime" style="color:#e5bd69;font-weight:bold">Начало: --:-- МСК</p>
+<h3 style="margin-top:15px">🎒 Что подготовить?</h3>
+<div id="raceNextAdvice">--</div>
+</div><div class="event-info">
+<h3>🕒 Расписание этапов (МСК)</h3>
+<ul>
+<li>03:00 — Подготовка войск</li>
+<li>07:00 — Исследования</li>
+<li>11:00 — Ковка снаряжения</li>
+<li>15:00 — Развитие героев</li>
+<li>19:00 — Строительство города</li>
+<li>23:00 — Подготовка войск</li>
+</ul>
+<p class="muted">Каждое окно длится 4 часа. Последовательность и задания могут меняться — обязательно сверяйся с текущим событием в игре.</p>
+</div>
+</section><!-- СИЛЬНЕЙШИЙ ЛОРД --><section class="card" id="strongestLord">
+<div class="event-label">ПЛАНИРОВАНИЕ СОБЫТИЙ</div>
+<h2 class="event-title">👑 СИЛЬНЕЙШИЙ ЛОРД</h2>
+<p class="muted">Шесть дней подготовки. Выбирай текущий день, изучай задания и заранее сохраняй необходимые ресурсы.</p><label for="lordDay">Выбери день мероприятия</label>
+<select id="lordDay">
 
-</header><section class="card">
+<option value="0">День 1 — Сбор ресурсов</option>
+<option value="1">День 2 — Строительство</option>
+<option value="2">День 3 — Развитие героев</option>
+<option value="3">День 4 — Подготовка войск</option>
+<option value="4">День 5 — Уничтожение противника</option>
+<option value="5">День 6 — Финальный рывок</option>
+</select><div class="event-info">
+<h3 id="lordDayTitle">День 1 — Сбор ресурсов</h3>
+<div id="lordDayTasks"></div>
+</div><div class="event-info event-next">
+<h3>🎒 Что подготовить заранее?</h3>
+<div id="lordPreparation"></div>
+</div><h3 style="margin-top:20px;color:#e5bd69">📅 Все шесть дней</h3>
+<div class="day-list">
+<div class="day-item"><strong>День 1</strong><span>Сбор ресурсов, задания разведки и энергия.</span></div>
+<div class="day-item"><strong>День 2</strong><span>Строительство зданий и исследования.</span></div>
+<div class="day-item"><strong>День 3</strong><span>Опыт героев, фрагменты и улучшение навыков.</span></div>
+<div class="day-item"><strong>День 4</strong><span>Обучение и ускорение подготовки войск.</span></div>
+<div class="day-item"><strong>День 5</strong><span>Сражения и уничтожение войск противника.</span></div>
+<div class="day-item"><strong>День 6</strong><span>Финальный набор очков по доступным заданиям.</span></div>
+</div><p class="muted" style="margin-top:15px">Это ориентировочная схема мероприятия. Проверяй список заданий и правила текущего события в игре.</p>
+</section><section class="card">
+<h2>📢 Не пропускай новые этапы!</h2>
+<p class="muted">В нашем Telegram-сообществе автоматически публикуются уведомления о начале этапов, а также выходят гайды, советы и полезная информация.</p>
+<a class="telegram-button" href="https://t.me/RC_FANGroup" target="_blank" rel="noopener noreferrer">
+✦ ВСТУПИТЬ В TELEGRAM ✦
+</a>
+</section><!-- КАЛЬКУЛЯТОР ЗАМКА --><section class="card">
 <h2>🏰 Уровень замка</h2>
 <div class="grid">
 <div><label for="current">Текущий уровень</label><select id="current"></select></div>
@@ -97,12 +167,156 @@ rel="noopener noreferrer">
 <button id="reset">Сбросить отметки</button>
 <button onclick="window.print()">Распечатать план</button>
 </section><div class="notice">
-<strong>Важно:</strong> это фанатский калькулятор. Часть значений в исходной таблице приблизительная. Перед улучшением обязательно сверяй стоимость с игрой. Для некоторых уровней требования зданий ещё нуждаются в проверке.
+<strong>Важно:</strong> калькулятор строительства содержит значения, часть которых приблизительная и требует проверки. Перед улучшением обязательно сверяй стоимость с игрой. Для некоторых уровней требования зданий ещё нуждаются в проверке.
 </div><footer>
 Royal Crown: Kingdom Wars | FANGroup<br>
-Дата проверки исходных данных: 07.11.2026
+Данные калькулятора требуют дополнительной проверки.<br>
+Расписание событий носит справочный характер.
 </footer>
 </main><script>
+// ===============================
+// ГОНКА ВООРУЖЕНИЙ
+// Время указано по Москве (UTC+3)
+// ===============================
+
+const raceStages=[
+{
+name:"Подготовка войск",
+start:3,
+advice:"<ul><li>Обучай войска и используй ускорения тренировки.</li><li>Заранее подготовь очереди обучения.</li><li>Сохраняй ускорения, если хочешь потратить их в подходящее окно.</li></ul>",
+prep:"Подготовь войска к обучению, проверь свободные очереди и запас ускорений тренировки."
+},
+{
+name:"Исследования",
+start:7,
+advice:"<ul><li>Завершай исследования в Академии.</li><li>Используй ускорения исследований.</li><li>По возможности заранее подготовь исследования с длительным временем.</li></ul>",
+prep:"Подбери исследование, подготовь ускорения и проверь доступные технологии."
+},
+{
+name:"Ковка снаряжения",
+start:11,
+advice:"<ul><li>Куй или улучшай снаряжение.</li><li>Проверь доступные материалы для улучшения.</li><li>Не расходуй редкие материалы без необходимости.</li></ul>",
+prep:"Сохрани материалы для ковки и заранее проверь, какое снаряжение можно улучшить."
+},
+{
+name:"Развитие героев",
+start:15,
+advice:"<ul><li>Используй опыт героев.</li><li>Улучшай навыки и повышай звёзды, если это предусмотрено заданиями.</li><li>Проверяй список заданий перед расходованием редких предметов.</li></ul>",
+prep:"Подготовь опыт героев, фрагменты и свитки навыков. Не используй их раньше подходящего этапа."
+},
+{
+name:"Строительство города",
+start:19,
+advice:"<ul><li>Улучшай здания.</li><li>Используй ускорения строительства.</li><li>По возможности заранее запусти улучшения, которые можно завершить в нужное время.</li></ul>",
+prep:"Подготовь ресурсы и ускорения строительства. Проверь, какие здания готовы к улучшению."
+},
+{
+name:"Подготовка войск",
+start:23,
+advice:"<ul><li>Обучай войска.</li><li>Используй ускорения тренировки.</li><li>Проверь, какие задания доступны именно в текущем окне.</li></ul>",
+prep:"Подготовь очереди обучения и ускорения. Следующее окно подготовки войск начнётся в 03:00 МСК."
+}
+];
+
+function moscowNow(){
+const parts=new Intl.DateTimeFormat("en-GB",{
+timeZone:"Europe/Moscow",
+year:"numeric",month:"numeric",day:"numeric",
+hour:"numeric",minute:"numeric",second:"numeric",
+hourCycle:"h23"
+}).formatToParts(new Date());
+const out={};
+parts.forEach(p=>{if(p.type!=="literal")out[p.type]=Number(p.value)});
+return out;
+}
+
+function updateRace(){
+const now=moscowNow();
+const h=now.hour;
+let index;
+
+if(h<3) index=5;
+else index=Math.floor((h-3)/4);
+
+const current=raceStages[index];
+const nextIndex=(index+1)%raceStages.length;
+const next=raceStages[nextIndex];
+
+let nextDay=now.day;
+if(next.start<=h) nextDay++;
+
+const currentStamp=Date.UTC(now.year,now.month-1,now.day,h,now.minute,now.second);
+const nextStamp=Date.UTC(now.year,now.month-1,nextDay,next.start,0,0);
+let seconds=Math.max(0,Math.floor((nextStamp-currentStamp)/1000));
+
+const hh=String(Math.floor(seconds/3600)).padStart(2,"0");
+const mm=String(Math.floor((seconds%3600)/60)).padStart(2,"0");
+const ss=String(seconds%60).padStart(2,"0");
+
+$("raceCurrentName").textContent=current.name;
+$("raceCurrentStart").textContent="Начало: "+String(current.start).padStart(2,"0")+":00 МСК";
+$("raceCurrentEnd").textContent="Окончание: "+String(next.start).padStart(2,"0")+":00 МСК";
+$("raceTimer").textContent=hh+":"+mm+":"+ss;
+$("raceCurrentAdvice").innerHTML=current.advice;
+$("raceNextName").textContent=next.name;
+$("raceNextTime").textContent="Начало: "+String(next.start).padStart(2,"0")+":00 МСК";
+$("raceNextAdvice").textContent=next.prep;
+}
+
+// ===============================
+// СИЛЬНЕЙШИЙ ЛОРД
+// ===============================
+
+const lordDays=[
+{
+title:"День 1 — Сбор ресурсов",
+tasks:"<ul><li>Собирай ресурсы на карте.</li><li>Выполняй задания разведки.</li><li>Используй энергию, если она приносит очки в текущем событии.</li></ul>",
+prep:"Заранее отправь отряды на сбор ресурсов. Сохраняй энергию и награды заданий разведки, если правила события позволяют получить за них очки."
+},
+{
+title:"День 2 — Строительство и исследования",
+tasks:"<ul><li>Улучшай здания.</li><li>Завершай исследования Академии.</li><li>Используй строительные и исследовательские ускорения.</li></ul>",
+prep:"Подготовь ресурсы, ускорения строительства и исследований. Заранее запусти длительные улучшения, если их завершение можно совместить с началом этапа."
+},
+{
+title:"День 3 — Развитие героев",
+tasks:"<ul><li>Используй опыт героев.</li><li>Улучшай навыки.</li><li>Повышай звёзды и развивай героев в соответствии с заданиями.</li></ul>",
+prep:"Сохраняй опыт героев, фрагменты и свитки навыков до начала подходящего этапа."
+},
+{
+title:"День 4 — Подготовка войск",
+tasks:"<ul><li>Обучай войска.</li><li>Используй ускорения тренировки.</li><li>Планируй обучение так, чтобы завершение совпало с событием.</li></ul>",
+prep:"Заранее подготовь очереди обучения и ускорения тренировки. Проверь свободные места в лагерях."
+},
+{
+title:"День 5 — Уничтожение противника",
+tasks:"<ul><li>Участвуй в PvP-сражениях.</li><li>Атакуй противника только с учётом правил события и возможностей своего альянса.</li><li>Следи за потерями и лечением войск.</li></ul>",
+prep:"Подготовь боевые отряды, проверь запасы лечения и согласуй действия с альянсом. Не рискуй войсками без необходимости."
+},
+{
+title:"День 6 — Финальный рывок",
+tasks:"<ul><li>Проверь доступные задания заключительного дня.</li><li>Выполняй только действия, которые действительно дают очки.</li><li>Распредели оставшиеся ускорения и ресурсы с умом.</li></ul>",
+prep:"Сохраняй универсальные ускорения, ресурсы и предметы до финального дня. Перед тратой обязательно проверь список начисления очков."
+}
+];
+
+function updateLord(){
+const index=Number($("lordDay").value);
+const day=lordDays[index];
+$("lordDayTitle").textContent=day.title;
+$("lordDayTasks").innerHTML=day.tasks;
+$("lordPreparation").textContent=day.prep;
+}
+
+$("lordDay").addEventListener("change",updateLord);
+updateLord();
+updateRace();
+setInterval(updateRace,1000);
+
+// ===============================
+// КАЛЬКУЛЯТОР СТРОИТЕЛЬСТВА
+// ===============================
+
 const data=[
 {level:11,req:[["Академия",10],["Центр альянса",10]],f:2.3,w:2.3,i:1.7},
 {level:12,req:[["Академия",11],["Лагерь лучников",11]],f:3.3,w:3.3,i:2.5,est:true},
