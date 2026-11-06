@@ -1,0 +1,220 @@
+<!DOCTYPE html><html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Сильнейший лорд — Royal Crown FANGroup</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#111722;color:#f2f3f5;font:16px Arial,sans-serif}
+main{max-width:850px;margin:auto;padding:20px 14px}
+header{text-align:center;padding:20px 0}
+header h1{color:#e5bd69;font-size:26px;margin:8px 0}
+header p,.muted{color:#aab4c4;font-size:14px;line-height:1.5}
+.telegram-button{
+display:inline-block;margin:16px 0 5px;padding:14px 25px;
+background:linear-gradient(135deg,#f0ce7b,#bd8c38);
+color:#171717;border:1px solid #f5d993;border-radius:10px;
+text-decoration:none;font-size:15px;font-weight:bold;
+letter-spacing:.3px;box-shadow:0 3px 12px rgba(229,189,105,.2)
+}
+.card{background:#1c2635;border:1px solid #344258;border-radius:14px;padding:17px;margin:14px 0}
+h2{font-size:19px;margin:0 0 15px}
+h3{font-size:17px}
+.event-label{font-size:12px;color:#e5bd69;letter-spacing:1px;font-weight:bold}
+.event-title{font-size:23px;color:#f0ce7b;margin:8px 0}
+.event-info{background:#111a27;border-radius:10px;padding:14px;margin:12px 0;line-height:1.6}
+.event-info h3{margin:0 0 9px;color:#e5bd69}
+.event-info ul{padding-left:20px;margin:8px 0}
+.event-info li{margin:7px 0;line-height:1.45}
+.event-next{border:1px solid #806333;background:#29271f}
+label{display:block;color:#b9c4d3;font-size:14px;margin-bottom:7px}
+select{width:100%;padding:13px;background:#111a27;color:white;border:1px solid #45546b;border-radius:9px;font-size:16px}
+.day-list{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.day-item{background:#111a27;border:1px solid #35445b;border-radius:9px;padding:12px}
+.day-item strong{display:block;color:#e5bd69;margin-bottom:5px}
+.day-item span{font-size:13px;color:#b9c4d3;line-height:1.4}
+.notice{background:#332e22;border-left:3px solid #d8b15e;padding:12px;border-radius:7px;color:#e8ddc5;font-size:13px;line-height:1.5}
+footer{text-align:center;color:#8995a7;font-size:12px;padding:20px}
+@media(max-width:550px){
+main{padding:12px}
+.telegram-button{display:block;margin:16px auto 5px;max-width:320px;text-align:center}
+.day-list{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<main><header>
+<div style="font-size:38px">♛</div>
+<h1>ROYAL CROWN</h1>
+<div style="color:#e5bd69">KINGDOM WARS | FANGROUP</div>
+<p>База знаний и полезные инструменты для игроков</p>
+<a class="telegram-button" href="https://t.me/RC_FANGroup" target="_blank" rel="noopener noreferrer">
+✦ НАШЕ СООБЩЕСТВО В TELEGRAM ✦
+</a>
+</header><section class="card">
+<div class="event-label">ПЛАНИРОВАНИЕ СОБЫТИЙ</div>
+<h2 class="event-title">👑 СИЛЬНЕЙШИЙ ЛОРД</h2>
+<p class="muted">Шесть дней подготовки, развития и борьбы за очки. Выбирай день мероприятия, изучай задания и заранее сохраняй необходимые ресурсы.</p><div class="event-info">
+<h3>📅 Выбери день мероприятия</h3>
+<label for="lordDay">Текущий день</label>
+<select id="lordDay">
+<option value="0">День 1 — Сбор ресурсов</option>
+<option value="1">День 2 — Строительство</option>
+<option value="2">День 3 — Развитие героев</option>
+<option value="3">День 4 — Подготовка войск</option>
+<option value="4">День 5 — Уничтожение противника</option>
+<option value="5">День 6 — Финальный рывок</option>
+</select>
+</div><div class="event-info">
+<div class="event-label">ЗАДАНИЯ ДНЯ</div>
+<h3 id="lordDayTitle">День 1 — Сбор ресурсов</h3>
+<div id="lordDayTasks"></div>
+</div><div class="event-info event-next">
+<h3>🎒 Что подготовить заранее?</h3>
+<div id="lordPreparation"></div>
+</div>
+</section><section class="card">
+<h2>📅 Все шесть дней мероприятия</h2>
+<div class="day-list">
+<div class="day-item">
+<strong>День 1 — Сбор ресурсов</strong>
+<span>Сбор ресурсов на карте, разведка и использование энергии.</span>
+</div>
+<div class="day-item">
+<strong>День 2 — Строительство</strong>
+<span>Улучшение зданий, исследования и ускорения развития города.</span>
+</div>
+<div class="day-item">
+<strong>День 3 — Развитие героев</strong>
+<span>Опыт героев, фрагменты, звёзды и улучшение навыков.</span>
+</div>
+<div class="day-item">
+<strong>День 4 — Подготовка войск</strong>
+<span>Обучение войск и использование ускорений тренировки.</span>
+</div>
+<div class="day-item">
+<strong>День 5 — Уничтожение противника</strong>
+<span>PvP-сражения и выполнение боевых заданий.</span>
+</div>
+<div class="day-item">
+<strong>День 6 — Финальный рывок</strong>
+<span>Заключительный набор очков и использование оставшихся запасов.</span>
+</div>
+</div>
+</section><section class="card">
+<h2>💡 Полезные советы</h2>
+<div class="event-info">
+<h3>1. Не торопись тратить ресурсы</h3>
+<p>Старайся сохранять ускорения, опыт героев, фрагменты и другие ценные предметы до подходящего дня мероприятия.</p>
+</div>
+<div class="event-info">
+<h3>2. Планируй заранее</h3>
+<p>Подготавливай очереди строительства, исследований и обучения так, чтобы завершение улучшений совпадало с нужным этапом.</p>
+</div>
+<div class="event-info">
+<h3>3. Проверяй задания</h3>
+<p>Перед использованием предметов убедись, что они действительно приносят очки в текущем дне.</p>
+</div>
+<div class="event-info">
+<h3>4. Согласовывай действия с альянсом</h3>
+<p>Особенно важно в дни PvP. Не рискуй войсками без необходимости и учитывай договорённости своего королевства.</p>
+</div>
+</section><section class="card">
+<h2>📢 Будь в курсе событий!</h2>
+<p class="muted">В нашем Telegram-сообществе выходят гайды, советы, полезная информация и уведомления о событиях игры.</p>
+<a class="telegram-button" href="https://t.me/RC_FANGroup" target="_blank" rel="noopener noreferrer">
+✦ ВСТУПИТЬ В TELEGRAM ✦
+</a>
+</section><div class="notice">
+<strong>Важно:</strong> это ориентировочная схема шести дней мероприятия. Конкретные задания, начисление очков и условия могут отличаться. Перед выполнением действий обязательно проверяй описание текущего события в игре.
+</div><footer>
+Royal Crown: Kingdom Wars | FANGroup<br>
+Информационный раздел — Сильнейший лорд
+</footer></main><script>
+const $ = id => document.getElementById(id);
+
+const lordDays = [
+{
+title:"День 1 — Сбор ресурсов",
+tasks:`
+<ul>
+<li>Собирай ресурсы на карте.</li>
+<li>Выполняй задания разведки.</li>
+<li>Используй энергию, если она приносит очки в текущем событии.</li>
+</ul>`,
+prep:"Заранее отправь отряды на сбор ресурсов. Сохраняй энергию и награды заданий разведки, если правила события позволяют получить за них очки."
+},
+{
+title:"День 2 — Строительство и исследования",
+tasks:`
+<ul>
+<li>Улучшай здания.</li>
+<li>Завершай исследования Академии.</li>
+<li>Используй строительные и исследовательские ускорения.</li>
+</ul>`,
+prep:"Подготовь ресурсы, ускорения строительства и исследований. Заранее запусти длительные улучшения, если их завершение можно совместить с началом этапа."
+},
+{
+title:"День 3 — Развитие героев",
+tasks:`
+<ul>
+<li>Используй опыт героев.</li>
+<li>Улучшай навыки.</li>
+<li>Повышай звёзды и развивай героев в соответствии с заданиями.</li>
+</ul>`,
+prep:"Сохраняй опыт героев, фрагменты и свитки навыков до начала подходящего этапа."
+},
+{
+title:"День 4 — Подготовка войск",
+tasks:`
+<ul>
+<li>Обучай войска.</li>
+<li>Используй ускорения тренировки.</li>
+<li>Планируй обучение так, чтобы завершение совпало с событием.</li>
+</ul>`,
+prep:"Заранее подготовь очереди обучения и ускорения тренировки. Проверь свободные места в лагерях."
+},
+{
+title:"День 5 — Уничтожение противника",
+tasks:`
+<ul>
+<li>Участвуй в PvP-сражениях.</li>
+<li>Атакуй противника с учётом правил события и возможностей своего альянса.</li>
+<li>Следи за потерями и лечением войск.</li>
+</ul>`,
+prep:"Подготовь боевые отряды, проверь запасы лечения и согласуй действия с альянсом. Не рискуй войсками без необходимости."
+},
+{
+title:"День 6 — Финальный рывок",
+tasks:`
+<ul>
+<li>Проверь доступные задания заключительного дня.</li>
+<li>Выполняй только действия, которые действительно дают очки.</li>
+<li>Распредели оставшиеся ускорения и ресурсы с умом.</li>
+</ul>`,
+prep:"Сохраняй универсальные ускорения, ресурсы и предметы до финального дня. Перед тратой обязательно проверь список начисления очков."
+}
+];
+
+function updateLord(){
+const index = Number($("lordDay").value);
+const day = lordDays[index];
+
+$("lordDayTitle").textContent = day.title;
+$("lordDayTasks").innerHTML = day.tasks;
+$("lordPreparation").textContent = day.prep;
+
+localStorage.setItem("rcw_lord_day", index);
+}
+
+$("lordDay").addEventListener("change", updateLord);
+
+const savedDay = localStorage.getItem("rcw_lord_day");
+
+if(savedDay !== null && Number(savedDay) >= 0 && Number(savedDay) <= 5){
+$("lordDay").value = savedDay;
+}
+
+updateLord();
+</script></body>
+</html>
