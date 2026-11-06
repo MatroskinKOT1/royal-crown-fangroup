@@ -61,7 +61,8 @@ main{padding:12px}
 </style>
 </head>
 <body>
-<main><header>
+<main>
+<header>
 <div style="font-size:38px">♛</div>
 <h1>ROYAL CROWN</h1>
 <div style="color:#e5bd69">KINGDOM WARS | FANGROUP</div>
@@ -174,6 +175,9 @@ Royal Crown: Kingdom Wars | FANGroup<br>
 Расписание событий носит справочный характер.
 </footer>
 </main><script>
+// ФУНКЦИЯ ПОИСКА ЭЛЕМЕНТОВ — ОБЪЯВЛЕНА В НАЧАЛЕ
+const $=id=>document.getElementById(id);
+
 // ===============================
 // ГОНКА ВООРУЖЕНИЙ
 // Время указано по Москве (UTC+3)
@@ -221,12 +225,19 @@ prep:"Подготовь очереди обучения и ускорения. 
 function moscowNow(){
 const parts=new Intl.DateTimeFormat("en-GB",{
 timeZone:"Europe/Moscow",
-year:"numeric",month:"numeric",day:"numeric",
-hour:"numeric",minute:"numeric",second:"numeric",
+year:"numeric",
+month:"numeric",
+day:"numeric",
+hour:"numeric",
+minute:"numeric",
+second:"numeric",
 hourCycle:"h23"
 }).formatToParts(new Date());
+
 const out={};
-parts.forEach(p=>{if(p.type!=="literal")out[p.type]=Number(p.value)});
+parts.forEach(p=>{
+if(p.type!=="literal")out[p.type]=Number(p.value);
+});
 return out;
 }
 
@@ -238,26 +249,32 @@ let index;
 if(h<3) index=5;
 else index=Math.floor((h-3)/4);
 
-const current=raceStages[index];
+const currentStage=raceStages[index];
 const nextIndex=(index+1)%raceStages.length;
 const next=raceStages[nextIndex];
 
 let nextDay=now.day;
 if(next.start<=h) nextDay++;
 
-const currentStamp=Date.UTC(now.year,now.month-1,now.day,h,now.minute,now.second);
-const nextStamp=Date.UTC(now.year,now.month-1,nextDay,next.start,0,0);
+const currentStamp=Date.UTC(
+now.year,now.month-1,now.day,h,now.minute,now.second
+);
+
+const nextStamp=Date.UTC(
+now.year,now.month-1,nextDay,next.start,0,0
+);
+
 let seconds=Math.max(0,Math.floor((nextStamp-currentStamp)/1000));
 
 const hh=String(Math.floor(seconds/3600)).padStart(2,"0");
 const mm=String(Math.floor((seconds%3600)/60)).padStart(2,"0");
 const ss=String(seconds%60).padStart(2,"0");
 
-$("raceCurrentName").textContent=current.name;
-$("raceCurrentStart").textContent="Начало: "+String(current.start).padStart(2,"0")+":00 МСК";
+$("raceCurrentName").textContent=currentStage.name;
+$("raceCurrentStart").textContent="Начало: "+String(currentStage.start).padStart(2,"0")+":00 МСК";
 $("raceCurrentEnd").textContent="Окончание: "+String(next.start).padStart(2,"0")+":00 МСК";
 $("raceTimer").textContent=hh+":"+mm+":"+ss;
-$("raceCurrentAdvice").innerHTML=current.advice;
+$("raceCurrentAdvice").innerHTML=currentStage.advice;
 $("raceNextName").textContent=next.name;
 $("raceNextTime").textContent="Начало: "+String(next.start).padStart(2,"0")+":00 МСК";
 $("raceNextAdvice").textContent=next.prep;
@@ -303,6 +320,7 @@ prep:"Сохраняй универсальные ускорения, ресур
 function updateLord(){
 const index=Number($("lordDay").value);
 const day=lordDays[index];
+
 $("lordDayTitle").textContent=day.title;
 $("lordDayTasks").innerHTML=day.tasks;
 $("lordPreparation").textContent=day.prep;
@@ -335,27 +353,44 @@ const data=[
 {level:25,req:null,f:1400,w:1400,i:1000,est:true}
 ];
 
-const $=id=>document.getElementById(id);
-const current=$("current"),target=$("target");
+const current=$("current");
+const target=$("target");
 
 for(let n=10;n<=25;n++){
 current.add(new Option("Уровень "+n,n));
 target.add(new Option("Уровень "+n,n));
 }
+
 current.value=10;
 target.value=25;
 
 let done={};
-try{done=JSON.parse(localStorage.getItem("rcw_done")||"{}")}catch(e){done={}}
+try{
+done=JSON.parse(localStorage.getItem("rcw_done")||"{}");
+}catch(e){
+done={};
+}
 
-function number(id){return Math.max(0,Number($(id).value)||0)}
-function fmt(n){return n.toLocaleString("ru-RU",{maximumFractionDigits:1})+" млн"}
+function number(id){
+return Math.max(0,Number($(id).value)||0);
+}
+
+function fmt(n){
+return n.toLocaleString("ru-RU",{maximumFractionDigits:1})+" млн";
+}
 
 function render(){
-const from=Number(current.value),to=Number(target.value);
+const from=Number(current.value);
+const to=Number(target.value);
 const rows=data.filter(x=>x.level>from&&x.level<=to);
+
 let f=0,w=0,i=0;
-rows.forEach(x=>{f+=x.f;w+=x.w;i+=x.i});
+
+rows.forEach(x=>{
+f+=x.f;
+w+=x.w;
+i+=x.i;
+});
 
 $("steps").textContent=rows.length;
 $("totalFood").textContent=fmt(f);
@@ -368,6 +403,7 @@ $("needIron").textContent=fmt(Math.max(0,i-number("iron")));
 $("stages").innerHTML=rows.map(x=>{
 let requirements=x.req?x.req.map((r,j)=>{
 let id=x.level+"_"+j;
+
 return `<div class="req">
 <input type="checkbox" data-id="${id}" ${done[id]?"checked":""}>
 <label><b>${r[0]}</b><br>Необходимый уровень: ${r[1]}</label>
@@ -397,7 +433,9 @@ localStorage.setItem("rcw_done",JSON.stringify(done));
 
 [current,target,$("food"),$("wood"),$("iron")].forEach(el=>{
 el.addEventListener("input",()=>{
-if(Number(target.value)<Number(current.value))target.value=current.value;
+if(Number(target.value)<Number(current.value)){
+target.value=current.value;
+}
 render();
 });
 });
@@ -409,6 +447,7 @@ localStorage.removeItem("rcw_done");
 render();
 }
 });
+
 render();
 </script></body>
 </html>
