@@ -1,230 +1,771 @@
-<!DOCTYPE html><html lang="ru">
+<!DOCTYPE html>
+<html lang="ru">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Гонка вооружений — Royal Crown FANGroup</title>
+
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#111722;color:#f2f3f5;font:16px Arial,sans-serif}
-main{max-width:850px;margin:auto;padding:20px 14px}
-header{text-align:center;padding:20px 0}
-header h1{color:#e5bd69;font-size:26px;margin:8px 0}
-header p,.muted{color:#aab4c4;font-size:14px;line-height:1.5}
-.telegram-button{
-display:inline-block;margin:16px 0 5px;padding:14px 25px;
-background:linear-gradient(135deg,#f0ce7b,#bd8c38);
-color:#171717;border:1px solid #f5d993;border-radius:10px;
-text-decoration:none;font-size:15px;font-weight:bold;
-letter-spacing:.3px;box-shadow:0 3px 12px rgba(229,189,105,.2)
+
+body{
+margin:0;
+background:#111722;
+color:#f2f3f5;
+font:16px Arial,sans-serif
 }
-.card{background:#1c2635;border:1px solid #344258;border-radius:14px;padding:17px;margin:14px 0}
-h2{font-size:19px;margin:0 0 15px}
+
+main{
+max-width:850px;
+margin:auto;
+padding:20px 14px
+}
+
+header{
+text-align:center;
+padding:20px 0
+}
+
+header h1{
+color:#e5bd69;
+font-size:26px;
+margin:8px 0
+}
+
+header p,.muted{
+color:#aab4c4;
+font-size:14px;
+line-height:1.5
+}
+
+.telegram-button{
+display:inline-block;
+margin:16px 0 5px;
+padding:14px 25px;
+background:linear-gradient(135deg,#f0ce7b,#bd8c38);
+color:#171717;
+border:1px solid #f5d993;
+border-radius:10px;
+text-decoration:none;
+font-size:15px;
+font-weight:bold;
+letter-spacing:.3px;
+box-shadow:0 3px 12px rgba(229,189,105,.2)
+}
+
+.card{
+background:#1c2635;
+border:1px solid #344258;
+border-radius:14px;
+padding:17px;
+margin:14px 0
+}
+
+h2{
+font-size:19px;
+margin:0 0 15px
+}
+
 h3{font-size:17px}
-.event-label{font-size:12px;color:#e5bd69;letter-spacing:1px;font-weight:bold}
-.event-title{font-size:23px;color:#f0ce7b;margin:8px 0}
-.timer{font-size:34px;font-weight:bold;color:#e5bd69;text-align:center;letter-spacing:2px;margin:16px 0}
-.timer-caption{text-align:center;color:#aab4c4;font-size:13px}
-.event-info{background:#111a27;border-radius:10px;padding:14px;margin:12px 0;line-height:1.6}
-.event-info h3{margin:0 0 9px;color:#e5bd69}
-.event-info ul{padding-left:20px;margin:8px 0}
-.event-info li{margin:7px 0;line-height:1.45}
-.event-time{display:flex;justify-content:space-between;gap:10px;color:#b9c4d3;font-size:13px}
-.event-next{border:1px solid #806333;background:#29271f}
-footer{text-align:center;color:#8995a7;font-size:12px;padding:20px}
-.notice{background:#332e22;border-left:3px solid #d8b15e;padding:12px;border-radius:7px;color:#e8ddc5;font-size:13px;line-height:1.5}
+
+.event-label{
+font-size:12px;
+color:#e5bd69;
+letter-spacing:1px;
+font-weight:bold
+}
+
+.event-title{
+font-size:23px;
+color:#f0ce7b;
+margin:8px 0
+}
+
+.timer{
+font-size:34px;
+font-weight:bold;
+color:#e5bd69;
+text-align:center;
+letter-spacing:2px;
+margin:16px 0
+}
+
+.timer-caption{
+text-align:center;
+color:#aab4c4;
+font-size:13px
+}
+
+.event-info{
+background:#111a27;
+border-radius:10px;
+padding:14px;
+margin:12px 0;
+line-height:1.6
+}
+
+.event-info h3{
+margin:0 0 9px;
+color:#e5bd69
+}
+
+.event-info ul{
+padding-left:20px;
+margin:8px 0
+}
+
+.event-info li{
+margin:7px 0;
+line-height:1.45
+}
+
+.event-time{
+display:flex;
+justify-content:space-between;
+gap:10px;
+color:#b9c4d3;
+font-size:13px
+}
+
+.event-next{
+border:1px solid #806333;
+background:#29271f
+}
+
+footer{
+text-align:center;
+color:#8995a7;
+font-size:12px;
+padding:20px
+}
+
+.notice{
+background:#332e22;
+border-left:3px solid #d8b15e;
+padding:12px;
+border-radius:7px;
+color:#e8ddc5;
+font-size:13px;
+line-height:1.5
+}
+
+.day-badge{
+display:inline-block;
+padding:6px 12px;
+background:#342e20;
+border:1px solid #806333;
+border-radius:20px;
+color:#f0ce7b;
+font-size:13px;
+margin-top:8px
+}
+
+.schedule-wrap{
+overflow-x:auto
+}
+
+.schedule{
+width:100%;
+border-collapse:collapse;
+font-size:12px;
+text-align:center;
+min-width:540px
+}
+
+.schedule th{
+color:#e5bd69;
+padding:10px 5px;
+background:#252f40
+}
+
+.schedule td{
+padding:10px 5px;
+border-bottom:1px solid #344258;
+color:#cbd3df
+}
+
+.schedule tr.active-day{
+background:#3b3321;
+color:#f0ce7b
+}
+
+.schedule tr.active-day td{
+color:#f0ce7b;
+font-weight:bold
+}
+
 @media(max-width:550px){
+
 main{padding:12px}
-.telegram-button{display:block;margin:16px auto 5px;max-width:320px;text-align:center}
+
+.telegram-button{
+display:block;
+margin:16px auto 5px;
+max-width:320px;
+text-align:center
+}
+
 .timer{font-size:28px}
+
 .event-time{font-size:12px}
+
 }
 </style>
 </head>
+
 <body>
-<main><header>
+
+<main>
+
+<header>
+
 <div style="font-size:38px">♛</div>
+
 <h1>ROYAL CROWN</h1>
-<div style="color:#e5bd69">KINGDOM WARS | FANGROUP</div>
+
+<div style="color:#e5bd69">
+KINGDOM WARS | FANGROUP
+</div>
+
 <p>База знаний и полезные инструменты для игроков</p>
-<a class="telegram-button" href="https://t.me/RC_FANGroup" target="_blank" rel="noopener noreferrer">
+
+<a class="telegram-button"
+href="https://t.me/RC_FANGroup"
+target="_blank"
+rel="noopener noreferrer">
 ✦ НАШЕ СООБЩЕСТВО В TELEGRAM ✦
 </a>
-</header><section class="card" id="armsRace">
+
+</header>
+
+
+<section class="card" id="armsRace">
+
 <div class="event-label">СОБЫТИЯ КОРОЛЕВСТВА</div>
+
 <h2 class="event-title">⚔️ ГОНКА ВООРУЖЕНИЙ</h2>
-<p class="muted">Следи за этапами, планируй развитие и заранее готовь ресурсы.</p><div class="event-info">
-<div class="event-label">СЕЙЧАС ПРОХОДИТ</div>
-<h3 id="raceCurrentName">Загрузка этапа...</h3><div class="event-time">
-<span id="raceCurrentStart">Начало: --:-- МСК</span>
-<span id="raceCurrentEnd">Окончание: --:-- МСК</span>
-</div><div class="timer" id="raceTimer">00:00:00</div>
-<div class="timer-caption">До начала следующего этапа</div>
-</div><div class="event-info">
-<h3>🎯 Что делать сейчас?</h3>
-<div id="raceCurrentAdvice">Загрузка рекомендаций...</div>
-</div><div class="event-info event-next">
-<div class="event-label">СЛЕДУЮЩИЙ ЭТАП</div>
-<h3 id="raceNextName">--</h3>
-<p id="raceNextTime" style="color:#e5bd69;font-weight:bold">Начало: --:-- МСК</p><h3 style="margin-top:15px">🎒 Что подготовить?</h3>
-<div id="raceNextAdvice">--</div>
-</div><div class="event-info">
-<h3>🕒 Расписание этапов (МСК)</h3>
-<ul>
-<li>03:00 — Подготовка войск</li>
-<li>07:00 — Исследования</li>
-<li>11:00 — Ковка снаряжения</li>
-<li>15:00 — Развитие героев</li>
-<li>19:00 — Строительство города</li>
-<li>23:00 — Подготовка войск</li>
-</ul>
-<p class="muted">Каждое окно длится 4 часа. Последовательность и задания могут меняться — обязательно сверяйся с текущим событием в игре.</p>
+
+<p class="muted">
+Следи за этапами, планируй развитие и заранее готовь ресурсы.
+</p>
+
+
+<div class="event-info">
+
+<div class="event-label">ТЕКУЩИЙ ДЕНЬ</div>
+
+<div class="day-badge" id="raceDay">
+Загрузка...
 </div>
-</section><section class="card">
+
+</div>
+
+
+<div class="event-info">
+
+<div class="event-label">СЕЙЧАС ПРОХОДИТ</div>
+
+<h3 id="raceCurrentName">Загрузка этапа...</h3>
+
+<div class="event-time">
+
+<span id="raceCurrentStart">Начало: --:-- МСК</span>
+
+<span id="raceCurrentEnd">Окончание: --:-- МСК</span>
+
+</div>
+
+<div class="timer" id="raceTimer">
+00:00:00
+</div>
+
+<div class="timer-caption">
+До начала следующего этапа
+</div>
+
+</div>
+
+
+<div class="event-info">
+
+<h3>🎯 Что делать сейчас?</h3>
+
+<div id="raceCurrentAdvice">
+Загрузка рекомендаций...
+</div>
+
+</div>
+
+
+<div class="event-info event-next">
+
+<div class="event-label">СЛЕДУЮЩИЙ ЭТАП</div>
+
+<h3 id="raceNextName">--</h3>
+
+<p id="raceNextTime"
+style="color:#e5bd69;font-weight:bold">
+Начало: --:-- МСК
+</p>
+
+<h3 style="margin-top:15px">
+🎒 Что подготовить?
+</h3>
+
+<div id="raceNextAdvice">--</div>
+
+</div>
+
+
+<div class="event-info">
+
+<h3>🕒 Расписание на 7 дней (МСК)</h3>
+
+<div class="schedule-wrap">
+
+<table class="schedule">
+
+<thead>
+<tr>
+<th>День</th>
+<th>03:00</th>
+<th>07:00</th>
+<th>11:00</th>
+<th>15:00</th>
+<th>19:00</th>
+<th>23:00</th>
+</tr>
+</thead>
+
+<tbody id="raceSchedule"></tbody>
+
+</table>
+
+</div>
+
+<p class="muted">
+Каждый этап длится 4 часа. Последовательность повторяется по циклу из 7 дней.
+</p>
+
+</div>
+
+</section>
+
+
+<section class="card">
+
 <h2>📢 Не пропускай новые этапы!</h2>
-<p class="muted">В нашем Telegram-сообществе автоматически публикуются уведомления о начале этапов, а также выходят гайды, советы и полезная информация.</p><a class="telegram-button" href="https://t.me/RC_FANGroup" target="_blank" rel="noopener noreferrer">
+
+<p class="muted">
+В нашем Telegram-сообществе автоматически публикуются уведомления о начале этапов, а также выходят гайды, советы и полезная информация.
+</p>
+
+<a class="telegram-button"
+href="https://t.me/RC_FANGroup"
+target="_blank"
+rel="noopener noreferrer">
 ✦ ВСТУПИТЬ В TELEGRAM ✦
 </a>
-</section><div class="notice">
-<strong>Важно:</strong> расписание носит справочный характер. Перед выполнением заданий проверяй текущий этап и начисление очков непосредственно в игре.
-</div><footer>
+
+</section>
+
+
+<div class="notice">
+
+<strong>Важно:</strong>
+Расписание основано на игровом календаре сервера.
+Перед выполнением заданий проверяй текущий этап и начисление очков непосредственно в игре.
+
+</div>
+
+
+<footer>
+
 Royal Crown: Kingdom Wars | FANGroup<br>
 Информационный раздел — Гонка вооружений
-</footer></main><script>
-const $ = id => document.getElementById(id);
 
+</footer>
+
+</main>
+
+
+<script>
+
+// =====================================
 // ГОНКА ВООРУЖЕНИЙ
-// Время указано по Москве (UTC+3)
+// ЧАСОВОЙ ПОЯС: МОСКВА (UTC+3)
+// =====================================
+
+// Дата первого дня гонки.
+// День 1 — 02.11.2026, 03:00 МСК.
+
+const RACE_DAY1_DATE = "2026-11-02";
+
+// Порядок пяти мероприятий.
 
 const raceStages = [
+
 {
-name:"Подготовка войск",
-start:3,
-advice:"<ul><li>Обучай войска и используй ускорения тренировки.</li><li>Заранее подготовь очереди обучения.</li><li>Сохраняй ускорения, если хочешь потратить их в подходящее окно.</li></ul>",
-prep:"Подготовь войска к обучению, проверь свободные очереди и запас ускорений тренировки."
+name:"Усиление героев",
+
+short:"Герои",
+
+advice:`
+<ul>
+<li>Используй опыт героев.</li>
+<li>Улучшай навыки и повышай звёзды.</li>
+<li>Проверяй задания перед использованием редких предметов.</li>
+</ul>
+`,
+
+prep:"Подготовь опыт героев, фрагменты и свитки навыков."
 },
-{
-name:"Исследования",
-start:7,
-advice:"<ul><li>Завершай исследования в Академии.</li><li>Используй ускорения исследований.</li><li>По возможности заранее подготовь исследования с длительным временем.</li></ul>",
-prep:"Подбери исследование, подготовь ускорения и проверь доступные технологии."
-},
-{
-name:"Ковка снаряжения",
-start:11,
-advice:"<ul><li>Куй или улучшай снаряжение.</li><li>Проверь доступные материалы для улучшения.</li><li>Не расходуй редкие материалы без необходимости.</li></ul>",
-prep:"Сохрани материалы для ковки и заранее проверь, какое снаряжение можно улучшить."
-},
-{
-name:"Развитие героев",
-start:15,
-advice:"<ul><li>Используй опыт героев.</li><li>Улучшай навыки и повышай звёзды, если это предусмотрено заданиями.</li><li>Проверяй список заданий перед расходованием редких предметов.</li></ul>",
-prep:"Подготовь опыт героев, фрагменты и свитки навыков. Не используй их раньше подходящего этапа."
-},
+
 {
 name:"Строительство города",
-start:19,
-advice:"<ul><li>Улучшай здания.</li><li>Используй ускорения строительства.</li><li>По возможности заранее запусти улучшения, которые можно завершить в нужное время.</li></ul>",
-prep:"Подготовь ресурсы и ускорения строительства. Проверь, какие здания готовы к улучшению."
+
+short:"Город",
+
+advice:`
+<ul>
+<li>Улучшай здания.</li>
+<li>Используй ускорения строительства.</li>
+<li>Следи за ресурсами и очередями строительства.</li>
+</ul>
+`,
+
+prep:"Подготовь ресурсы и ускорения строительства. Проверь доступные улучшения."
 },
+
 {
-name:"Подготовка войск",
-start:23,
-advice:"<ul><li>Обучай войска.</li><li>Используй ускорения тренировки.</li><li>Проверь, какие задания доступны именно в текущем окне.</li></ul>",
-prep:"Подготовь очереди обучения и ускорения. Следующее окно подготовки войск начнётся в 03:00 МСК."
+name:"Усиление войск",
+
+short:"Войска",
+
+advice:`
+<ul>
+<li>Обучай войска.</li>
+<li>Используй ускорения тренировки.</li>
+<li>Следи за доступными заданиями этапа.</li>
+</ul>
+`,
+
+prep:"Подготовь очереди обучения, ресурсы и ускорения тренировки."
+},
+
+{
+name:"Технологические исследования",
+
+short:"Исследования",
+
+advice:`
+<ul>
+<li>Завершай исследования в Академии.</li>
+<li>Используй ускорения исследований.</li>
+<li>Планируй длительные исследования заранее.</li>
+</ul>
+`,
+
+prep:"Подбери исследования, подготовь ускорения и проверь доступные технологии."
+},
+
+{
+name:"Ковка экипировки",
+
+short:"Ковка",
+
+advice:`
+<ul>
+<li>Куй и улучшай экипировку.</li>
+<li>Проверь доступные материалы.</li>
+<li>Не расходуй редкие материалы без необходимости.</li>
+</ul>
+`,
+
+prep:"Сохрани материалы для ковки и заранее проверь экипировку."
 }
+
 ];
 
+
+// Время начала каждого этапа.
+
+const raceHours = [3,7,11,15,19,23];
+
+
+// Получение текущего времени Москвы.
+
 function moscowNow(){
+
 const parts = new Intl.DateTimeFormat("en-GB",{
+
 timeZone:"Europe/Moscow",
+
 year:"numeric",
 month:"numeric",
 day:"numeric",
 hour:"numeric",
 minute:"numeric",
 second:"numeric",
+
 hourCycle:"h23"
+
 }).formatToParts(new Date());
 
 const out = {};
 
 parts.forEach(p=>{
-if(p.type !== "literal") out[p.type] = Number(p.value);
+
+if(p.type!=="literal"){
+out[p.type]=Number(p.value);
+}
+
 });
 
 return out;
+
 }
+
+
+// Расчёт даты начала текущего игрового дня.
+
+function getRaceDay(now){
+
+let date = new Date(Date.UTC(
+now.year,
+now.month-1,
+now.day
+));
+
+// Новый игровой день начинается в 03:00.
+
+if(now.hour<3){
+
+date.setUTCDate(date.getUTCDate()-1);
+
+}
+
+const anchor = new Date(RACE_DAY1_DATE+"T00:00:00Z");
+
+const difference = Math.floor(
+(date.getTime()-anchor.getTime())/86400000
+);
+
+return difference;
+
+}
+
+
+// Создание расписания на семь дней.
+
+function buildSchedule(){
+
+const tbody = $("raceSchedule");
+
+tbody.innerHTML="";
+
+const now=moscowNow();
+
+const dayOffset=getRaceDay(now);
+
+const currentDay=((dayOffset%7)+7)%7;
+
+for(let day=0;day<7;day++){
+
+const tr=document.createElement("tr");
+
+if(day===currentDay){
+tr.className="active-day";
+}
+
+let html=`<td>День ${day+1}</td>`;
+
+for(let slot=0;slot<6;slot++){
+
+const stageIndex=(day*6+slot)%5;
+
+html+=`<td>${raceStages[stageIndex].short}</td>`;
+
+}
+
+tr.innerHTML=html;
+
+tbody.appendChild(tr);
+
+}
+
+}
+
+
+// Основной таймер.
 
 function updateRace(){
-const now = moscowNow();
-const h = now.hour;
 
-let index;
+const now=moscowNow();
 
-if(h < 3){
-index = 5;
+const dayOffset=getRaceDay(now);
+
+
+// Определяем игровой слот.
+
+let slot;
+
+if(now.hour<3){
+
+slot=5;
+
 }else{
-index = Math.floor((h - 3) / 4);
+
+slot=Math.floor((now.hour-3)/4);
+
 }
 
-const currentStage = raceStages[index];
-const nextIndex = (index + 1) % raceStages.length;
-const next = raceStages[nextIndex];
 
-let nextDay = now.day;
+// Определяем текущий и следующий этап.
 
-if(next.start <= h){
+const currentIndex=(dayOffset*6+slot)%5;
+
+const nextIndex=(dayOffset*6+slot+1)%5;
+
+const currentStage=raceStages[
+(currentIndex+5)%5
+];
+
+const nextStage=raceStages[
+(nextIndex+5)%5
+];
+
+
+// Время начала текущего этапа.
+
+const currentStart=raceHours[slot];
+
+const nextSlot=(slot+1)%6;
+
+const nextStart=raceHours[nextSlot];
+
+
+// Номер игрового дня.
+
+const raceDayNumber=((dayOffset%7)+7)%7+1;
+
+$("raceDay").textContent=
+"ДЕНЬ "+raceDayNumber+" / 7";
+
+
+// Определяем дату следующего этапа.
+
+let nextDay=now.day;
+
+if(nextStart<=now.hour){
+
 nextDay++;
+
 }
 
-const currentStamp = Date.UTC(
+
+// Текущий момент.
+
+const currentStamp=Date.UTC(
 now.year,
-now.month - 1,
+now.month-1,
 now.day,
-h,
+now.hour,
 now.minute,
 now.second
 );
 
-const nextStamp = Date.UTC(
+
+// Следующий этап.
+
+const nextStamp=Date.UTC(
 now.year,
-now.month - 1,
+now.month-1,
 nextDay,
-next.start,
+nextStart,
 0,
 0
 );
 
-const seconds = Math.max(
+
+// Обратный отсчёт.
+
+const seconds=Math.max(
 0,
-Math.floor((nextStamp - currentStamp) / 1000)
+Math.floor((nextStamp-currentStamp)/1000)
 );
 
-const hh = String(Math.floor(seconds / 3600)).padStart(2,"0");
-const mm = String(Math.floor((seconds % 3600) / 60)).padStart(2,"0");
-const ss = String(seconds % 60).padStart(2,"0");
+const hh=String(
+Math.floor(seconds/3600)
+).padStart(2,"0");
 
-$("raceCurrentName").textContent = currentStage.name;
+const mm=String(
+Math.floor((seconds%3600)/60)
+).padStart(2,"0");
 
-$("raceCurrentStart").textContent =
-"Начало: " + String(currentStage.start).padStart(2,"0") + ":00 МСК";
+const ss=String(
+seconds%60
+).padStart(2,"0");
 
-$("raceCurrentEnd").textContent =
-"Окончание: " + String(next.start).padStart(2,"0") + ":00 МСК";
 
-$("raceTimer").textContent = hh + ":" + mm + ":" + ss;
+// Вывод текущего этапа.
 
-$("raceCurrentAdvice").innerHTML = currentStage.advice;
+$("raceCurrentName").textContent=
+currentStage.name;
 
-$("raceNextName").textContent = next.name;
+$("raceCurrentStart").textContent=
+"Начало: "+
+String(currentStart).padStart(2,"0")+
+":00 МСК";
 
-$("raceNextTime").textContent =
-"Начало: " + String(next.start).padStart(2,"0") + ":00 МСК";
+$("raceCurrentEnd").textContent=
+"Окончание: "+
+String(nextStart).padStart(2,"0")+
+":00 МСК";
 
-$("raceNextAdvice").textContent = next.prep;
+$("raceTimer").textContent=
+hh+":"+mm+":"+ss;
+
+$("raceCurrentAdvice").innerHTML=
+currentStage.advice;
+
+
+// Следующий этап.
+
+$("raceNextName").textContent=
+nextStage.name;
+
+$("raceNextTime").textContent=
+"Начало: "+
+String(nextStart).padStart(2,"0")+
+":00 МСК";
+
+$("raceNextAdvice").textContent=
+nextStage.prep;
+
 }
 
+
+// Вспомогательная функция.
+
+function $(id){
+
+return document.getElementById(id);
+
+}
+
+
+// Запуск.
+
+buildSchedule();
+
 updateRace();
+
 setInterval(updateRace,1000);
-</script></body>
+
+setInterval(buildSchedule,60000);
+
+</script>
+
+</body>
 </html>
