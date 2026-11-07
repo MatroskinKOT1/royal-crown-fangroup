@@ -3,7 +3,47 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Гонка вооружений — Royal Crown FANGroup</title>
+
+<meta name="theme-color" content="#111722">
+<meta name="robots" content="index, follow">
+
+<title>Гонка вооружений — расписание, таймер и этапы | Royal Crown FANGroup</title>
+
+<meta name="description" content="Гонка вооружений в Royal Crown: Kingdom Wars. Расписание этапов по московскому времени, онлайн-таймер, текущие задания и рекомендации по подготовке.">
+
+<link rel="canonical" href="https://royal-crown-fangroup.vercel.app/arms-race.html">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:site_name" content="Royal Crown: Kingdom Wars | FANGroup">
+<meta property="og:title" content="Гонка вооружений — Royal Crown: Kingdom Wars">
+<meta property="og:description" content="Расписание этапов, таймер обратного отсчёта и рекомендации для Гонки вооружений. Время указано по Москве.">
+<meta property="og:url" content="https://royal-crown-fangroup.vercel.app/arms-race.html">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Гонка вооружений — Royal Crown FANGroup">
+<meta name="twitter:description" content="Расписание, таймер и рекомендации по этапам Гонки вооружений.">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Гонка вооружений — Royal Crown: Kingdom Wars",
+  "description": "Расписание этапов Гонки вооружений, онлайн-таймер и рекомендации по подготовке.",
+  "url": "https://royal-crown-fangroup.vercel.app/arms-race.html",
+  "inLanguage": "ru",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Royal Crown: Kingdom Wars | FANGroup",
+    "url": "https://royal-crown-fangroup.vercel.app/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Royal Crown: Kingdom Wars | FANGroup",
+    "url": "https://royal-crown-fangroup.vercel.app/"
+  }
+}
+</script>
 
 <style>
 *{box-sizing:border-box}
@@ -381,8 +421,15 @@ rel="noopener noreferrer">
 
 <footer>
 
-Royal Crown: Kingdom Wars | FANGroup<br>
-Информационный раздел — Гонка вооружений
+<a href="index.html" style="color:#e5bd69">
+← На главную страницу
+</a>
+
+<br><br>
+
+<strong>Royal Crown: Kingdom Wars | FANGroup</strong><br>
+Информационный раздел — Гонка вооружений<br>
+Неофициальный фанатский проект.
 
 </footer>
 
@@ -396,10 +443,10 @@ Royal Crown: Kingdom Wars | FANGroup<br>
 // ЧАСОВОЙ ПОЯС: МОСКВА (UTC+3)
 // =====================================
 
-// Дата первого дня гонки.
 // День 1 — 02.11.2026, 03:00 МСК.
 
 const RACE_DAY1_DATE = "2026-11-02";
+
 
 // Порядок пяти мероприятий.
 
@@ -407,7 +454,6 @@ const raceStages = [
 
 {
 name:"Усиление героев",
-
 short:"Герои",
 
 advice:`
@@ -423,7 +469,6 @@ prep:"Подготовь опыт героев, фрагменты и свитк
 
 {
 name:"Строительство города",
-
 short:"Город",
 
 advice:`
@@ -439,7 +484,6 @@ prep:"Подготовь ресурсы и ускорения строитель
 
 {
 name:"Усиление войск",
-
 short:"Войска",
 
 advice:`
@@ -455,7 +499,6 @@ prep:"Подготовь очереди обучения, ресурсы и ус
 
 {
 name:"Технологические исследования",
-
 short:"Исследования",
 
 advice:`
@@ -471,7 +514,6 @@ prep:"Подбери исследования, подготовь ускорен
 
 {
 name:"Ковка экипировки",
-
 short:"Ковка",
 
 advice:`
@@ -540,18 +582,14 @@ now.day
 // Новый игровой день начинается в 03:00.
 
 if(now.hour<3){
-
 date.setUTCDate(date.getUTCDate()-1);
-
 }
 
 const anchor = new Date(RACE_DAY1_DATE+"T00:00:00Z");
 
-const difference = Math.floor(
+return Math.floor(
 (date.getTime()-anchor.getTime())/86400000
 );
-
-return difference;
 
 }
 
@@ -574,17 +612,21 @@ for(let day=0;day<7;day++){
 
 const tr=document.createElement("tr");
 
-if(day===currentDay){
+if(day===0){
 tr.className="active-day";
 }
 
-let html=`<td>День ${day+1}</td>`;
+const displayDay=((currentDay+day)%7)+1;
+
+let html=`<td>День ${displayDay}</td>`;
 
 for(let slot=0;slot<6;slot++){
 
-const stageIndex=(day*6+slot)%5;
+// Учитываем реальное положение текущего игрового дня в цикле.
 
-html+=`<td>${raceStages[stageIndex].short}</td>`;
+const stageIndex=((dayOffset+day)*6+slot)%5;
+
+html+=`<td>${raceStages[(stageIndex+5)%5].short}</td>`;
 
 }
 
@@ -611,13 +653,9 @@ const dayOffset=getRaceDay(now);
 let slot;
 
 if(now.hour<3){
-
 slot=5;
-
 }else{
-
 slot=Math.floor((now.hour-3)/4);
-
 }
 
 
@@ -653,14 +691,12 @@ $("raceDay").textContent=
 "ДЕНЬ "+raceDayNumber+" / 7";
 
 
-// Определяем дату следующего этапа.
+// Дата следующего этапа.
 
 let nextDay=now.day;
 
 if(nextStart<=now.hour){
-
 nextDay++;
-
 }
 
 
@@ -708,7 +744,7 @@ seconds%60
 ).padStart(2,"0");
 
 
-// Вывод текущего этапа.
+// Текущий этап.
 
 $("raceCurrentName").textContent=
 currentStage.name;
@@ -749,9 +785,7 @@ nextStage.prep;
 // Вспомогательная функция.
 
 function $(id){
-
 return document.getElementById(id);
-
 }
 
 
