@@ -1,8 +1,50 @@
-<!DOCTYPE html><html lang="ru">
+<!DOCTYPE html>
+<html lang="ru">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Калькулятор замка — Royal Crown FANGroup</title>
+<meta name="theme-color" content="#111722">
+
+<title>Калькулятор замка — расчёт ресурсов и улучшений | Royal Crown</title>
+
+<meta name="description" content="Калькулятор развития замка в Royal Crown: Kingdom Wars. Рассчитайте необходимые ресурсы для улучшения с 10 по 25 уровень, изучите требования зданий и составьте план строительства.">
+
+<meta name="robots" content="index, follow">
+<meta name="author" content="Royal Crown: Kingdom Wars | FANGroup">
+
+<link rel="canonical" href="https://royal-crown-fangroup.vercel.app/calculators.html">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:site_name" content="Royal Crown: Kingdom Wars | FANGroup">
+<meta property="og:title" content="Калькулятор замка — ресурсы и улучшения | Royal Crown">
+<meta property="og:description" content="Рассчитайте стоимость улучшения замка, проверьте требования зданий и спланируйте развитие города в Royal Crown: Kingdom Wars.">
+<meta property="og:url" content="https://royal-crown-fangroup.vercel.app/calculators.html">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Калькулятор замка | Royal Crown: Kingdom Wars">
+<meta name="twitter:description" content="Расчёт ресурсов, требований зданий и этапов улучшения замка с 10 по 25 уровень.">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Калькулятор замка — Royal Crown: Kingdom Wars",
+  "description": "Калькулятор ресурсов и требований для улучшения замка с 10 по 25 уровень в Royal Crown: Kingdom Wars.",
+  "url": "https://royal-crown-fangroup.vercel.app/calculators.html",
+  "inLanguage": "ru-RU",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Royal Crown: Kingdom Wars | FANGroup",
+    "url": "https://royal-crown-fangroup.vercel.app/"
+  },
+  "about": {
+    "@type": "VideoGame",
+    "name": "Royal Crown: Kingdom Wars"
+  }
+}
+</script>
+
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#111722;color:#f2f3f5;font:16px Arial,sans-serif}
@@ -50,8 +92,11 @@ button,.telegram-button{display:none}
 }
 </style>
 </head>
+
 <body>
-<main><header>
+<main>
+
+<header>
 <div style="font-size:38px">♛</div>
 <h1>ROYAL CROWN</h1>
 <div style="color:#e5bd69">KINGDOM WARS | FANGROUP</div>
@@ -59,7 +104,9 @@ button,.telegram-button{display:none}
 <a class="telegram-button" href="https://t.me/RC_FANGroup" target="_blank" rel="noopener noreferrer">
 ✦ НАШЕ СООБЩЕСТВО В TELEGRAM ✦
 </a>
-</header><section class="card">
+</header>
+
+<section class="card">
 <h2>🏰 Уровень замка</h2>
 <div class="grid">
 <div>
@@ -71,7 +118,9 @@ button,.telegram-button{display:none}
 <select id="target"></select>
 </div>
 </div>
-</section><section class="card">
+</section>
+
+<section class="card">
 <h2>📦 Мои ресурсы</h2>
 <div class="resources">
 <div>
@@ -88,7 +137,9 @@ button,.telegram-button{display:none}
 </div>
 </div>
 <p class="muted">Например, 150 = 150 миллионов ресурсов.</p>
-</section><section class="card">
+</section>
+
+<section class="card">
 <h2>📊 Расчёт ресурсов</h2>
 <div class="grid">
 <div class="metric">
@@ -120,20 +171,30 @@ button,.telegram-button{display:none}
 <strong id="needIron">0</strong>
 </div>
 </div>
-</section><section class="card">
+</section>
+
+<section class="card">
 <h2>📋 Очерёдность улучшений</h2>
 <p class="muted">Отмечай выполненные требования. Твои отметки сохраняются в браузере.</p>
 <div id="stages"></div>
 <button id="reset" type="button">Сбросить отметки</button>
 <button id="print" type="button">Распечатать план</button>
 <button id="resetAll" type="button">Сбросить все данные</button>
-</section><div class="notice">
+</section>
+
+<div class="notice">
 <strong>Важно:</strong> калькулятор строительства содержит значения, часть которых приблизительная и требует проверки. Перед улучшением обязательно сверяй стоимость с игрой. Для некоторых уровней требования зданий ещё нуждаются в проверке.
-</div><footer>
+</div>
+
+<footer>
 Royal Crown: Kingdom Wars | FANGroup<br>
 Калькулятор развития замка<br>
 Данные требуют дополнительной проверки.
-</footer></main><script>
+</footer>
+
+</main>
+
+<script>
 const $=id=>document.getElementById(id);
 
 const STORAGE_KEY="rcw_calculator_v2";
@@ -308,5 +369,7 @@ render();
 });
 
 render();
-</script></body>
+</script>
+
+</body>
 </html>
