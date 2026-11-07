@@ -1,9 +1,12 @@
-<!DOCTYPE html><html lang="ru">
+<!DOCTYPE html>
+<html lang="ru">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#101827">
+
 <title>Сильнейший лорд — Royal Crown: Kingdom Wars | FANGroup</title>
+
 <style>
 :root {
   --bg:#101827;
@@ -18,7 +21,9 @@
   --red:#f08b82;
   --border:rgba(232,189,104,.2);
 }
+
 *{box-sizing:border-box}
+
 body{
   margin:0;
   background:var(--bg);
@@ -26,303 +31,740 @@ body{
   font-family:Arial,Helvetica,sans-serif;
   line-height:1.55;
 }
-.container{max-width:1050px;margin:auto;padding:22px 16px 50px}
-header{text-align:center;padding:24px 10px 30px}
-.brand{color:var(--gold);font-size:12px;letter-spacing:3px;font-weight:bold}
-h1{font-size:clamp(25px,5vw,39px);margin:12px 0 8px}
-.subtitle{color:var(--muted);max-width:650px;margin:auto;font-size:14px}
+
+.container{
+  max-width:1050px;
+  margin:auto;
+  padding:22px 16px 50px;
+}
+
+header{
+  text-align:center;
+  padding:24px 10px 30px;
+}
+
+.brand{
+  color:var(--gold);
+  font-size:12px;
+  letter-spacing:3px;
+  font-weight:bold;
+}
+
+h1{
+  font-size:clamp(25px,5vw,39px);
+  margin:12px 0 8px;
+}
+
+.subtitle{
+  color:var(--muted);
+  max-width:650px;
+  margin:auto;
+  font-size:14px;
+}
+
 .top-link{
- display:inline-block;margin-top:20px;padding:11px 19px;
- border:1px solid var(--border);border-radius:9px;
- color:var(--gold2);text-decoration:none;font-size:13px;
+ display:inline-block;
+ margin-top:20px;
+ padding:11px 19px;
+ border:1px solid var(--border);
+ border-radius:9px;
+ color:var(--gold2);
+ text-decoration:none;
+ font-size:13px;
 }
+
 .section{margin-top:22px}
-.section-title{font-size:19px;margin:0 0 13px;color:var(--gold2)}
+
+.section-title{
+  font-size:19px;
+  margin:0 0 13px;
+  color:var(--gold2);
+}
+
 .panel{
- background:var(--panel);border:1px solid var(--border);
- border-radius:13px;padding:18px;margin-bottom:15px;
+ background:var(--panel);
+ border:1px solid var(--border);
+ border-radius:13px;
+ padding:18px;
+ margin-bottom:15px;
 }
+
 .muted{color:var(--muted)}
-.day-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+
+.day-grid{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:9px;
+}
+
 .day-btn{
- background:var(--panel2);border:1px solid var(--border);
- color:var(--text);padding:13px 8px;border-radius:9px;
- cursor:pointer;font-weight:bold;font-size:13px;
+ background:var(--panel2);
+ border:1px solid var(--border);
+ color:var(--text);
+ padding:13px 8px;
+ border-radius:9px;
+ cursor:pointer;
+ font-weight:bold;
+ font-size:13px;
 }
-.day-btn span{display:block;color:var(--muted);font-size:11px;font-weight:normal;margin-top:4px}
-.day-btn.active{background:#493b25;border-color:var(--gold);color:var(--gold2)}
-.day-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+
+.day-btn span{
+ display:block;
+ color:var(--muted);
+ font-size:11px;
+ font-weight:normal;
+ margin-top:4px;
+}
+
+.day-btn.active{
+ background:#493b25;
+ border-color:var(--gold);
+ color:var(--gold2);
+}
+
+.day-heading{
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ gap:10px;
+ flex-wrap:wrap;
+}
+
 .badge{
- display:inline-block;padding:5px 9px;border-radius:20px;
- background:rgba(232,189,104,.12);color:var(--gold2);
- font-size:11px;border:1px solid var(--border)
+ display:inline-block;
+ padding:5px 9px;
+ border-radius:20px;
+ background:rgba(232,189,104,.12);
+ color:var(--gold2);
+ font-size:11px;
+ border:1px solid var(--border);
 }
-.task-list{display:grid;gap:10px;margin-top:14px}
+
+.task-list{
+ display:grid;
+ gap:10px;
+ margin-top:14px;
+}
+
 .task{
- background:var(--panel2);border-radius:9px;padding:13px;
- border-left:3px solid var(--gold)
+ background:var(--panel2);
+ border-radius:9px;
+ padding:13px;
+ border-left:3px solid var(--gold);
 }
-.task strong{display:block;margin-bottom:4px}
-.task p{margin:0;color:var(--muted);font-size:13px}
-.schedule{display:grid;gap:9px}
-.time-row{
- display:grid;grid-template-columns:75px 1fr;gap:12px;
- align-items:start;padding:12px;background:var(--panel2);
- border-radius:9px;border:1px solid transparent
+
+.task strong{
+ display:block;
+ margin-bottom:4px;
 }
-.time-row.current{border-color:var(--green);background:#1b3440}
-.time{font-weight:bold;color:var(--gold2);font-size:15px}
-.time-row strong{font-size:14px}
-.time-row p{margin:3px 0 0;color:var(--muted);font-size:12px}
-.tag{
- display:inline-block;font-size:10px;padding:3px 7px;
- border-radius:5px;margin:5px 4px 0 0;
- background:rgba(131,186,255,.13);color:var(--blue)
+
+.task p{
+ margin:0;
+ color:var(--muted);
+ font-size:13px;
 }
-.tag.both{background:rgba(114,214,160,.13);color:var(--green)}
-.tag.prepare{background:rgba(232,189,104,.13);color:var(--gold2)}
+
 .tip{
- padding:13px;border-radius:9px;background:rgba(114,214,160,.08);
- border:1px solid rgba(114,214,160,.2);font-size:13px;margin-top:12px
+ padding:14px;
+ border-radius:9px;
+ background:rgba(114,214,160,.08);
+ border:1px solid rgba(114,214,160,.2);
+ font-size:13px;
+ margin-top:12px;
 }
+
 .warning{
- padding:13px;border-radius:9px;background:rgba(240,139,130,.08);
- border:1px solid rgba(240,139,130,.2);font-size:12px;color:#f4c1bb;
- margin-top:14px
+ padding:14px;
+ border-radius:9px;
+ background:rgba(240,139,130,.08);
+ border:1px solid rgba(240,139,130,.2);
+ font-size:13px;
+ color:#f4c1bb;
+ margin-top:14px;
 }
-.overview{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}
-.overview-item{background:var(--panel2);padding:12px;border-radius:9px}
-.overview-item strong{display:block;color:var(--gold2);font-size:13px}
-.overview-item span{font-size:12px;color:var(--muted)}
-.clock{color:var(--green);font-weight:bold;font-size:13px}
-footer{text-align:center;color:var(--muted);font-size:11px;margin-top:30px}
-a{color:var(--gold2)}
+
+.info-box{
+ padding:15px;
+ border-radius:10px;
+ background:rgba(131,186,255,.08);
+ border:1px solid rgba(131,186,255,.2);
+ font-size:13px;
+}
+
+.overview{
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:9px;
+}
+
+.overview-item{
+ background:var(--panel2);
+ padding:12px;
+ border-radius:9px;
+}
+
+.overview-item strong{
+ display:block;
+ color:var(--gold2);
+ font-size:13px;
+}
+
+.overview-item span{
+ font-size:12px;
+ color:var(--muted);
+}
+
+.clock{
+ color:var(--green);
+ font-weight:bold;
+ font-size:14px;
+}
+
+footer{
+ text-align:center;
+ color:var(--muted);
+ font-size:11px;
+ margin-top:30px;
+}
+
 @media(max-width:600px){
  .day-grid{grid-template-columns:repeat(2,1fr)}
  .overview{grid-template-columns:1fr}
  .panel{padding:14px}
- .time-row{grid-template-columns:65px 1fr}
 }
 </style>
 </head>
+
 <body>
-<div class="container"><header>
- <div class="brand">ROYAL CROWN: KINGDOM WARS | FANGROUP</div>
+
+<div class="container">
+
+<header>
+
+ <div class="brand">
+ ROYAL CROWN: KINGDOM WARS | FANGROUP
+ </div>
+
  <h1>СИЛЬНЕЙШИЙ ЛОРД</h1>
- <p class="subtitle">Планируй действия заранее, совмещай задания двух событий и не трать ускорения впустую.</p>
- <a class="top-link" href="index.html">← На главную</a>
-</header><section class="section panel">
- <h2 class="section-title">Выбери день мероприятия</h2>
- <p class="muted" style="font-size:13px;margin-top:-5px">Выбери нужный день, чтобы увидеть задания и подходящее расписание.</p>
- <div class="day-grid" id="dayButtons"></div>
-</section><section class="section panel">
- <div class="day-heading">
-  <h2 class="section-title" id="dayTitle">День 1 — Сбор ресурсов</h2>
-  <span class="badge" id="dayBadge">СИЛЬНЕЙШИЙ ЛОРД</span>
- </div>
- <p class="muted" id="dayDescription" style="font-size:13px"></p>
- <div class="task-list" id="tasks"></div>
-</section><section class="section panel">
- <div class="day-heading">
-  <h2 class="section-title">План действий по времени МСК</h2>
-  <span class="clock" id="moscowClock">--:-- МСК</span>
- </div>
- <p class="muted" style="font-size:13px;margin-top:-5px">
-  Здесь собраны временные окна «Гонки вооружений» и рекомендации для выбранного дня «Сильнейшего лорда».
+
+ <p class="subtitle">
+ Шестидневное испытание для развития города,
+ героев и армии. Планируй действия заранее
+ и забирай максимум наград.
  </p>
+
+ <a class="top-link" href="index.html">
+ ← На главную
+ </a>
+
+</header>
+
+
+<!-- ВЫБОР ДНЯ -->
+
+<section class="section panel">
+
+ <h2 class="section-title">
+ Выбери день мероприятия
+ </h2>
+
+ <p class="muted" style="font-size:13px">
+ Выбери интересующий этап, чтобы посмотреть задания
+ и рекомендации.
+ </p>
+
+ <div class="day-grid" id="dayButtons"></div>
+
+</section>
+
+
+<!-- ИНФОРМАЦИЯ О ДНЕ -->
+
+<section class="section panel">
+
+ <div class="day-heading">
+
+  <h2 class="section-title" id="dayTitle">
+   День 1 — Сбор ресурсов
+  </h2>
+
+  <span class="badge">
+   СИЛЬНЕЙШИЙ ЛОРД
+  </span>
+
+ </div>
+
+ <p class="muted" id="dayDescription"
+ style="font-size:13px"></p>
+
+ <div class="task-list" id="tasks"></div>
+
  <div class="tip" id="dayPlan"></div>
- <div class="schedule" id="schedule" style="margin-top:14px"></div>
- <div class="warning">
-  Важно: расписание «Гонки вооружений» приведено как справочный ориентир. Порядок этапов и условия начисления очков могут отличаться. Перед ускорением или завершением действия проверь задание непосредственно в игре.
+
+</section>
+
+
+<!-- ВРЕМЯ -->
+
+<section class="section panel">
+
+ <div class="day-heading">
+
+  <h2 class="section-title">
+   Текущее время
+  </h2>
+
+  <span class="clock" id="moscowClock">
+   --:-- МСК
+  </span>
+
  </div>
-</section><section class="section panel">
- <h2 class="section-title">Все 6 дней — краткий обзор</h2>
- <div class="overview">
-  <div class="overview-item"><strong>День 1 — Сбор ресурсов</strong><span>Собирай ресурсы и заранее планируй сборы.</span></div>
-  <div class="overview-item"><strong>День 2 — Развитие города</strong><span>Строительство и исследования.</span></div>
-  <div class="overview-item"><strong>День 3 — Развитие героев</strong><span>Подготовь материалы и ресурсы для героев.</span></div>
-  <div class="overview-item"><strong>День 4 — Подготовка войск</strong><span>Планируй обучение и завершение очередей.</span></div>
-  <div class="overview-item"><strong>День 5 — Уничтожение противника</strong><span>Сражения и PvP-активность.</span></div>
-  <div class="overview-item"><strong>День 6 — Финальный рывок</strong><span>Закрывай оставшиеся задания и набирай очки.</span></div>
+
+ <p class="muted" style="font-size:13px">
+  Все рекомендации на этой странице ориентированы
+  на московское время.
+ </p>
+
+</section>
+
+
+<!-- ВАЖНАЯ ПАМЯТКА -->
+
+<section class="section panel">
+
+ <h2 class="section-title">
+ Как совмещать два мероприятия?
+ </h2>
+
+ <div class="info-box">
+
+  <strong style="color:var(--blue)">
+   «Сильнейший лорд» и «Гонка вооружений»
+  </strong>
+
+  <p>
+   Эти мероприятия имеют независимые расписания.
+   Их дни и этапы не обязательно совпадают.
+  </p>
+
+  <p>
+   Однако некоторые действия могут приносить очки
+   сразу в обоих мероприятиях.
+  </p>
+
+  <p>
+   Перед использованием ускорений и выполнением
+   важных заданий проверяй текущий этап
+   «Гонки вооружений».
+  </p>
+
  </div>
-</section><section class="section panel">
- <h2 class="section-title">Как правильно совмещать события?</h2>
+
  <div class="task-list">
+
   <div class="task">
-   <strong>1. Готовься заранее</strong>
-   <p>Накапливай ресурсы, материалы и ускорения до начала нужного этапа. Не обязательно ждать старта события, чтобы подготовить всё необходимое.</p>
+   <strong>1. Проверяй текущий этап</strong>
+   <p>
+    Посмотри, какое задание сейчас активно
+    в «Гонке вооружений».
+   </p>
   </div>
+
   <div class="task">
-   <strong>2. Следи за временем завершения</strong>
-   <p>Если очки начисляются за завершение строительства, исследования или обучения, постарайся завершить действие во время подходящего этапа «Гонки вооружений».</p>
+   <strong>2. Сравнивай задания</strong>
+   <p>
+    Если действие подходит обоим мероприятиям,
+    постарайся выполнить его в подходящее временное окно.
+   </p>
   </div>
+
   <div class="task">
-   <strong>3. Проверяй условия начисления</strong>
-   <p>Не каждое действие приносит очки в обоих событиях. Сначала проверь условия, затем используй ускорения.</p>
+   <strong>3. Планируй ускорения</strong>
+   <p>
+    Не спеши завершать строительство, исследования
+    или обучение войск. Рассчитывай время заранее.
+   </p>
   </div>
+
   <div class="task">
-   <strong>4. Не трать всё в первый день</strong>
-   <p>Распределяй ускорения и ресурсы по дням. Оставляй запас на финальный этап.</p>
+   <strong>4. Проверяй начисление очков</strong>
+   <p>
+    Учитывай, что не каждое действие засчитывается
+    в обоих мероприятиях. Проверяй условия непосредственно
+    в игре.
+   </p>
   </div>
+
  </div>
-</section><footer>
- Royal Crown: Kingdom Wars | FANGroup<br>
- Фанатский справочный материал. Проверяй задания и расписание в игре.
-</footer></div><script>
-const armsRace = [
- {time:"03:00",name:"Подготовка войск",desc:"Окно для действий, связанных с обучением войск.",type:"troops"},
- {time:"07:00",name:"Исследования",desc:"Окно для завершения исследований, если они дают очки.",type:"research"},
- {time:"11:00",name:"Ковка снаряжения",desc:"Окно для действий с экипировкой и её ковкой.",type:"gear"},
- {time:"15:00",name:"Развитие героев",desc:"Окно для развития героев и подходящих улучшений.",type:"heroes"},
- {time:"19:00",name:"Строительство города",desc:"Окно для завершения улучшений зданий.",type:"building"},
- {time:"23:00",name:"Подготовка войск",desc:"Начинается новое окно подготовки войск.",type:"troops"}
-];
+
+ <div class="warning">
+  Важно! Расписание «Гонки вооружений» может меняться
+  независимо от «Сильнейшего лорда». Не ориентируйся
+  на старый календарь. Всегда проверяй актуальные
+  задания и время начала этапов в игре.
+ </div>
+
+</section>
+
+
+<!-- ОБЗОР -->
+
+<section class="section panel">
+
+ <h2 class="section-title">
+ Все 6 дней — краткий обзор
+ </h2>
+
+ <div class="overview">
+
+  <div class="overview-item">
+   <strong>День 1 — Сбор ресурсов</strong>
+   <span>Добыча ресурсов и подготовка запасов.</span>
+  </div>
+
+  <div class="overview-item">
+   <strong>День 2 — Развитие города</strong>
+   <span>Строительство и исследования.</span>
+  </div>
+
+  <div class="overview-item">
+   <strong>День 3 — Развитие героев</strong>
+   <span>Улучшение героев и использование материалов.</span>
+  </div>
+
+  <div class="overview-item">
+   <strong>День 4 — Подготовка войск</strong>
+   <span>Обучение и усиление армии.</span>
+  </div>
+
+  <div class="overview-item">
+   <strong>День 5 — Уничтожение противника</strong>
+   <span>Боевые действия и PvP.</span>
+  </div>
+
+  <div class="overview-item">
+   <strong>День 6 — Финальный рывок</strong>
+   <span>Завершение испытания и набор очков.</span>
+  </div>
+
+ </div>
+
+</section>
+
+
+<footer>
+
+ Royal Crown: Kingdom Wars | FANGroup
+
+ <br><br>
+
+ Фанатский справочный материал.
+ Проверяй актуальные задания непосредственно в игре.
+
+</footer>
+
+</div>
+
+
+<script>
 
 const days = [
- {
-  title:"День 1 — Сбор ресурсов",
-  description:"Основная задача — собрать как можно больше ресурсов. Подготовь сборы заранее и используй доступные точки добычи.",
-  tasks:[
-   ["Сбор ресурсов","Отправляй отряды на сбор и следи за временем их возвращения."],
-   ["Подготовка","По возможности заранее освободи походы и подготовь отряды для следующего сбора."],
-   ["Экономия","Не расходуй ускорения без необходимости. В расписании «Гонки вооружений» нет отдельного этапа сбора ресурсов."]
+
+{
+ title:"День 1 — Сбор ресурсов",
+
+ description:
+ "Основная задача — собрать как можно больше ресурсов. Подготовь сборы заранее и используй доступные точки добычи.",
+
+ tasks:[
+  [
+   "Сбор ресурсов",
+   "Отправляй отряды на добычу ресурсов. Используй доступные походы максимально эффективно."
   ],
-  plan:"Прямого совпадения с этапами «Гонки вооружений» в этот день нет. Главный приоритет — сбор ресурсов для «Сильнейшего лорда». Используй свободные окна для подготовки к следующим дням."
- },
- {
-  title:"День 2 — Развитие города",
-  description:"Сосредоточься на строительстве и исследованиях. Планируй завершение длительных улучшений под подходящие временные окна.",
-  tasks:[
-   ["Строительство","Заранее запусти улучшение здания, если его завершение засчитывается в задании."],
-   ["Исследования","Подготовь нужное исследование и рассчитай время его завершения."],
-   ["Ускорения","Сохраняй ускорения до подходящего этапа, если это не мешает выполнению заданий."]
+  [
+   "Планирование сборов",
+   "Следи за временем возвращения отрядов, чтобы не оставлять походы без дела."
   ],
-  plan:"Главные совпадения: 07:00 — исследования, 19:00 — строительство. Можно запустить длительные процессы заранее и завершить их в нужное окно, если именно завершение приносит очки в обоих событиях."
- },
- {
-  title:"День 3 — Развитие героев",
-  description:"Собери материалы для улучшения героев и заранее подготовь действия, которые дают очки в событии.",
-  tasks:[
-   ["Материалы","Не расходуй предметы развития героев до нужного дня."],
-   ["Развитие","Выполняй улучшения героев в соответствии с заданиями мероприятия."],
-   ["Подготовка","Заранее проверь, какие материалы и действия дают очки."]
+  [
+   "Запасы",
+   "Старайся собирать ресурсы разных типов и не забывай проверять заполненность складов."
   ],
-  plan:"Главное совпадение — 15:00, этап «Развитие героев» в «Гонке вооружений». По возможности приурочь подходящие улучшения к этому времени."
- },
- {
-  title:"День 4 — Подготовка войск",
-  description:"Основной день для обучения войск. Подготовь очереди, ресурсы и ускорения заранее.",
-  tasks:[
-   ["До 23:00","Подготовь ресурсы и очереди обучения. Проверь, какие войска выгоднее тренировать."],
-   ["23:00 — первое окно","Начинается этап «Подготовка войск». Выполняй действия, которые дают очки в обоих событиях."],
-   ["03:00 — второе окно","Начинается следующее окно подготовки войск. Продолжай обучение или завершай очереди, если это засчитывается."]
+  [
+   "Экономия",
+   "Не трать ускорения без необходимости. Главный приоритет сегодня — добыча ресурсов."
+  ]
+ ],
+
+ plan:
+ "СОВЕТ: отправляй отряды на сбор заранее. Рассчитывай возвращение так, чтобы регулярно отправлять их на новые ресурсные точки."
+},
+
+{
+ title:"День 2 — Развитие города",
+
+ description:
+ "Сосредоточься на строительстве и исследованиях. Подготовь улучшения заранее и правильно распредели ускорения.",
+
+ tasks:[
+  [
+   "Строительство",
+   "Выполняй улучшения зданий, которые дают очки в текущем этапе."
   ],
-  plan:"Особенно выгодно следить за двумя окнами: 23:00–03:00 и 03:00–07:00 МСК. Например, можно заранее поставить войска на обучение, чтобы завершить его в подходящее время. Но сначала проверь, за что именно начисляются очки."
- },
- {
-  title:"День 5 — Уничтожение противника",
-  description:"Основной акцент — PvP и выполнение боевых заданий. Соблюдай правила своего альянса и не вступай в ненужные сражения.",
-  tasks:[
-   ["Боевые действия","Выбирай цели и действия в соответствии с правилами королевства и альянса."],
-   ["Подготовка","Проверь лечение, запасы ресурсов и готовность войск."],
-   ["Экономия","Не расходуй ускорения на этапы «Гонки вооружений», если они не дают дополнительной пользы."]
+  [
+   "Исследования",
+   "Заранее выбирай исследования и планируй время их завершения."
   ],
-  plan:"Прямого PvP-этапа в приведённом расписании «Гонки вооружений» нет. Сосредоточься на боевых заданиях «Сильнейшего лорда» и не подстраивай действия под неподходящие этапы."
- },
- {
-  title:"День 6 — Финальный рывок",
-  description:"Последний день мероприятия. Закрой оставшиеся задания и используй накопленные ресурсы с максимальной пользой.",
-  tasks:[
-   ["Проверь прогресс","Посмотри, каких очков не хватает до нужной награды или места в рейтинге."],
-   ["Выбери приоритет","Сосредоточься на тех действиях, которые принесут больше всего очков."],
-   ["Используй запас","Трать накопленные ускорения и материалы только после проверки условий начисления."]
+  [
+   "Ускорения",
+   "Не расходуй ускорения сразу. Оставь их для наиболее выгодных действий."
   ],
-  plan:"В финальный день используй подходящие окна «Гонки вооружений» — 03:00, 07:00, 11:00, 15:00, 19:00 и 23:00 МСК. Выбирай только те действия, которые совпадают с заданиями финального дня."
- }
+  [
+   "Подготовка",
+   "По возможности запусти длительные улучшения заранее."
+  ]
+ ],
+
+ plan:
+ "СОВЕТ: заранее рассчитай время завершения строительства и исследований. Сверяй действия с активным этапом «Гонки вооружений»."
+},
+
+{
+ title:"День 3 — Развитие героев",
+
+ description:
+ "Основная задача — развитие героев. Подготовь материалы и предметы улучшения до начала этапа.",
+
+ tasks:[
+  [
+   "Материалы",
+   "Собирай и сохраняй необходимые предметы для развития героев."
+  ],
+  [
+   "Улучшение героев",
+   "Выполняй доступные улучшения, которые засчитываются в событии."
+  ],
+  [
+   "Подготовка",
+   "Заранее проверь запасы материалов и необходимых ресурсов."
+  ],
+  [
+   "Экономия",
+   "Не расходуй редкие предметы на второстепенные улучшения."
+  ]
+ ],
+
+ plan:
+ "СОВЕТ: не используй все накопленные материалы сразу. Сначала проверь задания и возможное совпадение с «Гонкой вооружений»."
+},
+
+{
+ title:"День 4 — Подготовка войск",
+
+ description:
+ "Основной акцент — обучение войск и развитие армии. Подготовь ресурсы и очереди обучения заранее.",
+
+ tasks:[
+  [
+   "Обучение",
+   "Запускай обучение войск и следи за заполненностью очередей."
+  ],
+  [
+   "Подготовка ресурсов",
+   "Заранее накопи необходимые ресурсы для обучения."
+  ],
+  [
+   "Ускорения",
+   "Рассчитывай завершение обучения под подходящее время."
+  ],
+  [
+   "Развитие армии",
+   "Используй доступные возможности для усиления войск."
+  ]
+ ],
+
+ plan:
+ "СОВЕТ: заранее подготовь очереди обучения. Перед ускорением проверь, не начался ли подходящий этап «Гонки вооружений»."
+},
+
+{
+ title:"День 5 — Уничтожение противника",
+
+ description:
+ "Боевой этап мероприятия. Основной акцент — PvP, сражения и выполнение боевых заданий.",
+
+ tasks:[
+  [
+   "Боевые действия",
+   "Выполняй боевые задания и выбирай подходящие цели."
+  ],
+  [
+   "Подготовка армии",
+   "Проверь готовность войск, лечение и запасы ресурсов."
+  ],
+  [
+   "Тактика",
+   "Согласовывай действия с союзниками и руководством альянса."
+  ],
+  [
+   "Безопасность",
+   "Не вступай в ненужные сражения и учитывай правила своего королевства."
+  ]
+ ],
+
+ plan:
+ "СОВЕТ: не забывай о безопасности армии. Перед боевыми действиями оцени риски и согласуй атаки с альянсом."
+},
+
+{
+ title:"День 6 — Финальный рывок",
+
+ description:
+ "Последний день мероприятия. Проверь свой результат и сосредоточься на заданиях, которые принесут больше всего очков.",
+
+ tasks:[
+  [
+   "Проверь прогресс",
+   "Посмотри, сколько очков не хватает до следующей награды или желаемого места в рейтинге."
+  ],
+  [
+   "Выбери приоритет",
+   "Сосредоточься на наиболее выгодных заданиях."
+  ],
+  [
+   "Используй запасы",
+   "При необходимости используй накопленные материалы и ускорения."
+  ],
+  [
+   "Последний рывок",
+   "Не откладывай выполнение оставшихся заданий на последние минуты."
+  ]
+ ],
+
+ plan:
+ "СОВЕТ: не расходуй все запасы без расчёта. Сначала оцени недостающие очки и выбери наиболее выгодный способ завершения мероприятия."
+}
+
 ];
 
-let selectedDay = Number(localStorage.getItem("rcw_lord_day") || 0);
-if(selectedDay < 0 || selectedDay > 5) selectedDay = 0;
+
+let selectedDay =
+ Number(localStorage.getItem("rcw_lord_day") || 0);
+
+if(selectedDay < 0 || selectedDay > 5){
+ selectedDay = 0;
+}
+
 
 function renderDays(){
- const box=document.getElementById("dayButtons");
- box.innerHTML="";
+
+ const box = document.getElementById("dayButtons");
+
+ box.innerHTML = "";
+
  days.forEach((day,index)=>{
-  const btn=document.createElement("button");
-  btn.className="day-btn"+(selectedDay===index?" active":"");
-  btn.innerHTML=`ДЕНЬ ${index+1}<span>${day.title.split("—")[1].trim()}</span>`;
-  btn.onclick=()=>{
-   selectedDay=index;
+
+  const btn = document.createElement("button");
+
+  btn.className =
+   "day-btn" +
+   (selectedDay === index ? " active" : "");
+
+  btn.innerHTML =
+   `ДЕНЬ ${index+1}
+    <span>${day.title.split("—")[1].trim()}</span>`;
+
+  btn.onclick = ()=>{
+
+   selectedDay = index;
+
    localStorage.setItem("rcw_lord_day",index);
+
    renderAll();
+
   };
+
   box.appendChild(btn);
+
  });
+
 }
+
 
 function renderDay(){
- const day=days[selectedDay];
- document.getElementById("dayTitle").textContent=day.title;
- document.getElementById("dayDescription").textContent=day.description;
- document.getElementById("dayPlan").textContent=day.plan;
- const tasks=document.getElementById("tasks");
- tasks.innerHTML="";
+
+ const day = days[selectedDay];
+
+ document.getElementById("dayTitle").textContent =
+  day.title;
+
+ document.getElementById("dayDescription").textContent =
+  day.description;
+
+ document.getElementById("dayPlan").textContent =
+  day.plan;
+
+ const tasks = document.getElementById("tasks");
+
+ tasks.innerHTML = "";
+
  day.tasks.forEach(item=>{
-  const div=document.createElement("div");
-  div.className="task";
-  div.innerHTML=`<strong>${item[0]}</strong><p>${item[1]}</p>`;
+
+  const div = document.createElement("div");
+
+  div.className = "task";
+
+  const strong = document.createElement("strong");
+  strong.textContent = item[0];
+
+  const p = document.createElement("p");
+  p.textContent = item[1];
+
+  div.appendChild(strong);
+  div.appendChild(p);
+
   tasks.appendChild(div);
+
  });
+
 }
 
-function getMoscowTime(){
- return new Date(new Date().toLocaleString("en-US",{timeZone:"Europe/Moscow"}));
+
+function updateClock(){
+
+ const now = new Date();
+
+ const moscow = new Intl.DateTimeFormat(
+  "ru-RU",
+  {
+   timeZone:"Europe/Moscow",
+   hour:"2-digit",
+   minute:"2-digit",
+   second:"2-digit"
+  }
+ ).format(now);
+
+ document.getElementById("moscowClock").textContent =
+  moscow + " МСК";
+
 }
 
-function minutesFromMidnight(date){
- return date.getHours()*60+date.getMinutes();
-}
-
-function renderSchedule(){
- const now=getMoscowTime();
- const current=minutesFromMidnight(now);
- const schedule=document.getElementById("schedule");
- schedule.innerHTML="";
- document.getElementById("moscowClock").textContent=
-  now.toLocaleTimeString("ru-RU",{hour:"2-digit",minute:"2-digit"})+" МСК";
-
- armsRace.forEach((stage,index)=>{
-  const start=Number(stage.time.slice(0,2))*60;
-  const next=armsRace[(index+1)%armsRace.length];
-  const end=(index===armsRace.length-1)?1440:Number(next.time.slice(0,2))*60;
-  const isCurrent=current>=start&&current<end;
-  const row=document.createElement("div");
-  row.className="time-row"+(isCurrent?" current":"");
-  let tag="";
-  if(stage.type==="troops"&&selectedDay===3) tag='<span class="tag both">СОВПАДЕНИЕ ДВУХ СОБЫТИЙ</span>';
-  else if(stage.type==="research"&&selectedDay===1) tag='<span class="tag both">СОВПАДЕНИЕ ДВУХ СОБЫТИЙ</span>';
-  else if(stage.type==="building"&&selectedDay===1) tag='<span class="tag both">СОВПАДЕНИЕ ДВУХ СОБЫТИЙ</span>';
-  else if(stage.type==="heroes"&&selectedDay===2) tag='<span class="tag both">СОВПАДЕНИЕ ДВУХ СОБЫТИЙ</span>';
-  else tag='<span class="tag">ГОНКА ВООРУЖЕНИЙ</span>';
-
-  row.innerHTML=`
-   <div class="time">${stage.time}</div>
-   <div>
-    <strong>${stage.name}${isCurrent?" · СЕЙЧАС":""}</strong>
-    <p>${stage.desc}</p>
-    ${tag}
-   </div>`;
-  schedule.appendChild(row);
- });
-}
 
 function renderAll(){
+
  renderDays();
+
  renderDay();
- renderSchedule();
+
+ updateClock();
+
 }
 
+
 renderAll();
-setInterval(renderSchedule,1000);
-</script></body>
+
+setInterval(updateClock,1000);
+
+</script>
+
+</body>
 </html>
