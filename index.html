@@ -212,52 +212,55 @@ section{margin:25px 0 42px;scroll-margin-top:20px}
 
 /* DONATE */
 .donate-card{
-  display:block;
-  position:relative;
-  overflow:hidden;
-  padding:25px;
-  border:1px solid #9b7944;
-  border-radius:14px;
-  background:
-    radial-gradient(ellipse at 100% 0%,#80602b33,transparent 55%),
-    linear-gradient(145deg,#29374a,#151f2e);
-  box-shadow:0 8px 25px #0003;
+  display:flex;
+  align-items:center;
+  gap:20px;
+  padding:24px;
+  border:1px solid #80683f;
+  border-radius:13px;
+  background:linear-gradient(145deg,#26364a,#172232);
   transition:.2s;
 }
 
 .donate-card:hover{
-  transform:translateY(-3px);
   border-color:var(--gold2);
-  box-shadow:0 12px 30px #0005;
+  transform:translateY(-2px);
 }
 
 .donate-icon{
+  flex-shrink:0;
+  width:58px;
+  height:58px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:12px;
+  background:#e4bd7018;
+  color:var(--gold);
   font-size:30px;
-  margin-bottom:12px;
 }
 
-.donate-card h3{
-  margin:0 0 10px;
-  color:var(--gold2);
-  font-family:Georgia,serif;
-  font-size:23px;
-  font-weight:500;
+.donate-content{flex:1}
+
+.donate-content h3{
+  margin:0 0 8px;
+  font-size:18px;
+  font-weight:650;
 }
 
-.donate-card p{
-  max-width:650px;
+.donate-content p{
   margin:0;
   color:var(--muted);
-  font-size:14px;
+  font-size:13px;
   line-height:1.7;
 }
 
 .donate-button{
   display:inline-block;
-  margin-top:19px;
-  padding:13px 20px;
+  margin-top:15px;
+  padding:12px 18px;
   border-radius:8px;
-  background:linear-gradient(110deg,#b98c42,#f0d28e,#b98c42);
+  background:linear-gradient(110deg,#b98c42,#f0d28e);
   color:#17202d;
   font-size:12px;
   font-weight:800;
@@ -265,14 +268,11 @@ section{margin:25px 0 42px;scroll-margin-top:20px}
   transition:.2s;
 }
 
-.donate-card:hover .donate-button{
-  filter:brightness(1.1);
-}
+.donate-button:hover{filter:brightness(1.1)}
 
 .donate-note{
-  display:block;
-  margin-top:14px;
-  color:#8997a9;
+  margin-top:12px;
+  color:#78869a;
   font-size:11px;
   line-height:1.5;
 }
@@ -327,6 +327,18 @@ footer strong{
   nav{gap:4px}
   nav a{padding:8px 9px;font-size:10px}
   .hero{padding:38px 5px 30px}
+
+  .donate-card{
+    align-items:flex-start;
+    gap:14px;
+    padding:18px;
+  }
+
+  .donate-icon{
+    width:45px;
+    height:45px;
+    font-size:24px;
+  }
 }
 </style>
 </head>
@@ -485,34 +497,40 @@ footer strong{
   </div>
 </section>
 
-<!-- ВЫГОДНЫЙ ДОНАТ -->
+<!-- DONATE -->
 <section id="donate">
   <div class="section-title"><h2>Выгодный донат</h2></div>
   <p class="section-description">
     Игровые покупки для развития твоего королевства.
   </p>
 
-  <a
-    class="donate-card"
-    href="https://phantgames.shop/games/Royal-Crown-Kingdom-Wars"
-    target="_blank"
-    rel="noopener noreferrer"
-  >
+  <div class="donate-card">
+
     <div class="donate-icon">💎</div>
-    <h3>PhantGames — игровые покупки</h3>
-    <p>
-      Хочешь приобрести игровые наборы Royal Crown: Kingdom Wars
-      по выгодным ценам? Посети магазин PhantGames и ознакомься
-      с доступными предложениями.
-    </p>
 
-    <span class="donate-button">ПЕРЕЙТИ В МАГАЗИН ↗</span>
+    <div class="donate-content">
+      <h3>PhantGames — игровые покупки</h3>
 
-    <span class="donate-note">
-      Магазин является сторонним ресурсом и не принадлежит FANGroup.
-      Покупки осуществляются непосредственно на сайте магазина.
-    </span>
-  </a>
+      <p>
+        Магазин игровых покупок для Royal Crown: Kingdom Wars.
+        Ознакомься с предложениями и выбери подходящий вариант.
+      </p>
+
+      <a class="donate-button"
+         href="https://phantgames.shop/games/Royal-Crown-Kingdom-Wars"
+         target="_blank"
+         rel="noopener noreferrer">
+        ПЕРЕЙТИ В МАГАЗИН ↗
+      </a>
+
+      <div class="donate-note">
+        PhantGames — сторонний магазин. Не является частью FANGroup
+        и не связан с разработчиками игры. Покупки осуществляются
+        непосредственно на сайте магазина.
+      </div>
+    </div>
+
+  </div>
 </section>
 
 <section>
