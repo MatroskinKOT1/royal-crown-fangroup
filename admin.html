@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#101722">
+<meta name="description" content="Административная панель Royal Crown: Kingdom Wars | FANGroup">
 <title>Админ-панель | Royal Crown FANGroup</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -33,7 +34,7 @@ body {
 }
 
 header {
-    padding: 24px 16px;
+    padding: 25px 16px;
     text-align: center;
     border-bottom: 1px solid var(--border);
     background: #131e2c;
@@ -42,7 +43,7 @@ header {
 header h1 {
     margin: 0;
     color: var(--gold);
-    font-size: 23px;
+    font-size: 24px;
 }
 
 header p {
@@ -124,6 +125,8 @@ button:disabled {
     color: var(--muted);
     margin-top: 12px;
     font-size: 14px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
 }
 
 .card {
@@ -218,7 +221,9 @@ footer {
                 required
             >
 
-            <button class="primary" type="submit">Войти</button>
+            <button class="primary" id="loginButton" type="submit">
+                Войти
+            </button>
         </form>
 
         <div class="message" id="loginMessage"></div>
@@ -231,11 +236,11 @@ footer {
 
             <div class="message" id="adminInfo"></div>
 
-            <button class="primary" onclick="loadApplications()">
+            <button class="primary" id="refreshButton">
                 Обновить список
             </button>
 
-            <button class="secondary" onclick="logout()">
+            <button class="secondary" id="logoutButton">
                 Выйти
             </button>
         </div>
@@ -264,10 +269,12 @@ footer {
 </footer>
 
 <script>
-const SUPABASE_URL = "https://yzfnuczplssxyfovkrti.supabase.co";
+const SUPABASE_URL =
+    "https://yzfnuczplssxyfovkrti.supabase.co";
 
-// Вставь сюда свой sb_publishable_ ключ из recruitment.html
-const SUPABASE_KEY = "sb_publishable_ow7zkRfzaS1oRg-Bjk5CzA_bWx9QOK0";
+// Вставь свой sb_publishable_ ключ
+const SUPABASE_KEY =
+    "ВСТАВЬ_СВОЙ_PUBLISHABLE_КЛЮЧ";
 
 const db = supabase.createClient(
     SUPABASE_URL,
@@ -278,31 +285,62 @@ const loginPanel = document.getElementById("loginPanel");
 const dashboard = document.getElementById("dashboard");
 const loginMessage = document.getElementById("loginMessage");
 
+function showLogin() {
+    dashboard.classList.add("hidden");
+    loginPanel.classList.remove("hidden");
+}
+
+function showDashboard() {
+    loginPanel.classList.add("hidden");
+    dashboard.classList.remove("hidden");
+}
+
 document.getElementById("loginForm").addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    loginMessage.textContent = "Выполняется вход...";
+    const button = document.getElementById("loginButton");
+
+    button.disabled = true;
+    loginMessage.textContent = "Проверяем данные...";
 
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value;
 
-    const { error } = await db.auth.signInWithPassword({
-        email,
-        password
-    });
+    try {
+        const { error } = await db.auth.signInWithPassword({
+            email,
+            password
+        });
 
-    if (error) {
-        loginMessage.textContent = "Ошибка входа: " + error.message;
-        return;
+        if (error) {
+            loginMessage.textContent =
+                "Ошибка входа: " + error.message;
+            return;
+        }
+
+        await checkAdmin();
+
+    } catch (error) {
+        loginMessage.textContent =
+            "Ошибка: " + error.message;
+
+    } finally {
+        button.disabled = false;
     }
-
-    await checkAdmin();
 });
 
 async function checkAdmin() {
-    const { data: { user }, error: authError } = await db.auth.getUser();
+    loginMessage.textContent = "Проверяем права администратора...";
+
+    const {
+        data: { user },
+        error: authError
+    } = await db.auth.getUser();
 
     if (authError || !user) {
+        loginMessage.textContent =
+            "Не удалось подтвердить авторизацию: " +
+            (authError?.message || "Пользователь не найден");
         showLogin();
         return;
     }
@@ -313,22 +351,231 @@ async function checkAdmin() {
         .eq("user_id", user.id)
         .maybeSingle();
 
-    if (error || !data || data.role !== "admin") {
-        await db.auth.signOut();
-        showLogin();
+    if (error) {
         loginMessage.textContent =
-            "У этой учётной записи нет прав администратора.";
+            "Ошибка проверки прав администратора: " +
+            error.message;
         return;
     }
 
-    loginPanel.classList.add("hidden");
-    dashboard.classList.remove("hidden");
+    if (!data) {
+        loginMessage.textContent =
+            "Для этой учётной записи не найдена запись администратора.";
+        await db.auth.signOut();
+        showLogin();
+        return;
+    }
+
+    if (String(data.role).toLowerCase() !== "admin") {
+        loginMessage.textContent =
+            "У этой учётной записи нет прав администратора.";
+        await db.auth.signOut();
+        showLogin();
+        return;
+    }
+
+    showDashboard();
 
     document.getElementById("adminInfo").textContent =
         "Вы вошли как " + user.email;
 
+    loginMessage.textContent = "";
+
     await loadApplications();
 }
 
-function showLogin() {
-    dashboard.class
+async function logout() {
+    await db.auth.signOut();
+    showLogin();
+    loginMessage.textContent = "Вы вышли из панели.";
+}
+
+function addField(parent, title, value) {
+    const field = document.createElement("div");
+    field.className = "field";
+
+    const label = document.createElement("strong");
+    label.textContent = title;
+
+    const content = document.createElement("div");
+    content.textContent = value || "Не указано";
+
+    field.append(label, content);
+    parent.appendChild(field);
+}
+
+function createCard(item, status) {
+    const card = document.createElement("article");
+    card.className = "card";
+
+    const title = document.createElement("h3");
+    title.textContent = item.alliance_name;
+
+    const badge = document.createElement("span");
+    badge.className = "status " + status;
+
+    const statusNames = {
+        pending: "Ожидает проверки",
+        approved: "Опубликовано",
+        rejected: "Отклонено"
+    };
+
+    badge.textContent = statusNames[status] || status;
+
+    card.append(title, badge);
+
+    addField(card, "Королевство", item.kingdom_number);
+    addField(card, "Требования к игрокам", item.player_requirements);
+    addField(card, "Стиль игры", item.play_style);
+    addField(card, "Руководитель / рекрутер", item.recruiter_name);
+
+    const contact = document.createElement("div");
+    contact.className = "field";
+
+    const contactLabel = document.createElement("strong");
+    contactLabel.textContent = "Ссылка для связи";
+
+    const link = document.createElement("a");
+    link.href = item.contact_link;
+    link.textContent = "Открыть ссылку";
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.style.color = "#d8b56a";
+
+    contact.append(contactLabel, link);
+    card.appendChild(contact);
+
+    if (status === "pending") {
+        const actions = document.createElement("div");
+        actions.className = "actions";
+
+        const approve = document.createElement("button");
+        approve.className = "approve";
+        approve.textContent = "✓ Одобрить";
+
+        const reject = document.createElement("button");
+        reject.className = "reject";
+        reject.textContent = "✕ Отклонить";
+
+        approve.onclick = () =>
+            moderate(item.id, "approved", approve, reject);
+
+        reject.onclick = () =>
+            moderate(item.id, "rejected", approve, reject);
+
+        actions.append(approve, reject);
+        card.appendChild(actions);
+    }
+
+    const date = document.createElement("div");
+    date.className = "message";
+    date.textContent = "Дата подачи: " +
+        new Date(item.created_at).toLocaleString("ru-RU");
+
+    card.appendChild(date);
+
+    return card;
+}
+
+async function loadApplications() {
+    const lists = {
+        pending: document.getElementById("pendingList"),
+        approved: document.getElementById("approvedList"),
+        rejected: document.getElementById("rejectedList")
+    };
+
+    Object.values(lists).forEach(el => {
+        el.textContent = "Загрузка...";
+    });
+
+    const { data, error } = await db
+        .from("alliance_recruitment")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+    if (error) {
+        Object.values(lists).forEach(el => {
+            el.textContent =
+                "Ошибка загрузки: " + error.message;
+        });
+        return;
+    }
+
+    for (const [status, container] of Object.entries(lists)) {
+        container.replaceChildren();
+
+        const items = data.filter(item => item.status === status);
+
+        if (!items.length) {
+            container.textContent = "Заявок пока нет.";
+            continue;
+        }
+
+        items.forEach(item => {
+            container.appendChild(createCard(item, status));
+        });
+    }
+}
+
+async function moderate(id, status, approveButton, rejectButton) {
+    const action = status === "approved" ? "одобрить" : "отклонить";
+
+    if (!confirm("Вы действительно хотите " + action + " это объявление?")) {
+        return;
+    }
+
+    approveButton.disabled = true;
+    rejectButton.disabled = true;
+
+    const { error } = await db.rpc(
+        "moderate_alliance_recruitment",
+        {
+            p_id: id,
+            p_status: status
+        }
+    );
+
+    if (error) {
+        alert("Не удалось изменить статус: " + error.message);
+        approveButton.disabled = false;
+        rejectButton.disabled = false;
+        return;
+    }
+
+    alert(status === "approved"
+        ? "Объявление опубликовано!"
+        : "Заявка отклонена.");
+
+    await loadApplications();
+}
+
+document.getElementById("refreshButton").addEventListener(
+    "click",
+    loadApplications
+);
+
+document.getElementById("logoutButton").addEventListener(
+    "click",
+    logout
+);
+
+(async function init() {
+    const {
+        data: { session },
+        error
+    } = await db.auth.getSession();
+
+    if (error) {
+        loginMessage.textContent =
+            "Ошибка проверки сессии: " + error.message;
+        return;
+    }
+
+    if (session) {
+        await checkAdmin();
+    }
+})();
+</script>
+
+</body>
+</html>
