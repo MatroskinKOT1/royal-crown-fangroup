@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://royal-crown-fangroup.vercel.app/sitemap.xml
