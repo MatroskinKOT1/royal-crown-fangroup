@@ -4,8 +4,48 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#101827">
+<meta name="robots" content="index, follow">
 
-<title>Сильнейший лорд — Royal Crown: Kingdom Wars | FANGroup</title>
+<title>Сильнейший лорд — 6 дней испытания, задания и советы | Royal Crown FANGroup</title>
+
+<meta name="description" content="Сильнейший лорд в Royal Crown: Kingdom Wars. Подробный разбор всех 6 дней мероприятия, задания, рекомендации по сбору ресурсов, развитию города, героев и войск.">
+
+<link rel="canonical" href="https://royal-crown-fangroup.vercel.app/strongest-lord.html">
+
+<!-- OPEN GRAPH -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:site_name" content="Royal Crown: Kingdom Wars | FANGroup">
+<meta property="og:title" content="Сильнейший лорд — Royal Crown: Kingdom Wars">
+<meta property="og:description" content="Все 6 дней мероприятия: задания, рекомендации и советы по набору очков. Подготовься к испытанию Сильнейший лорд.">
+<meta property="og:url" content="https://royal-crown-fangroup.vercel.app/strongest-lord.html">
+
+<!-- TWITTER CARD -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Сильнейший лорд — Royal Crown FANGroup">
+<meta name="twitter:description" content="Шесть дней испытания, задания и рекомендации для игроков Royal Crown: Kingdom Wars.">
+
+<!-- STRUCTURED DATA -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Сильнейший лорд — Royal Crown: Kingdom Wars",
+  "description": "Руководство по мероприятию Сильнейший лорд: задания, рекомендации и обзор всех шести дней.",
+  "url": "https://royal-crown-fangroup.vercel.app/strongest-lord.html",
+  "inLanguage": "ru",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Royal Crown: Kingdom Wars | FANGroup",
+    "url": "https://royal-crown-fangroup.vercel.app/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Royal Crown: Kingdom Wars | FANGroup",
+    "url": "https://royal-crown-fangroup.vercel.app/"
+  }
+}
+</script>
 
 <style>
 :root {
@@ -454,9 +494,15 @@ footer{
 
 <footer>
 
- Royal Crown: Kingdom Wars | FANGroup
+ <a href="index.html" style="color:var(--gold2);text-decoration:none">
+  ← На главную страницу
+ </a>
 
  <br><br>
+
+ <strong>Royal Crown: Kingdom Wars | FANGroup</strong>
+
+ <br>
 
  Фанатский справочный материал.
  Проверяй актуальные задания непосредственно в игре.
@@ -647,10 +693,15 @@ const days = [
 ];
 
 
-let selectedDay =
- Number(localStorage.getItem("rcw_lord_day") || 0);
+let selectedDay = 0;
 
-if(selectedDay < 0 || selectedDay > 5){
+try {
+ const savedDay = Number(localStorage.getItem("rcw_lord_day") || 0);
+
+ if(Number.isInteger(savedDay) && savedDay >= 0 && savedDay <= 5){
+  selectedDay = savedDay;
+ }
+} catch(error) {
  selectedDay = 0;
 }
 
@@ -673,11 +724,15 @@ function renderDays(){
    `ДЕНЬ ${index+1}
     <span>${day.title.split("—")[1].trim()}</span>`;
 
+  btn.setAttribute("aria-pressed",selectedDay === index ? "true" : "false");
+
   btn.onclick = ()=>{
 
    selectedDay = index;
 
-   localStorage.setItem("rcw_lord_day",index);
+   try {
+    localStorage.setItem("rcw_lord_day",index);
+   } catch(error) {}
 
    renderAll();
 
