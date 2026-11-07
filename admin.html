@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101722">
+<title>Админ-панель | Royal Crown FANGroup</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+:root {
+    --bg: #101722;
+    --panel: #192536;
+    --panel2: #202f43;
+    --gold: #d8b56a;
+    --text: #f1f3f6;
+    --muted: #aab5c4;
+    --green: #55c98a;
+    --red: #e47777;
+    --border: rgba(216,181,106,.25);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: Arial, sans-serif;
+}
+
+header {
+    padding: 24px 16px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    background: #131e2c;
+}
+
+header h1 {
+    margin: 0;
+    color: var(--gold);
+    font-size: 23px;
+}
+
+header p {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.container {
+    max-width: 950px;
+    margin: 25px auto;
+    padding: 0 15px;
+}
+
+.panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 18px;
+}
+
+h2 {
+    color: var(--gold);
+    font-size: 19px;
+    margin-top: 0;
+}
+
+input {
+    width: 100%;
+    padding: 13px;
+    margin: 7px 0 12px;
+    background: #101722;
+    color: white;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+button {
+    padding: 11px 16px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 4px;
+}
+
+.primary {
+    background: var(--gold);
+    color: #17202c;
+}
+
+.approve {
+    background: var(--green);
+    color: #10251b;
+}
+
+.reject {
+    background: var(--red);
+    color: #2b1111;
+}
+
+.secondary {
+    background: var(--panel2);
+    color: white;
+    border: 1px solid var(--border);
+}
+
+button:disabled {
+    opacity: .5;
+    cursor: wait;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.message {
+    color: var(--muted);
+    margin-top: 12px;
+    font-size: 14px;
+}
+
+.card {
+    background: var(--panel2);
+    border: 1px solid var(--border);
+    border-radius: 11px;
+    padding: 17px;
+    margin: 13px 0;
+}
+
+.card h3 {
+    color: var(--gold);
+    margin-top: 0;
+}
+
+.field {
+    margin: 10px 0;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+.field strong {
+    color: var(--gold);
+    display: block;
+    font-size: 12px;
+    text-transform: uppercase;
+    margin-bottom: 3px;
+}
+
+.status {
+    display: inline-block;
+    padding: 5px 9px;
+    border-radius: 6px;
+    font-size: 12px;
+    background: #33445a;
+    margin-bottom: 10px;
+}
+
+.status.pending {
+    color: #f2d28b;
+}
+
+.status.approved {
+    color: var(--green);
+}
+
+.status.rejected {
+    color: var(--red);
+}
+
+.actions {
+    margin-top: 15px;
+    border-top: 1px solid var(--border);
+    padding-top: 12px;
+}
+
+footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 12px;
+    padding: 25px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>ROYAL CROWN</h1>
+    <p>KINGDOM WARS | FANGroup — Панель управления</p>
+</header>
+
+<main class="container">
+
+    <section class="panel" id="loginPanel">
+        <h2>Вход администратора</h2>
+
+        <form id="loginForm">
+            <input
+                type="email"
+                id="email"
+                placeholder="Электронная почта"
+                autocomplete="username"
+                required
+            >
+
+            <input
+                type="password"
+                id="password"
+                placeholder="Пароль"
+                autocomplete="current-password"
+                required
+            >
+
+            <button class="primary" type="submit">Войти</button>
+        </form>
+
+        <div class="message" id="loginMessage"></div>
+    </section>
+
+    <section id="dashboard" class="hidden">
+
+        <div class="panel">
+            <h2>Управление объявлениями</h2>
+
+            <div class="message" id="adminInfo"></div>
+
+            <button class="primary" onclick="loadApplications()">
+                Обновить список
+            </button>
+
+            <button class="secondary" onclick="logout()">
+                Выйти
+            </button>
+        </div>
+
+        <div class="panel">
+            <h2>Новые заявки</h2>
+            <div id="pendingList">Загрузка...</div>
+        </div>
+
+        <div class="panel">
+            <h2>Опубликованные объявления</h2>
+            <div id="approvedList">Загрузка...</div>
+        </div>
+
+        <div class="panel">
+            <h2>Отклонённые заявки</h2>
+            <div id="rejectedList">Загрузка...</div>
+        </div>
+
+    </section>
+
+</main>
+
+<footer>
+    Royal Crown: Kingdom Wars | FANGroup
+</footer>
+
+<script>
+const SUPABASE_URL = "https://yzfnuczplssxyfovkrti.supabase.co";
+
+// Вставь сюда свой sb_publishable_ ключ из recruitment.html
+const SUPABASE_KEY = "ВСТАВЬ_СВОЙ_PUBLISHABLE_КЛЮЧ";
+
+const db = supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+const loginPanel = document.getElementById("loginPanel");
+const dashboard = document.getElementById("dashboard");
+const loginMessage = document.getElementById("loginMessage");
+
+document.getElementById("loginForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    loginMessage.textContent = "Выполняется вход...";
+
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+
+    const { error } = await db.auth.signInWithPassword({
+        email,
+        password
+    });
+
+    if (error) {
+        loginMessage.textContent = "Ошибка входа: " + error.message;
+        return;
+    }
+
+    await checkAdmin();
+});
+
+async function checkAdmin() {
+    const { data: { user }, error: authError } = await db.auth.getUser();
+
+    if (authError || !user) {
+        showLogin();
+        return;
+    }
+
+    const { data, error } = await db
+        .from("admin_users")
+        .select("role")
+        .eq("user_id", user.id)
+        .maybeSingle();
+
+    if (error || !data || data.role !== "admin") {
+        await db.auth.signOut();
+        showLogin();
+        loginMessage.textContent =
+            "У этой учётной записи нет прав администратора.";
+        return;
+    }
+
+    loginPanel.classList.add("hidden");
+    dashboard.classList.remove("hidden");
+
+    document.getElementById("adminInfo").textContent =
+        "Вы вошли как " + user.email;
+
+    await loadApplications();
+}
+
+function showLogin() {
+    dashboard.class
