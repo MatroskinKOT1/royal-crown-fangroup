@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Рекрутинг альянсов | Royal Crown: Kingdom Wars</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 20px;
+    background: radial-gradient(circle at top, #17263b, #0d1420 65%);
+    color: #e8edf5;
+    font-family: system-ui, Arial, sans-serif;
+}
+
+.container {
+    max-width: 900px;
+    margin: auto;
+}
+
+header {
+    text-align: center;
+    padding: 25px 10px;
+}
+
+.logo {
+    color: #e4bd70;
+    font-family: Georgia, serif;
+    font-size: 27px;
+    font-weight: bold;
+}
+
+header p {
+    color: #aab7c9;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 20px 0 30px;
+}
+
+nav a {
+    color: #e4bd70;
+    text-decoration: none;
+    background: #172232;
+    padding: 10px 16px;
+    border-radius: 9px;
+    border: 1px solid #29384c;
+}
+
+nav a:hover {
+    background: #26374e;
+}
+
+.panel {
+    background: #172232;
+    border: 1px solid #29384c;
+    border-radius: 15px;
+    padding: 24px;
+    margin-bottom: 25px;
+}
+
+h1, h2 {
+    color: #e4bd70;
+    font-family: Georgia, serif;
+}
+
+h1 {
+    text-align: center;
+}
+
+.description {
+    text-align: center;
+    color: #aab7c9;
+    line-height: 1.6;
+}
+
+label {
+    display: block;
+    margin: 17px 0 7px;
+    color: #e4bd70;
+    font-weight: 600;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 13px;
+    border-radius: 8px;
+    border: 1px solid #35465e;
+    background: #0d1420;
+    color: white;
+    font-size: 15px;
+    outline: none;
+}
+
+input:focus, textarea:focus {
+    border-color: #e4bd70;
+}
+
+textarea {
+    min-height: 85px;
+    resize: vertical;
+}
+
+button {
+    width: 100%;
+    margin-top: 22px;
+    padding: 14px;
+    border: none;
+    border-radius: 9px;
+    background: linear-gradient(135deg, #e4bd70, #b88a3d);
+    color: #172232;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: wait;
+}
+
+.message {
+    margin-top: 15px;
+    text-align: center;
+    line-height: 1.5;
+}
+
+.alliance-card {
+    background: #1c2a3d;
+    border: 1px solid #35465e;
+    border-radius: 12px;
+    padding: 19px;
+    margin-top: 15px;
+}
+
+.alliance-card h3 {
+    color: #e4bd70;
+    margin-top: 0;
+}
+
+.alliance-card p {
+    color: #c4cedc;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+.alliance-card a {
+    color: #e4bd70;
+    overflow-wrap: anywhere;
+}
+
+.empty {
+    text-align: center;
+    color: #9eacbf;
+    padding: 20px;
+}
+
+footer {
+    text-align: center;
+    color: #8190a4;
+    font-size: 13px;
+    padding: 25px 10px;
+}
+
+@media (max-width: 600px) {
+    body {
+        padding: 12px;
+    }
+
+    .panel {
+        padding: 17px;
+    }
+
+    .logo {
+        font-size: 23px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<header>
+    <div class="logo">ROYAL CROWN</div>
+    <p>Kingdom Wars | FANGroup</p>
+</header>
+
+<nav>
+    <a href="index.html">Главная</a>
+    <a href="https://t.me/RC_FANGroup">Telegram</a>
+</nav>
+
+<h1>Рекрутинг альянсов</h1>
+
+<p class="description">
+    Ищешь сильный альянс или хочешь собрать активную команду?
+    Размести объявление и найди игроков своего королевства!
+</p>
+
+<section class="panel">
+    <h2>Разместить объявление</h2>
+
+    <p class="description">
+        Заполни форму. После проверки администрацией
+        объявление появится в общем списке.
+    </p>
+
+    <form id="recruitmentForm">
+
+        <label for="allianceName">1. Название альянса + тег</label>
+        <input id="allianceName" type="text" maxlength="100"
+        placeholder="Например: Royal Guards [RG]" required>
+
+        <label for="kingdom">2. Номер королевства</label>
+        <input id="kingdom" type="text" maxlength="30"
+        placeholder="Например: 123" required>
+
+        <label for="requirements">3. Требования к игрокам</label>
+        <textarea id="requirements" maxlength="1000"
+        placeholder="Уровень развития, активность и другие требования..."
+        required></textarea>
+
+        <label for="playStyle">4. Стиль игры</label>
+        <textarea id="playStyle" maxlength="1000"
+        placeholder="PvP, войны, развитие, события и т.д."
+        required></textarea>
+
+        <label for="recruiter">5. Связь с руководителем или рекрутером</label>
+        <input id="recruiter" type="text" maxlength="100"
+        placeholder="Имя или игровой ник" required>
+
+        <label for="contactLink">6. Ссылка для связи</label>
+        <input id="contactLink" type="url" maxlength="300"
+        placeholder="https://t.me/..." required>
+
+        <button type="submit" id="submitButton">
+            Отправить на модерацию
+        </button>
+
+        <div class="message" id="formMessage"></div>
+
+    </form>
+</section>
+
+<section class="panel">
+    <h2>Объявления альянсов</h2>
+
+    <div id="alliancesList">
+        <div class="empty">Загрузка объявлений...</div>
+    </div>
+</section>
+
+<footer>
+    Royal Crown: Kingdom Wars | FANGroup
+    <br>
+    Информационное сообщество игроков
+</footer>
+
+</div>
+
+<script>
+const SUPABASE_URL = "https://yzfnuczplssxyfovkrti.supabase.co";
+const SUPABASE_KEY = "sb_publishable_ow7zkRfzaS1oRg-Bjk5CzA_bWx9QOK0";
+
+const headers = {
+    "apikey": SUPABASE_KEY,
+    "Authorization": "Bearer " + SUPABASE_KEY,
+    "Content-Type": "application/json"
+};
+
+const form = document.getElementById("recruitmentForm");
+const message = document.getElementById("formMessage");
+const submitButton = document.getElementById("submitButton");
+const alliancesList = document.getElementById("alliancesList");
+
+function escapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, function(char) {
+        return {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#039;"
+        }[char];
+    });
+}
+
+function safeLink(value) {
+    try {
+        const url = new URL(value);
+        if (url.protocol === "https:" || url.protocol === "http:") {
+            return escapeHTML(url.href);
+        }
+    } catch (error) {}
+    return "";
+}
+
+form.addEventListener("submit", async function(event) {
+    event.preventDefault();
+
+    if (SUPABASE_KEY === "ВСТАВЬ_СЮДА_PUBLISHABLE_KEY") {
+        message.textContent = "Сначала необходимо подключить ключ Supabase.";
+        return;
+    }
+
+    submitButton.disabled = true;
+    submitButton.textContent = "Отправка...";
+    message.textContent = "";
+
+    const data = {
+        alliance_name: document.getElementById("allianceName").value.trim(),
+        kingdom_number: document.getElementById("kingdom").value.trim(),
+        player_requirements: document.getElementById("requirements").value.trim(),
+        play_style: document.getElementById("playStyle").value.trim(),
+        recruiter_name: document.getElementById("recruiter").value.trim(),
+        contact_link: document.getElementById("contactLink").value.trim()
+    };
+
+    try {
+        const response = await fetch(
+            SUPABASE_URL + "/rest/v1/alliance_recruitment",
+            {
+                method: "POST",
+                headers: {
+                    ...headers,
+                    "Prefer": "return=minimal"
+                },
+                body: JSON.stringify(data)
+            }
+        );
+
+        if (!response.ok) {
+            const error = await response.text();
+            throw new Error(error);
+        }
+
+        form.reset();
+        message.textContent = "Заявка отправлена! Она появится после проверки администрацией.";
+        message.style.color = "#8fdaa2";
+
+    } catch (error) {
+        console.error(error);
+        message.textContent = "Не удалось отправить заявку. Попробуй ещё раз.";
+        message.style.color = "#ff9999";
+    }
+
+    submitButton.disabled = false;
+    submitButton.textContent = "Отправить на модерацию";
+});
+
+async function loadAlliances() {
+    if (SUPABASE_KEY === "ВСТАВЬ_СЮДА_PUBLISHABLE_KEY") {
+        alliancesList.innerHTML =
+            '<div class="empty">Подключение Supabase ещё не завершено.</div>';
+        return;
+    }
+
+    try {
+        const response = await fetch(
+            SUPABASE_URL +
+            "/rest/v1/alliance_recruitment?select=alliance_name,kingdom_number,player_requirements,play_style,recruiter_name,contact_link&status=eq.approved&order=created_at.desc",
+            { headers }
+        );
+
+        if (!response.ok) {
+            throw new Error(await response.text());
+        }
+
+        const alliances = await response.json();
+
+        if (!alliances.length) {
+            alliancesList.innerHTML =
+                '<div class="empty">Пока нет опубликованных объявлений.</div>';
+            return;
+        }
+
+        alliancesList.innerHTML = alliances.map(function(item) {
+            const link = safeLink(item.contact_link);
+
+            return `
+                <article class="alliance-card">
+                    <h3>${escapeHTML(item.alliance_name)}</h3>
+                    <p><b>Королевство:</b> ${escapeHTML(item.kingdom_number)}</p>
+                    <p><b>Требования:</b><br>${escapeHTML(item.player_requirements).replace(/\n/g, "<br>")}</p>
+                    <p><b>Стиль игры:</b><br>${escapeHTML(item.play_style).replace(/\n/g, "<br>")}</p>
+                    <p><b>Рекрутер:</b> ${escapeHTML(item.recruiter_name)}</p>
+                    ${link ? `<p><a href="${link}" target="_blank" rel="noopener noreferrer">Связаться с альянсом →</a></p>` : ""}
+                </article>
+            `;
+        }).join("");
+
+    } catch (error) {
+        console.error(error);
+        alliancesList.innerHTML =
+            '<div class="empty">Не удалось загрузить объявления. Попробуй позже.</div>';
+    }
+}
+
+loadAlliances();
+</script>
+
+</body>
+</html>
