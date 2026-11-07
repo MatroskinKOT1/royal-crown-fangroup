@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Развитие города | Royal Crown</title>
+
+<style>
+:root {
+  --bg:#101827;
+  --panel:#192538;
+  --panel2:#202f45;
+  --gold:#e8bd68;
+  --gold2:#ffdc91;
+  --text:#f1f3f7;
+  --muted:#aab6c7;
+  --green:#72d6a0;
+  --red:#f08b82;
+  --border:rgba(232,189,104,.2);
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  padding:20px;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Arial,sans-serif;
+}
+
+.container{
+  max-width:1050px;
+  margin:auto;
+}
+
+header{
+  text-align:center;
+  margin-bottom:25px;
+}
+
+h1{
+  color:var(--gold);
+  margin-bottom:8px;
+}
+
+.subtitle{
+  color:var(--muted);
+  font-size:14px;
+}
+
+.panel{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:18px;
+  margin-bottom:18px;
+}
+
+h2{
+  color:var(--gold2);
+  font-size:19px;
+  margin-top:0;
+}
+
+h3{
+  color:var(--gold);
+  font-size:16px;
+}
+
+label{
+  display:block;
+  color:var(--muted);
+  font-size:13px;
+  margin-bottom:7px;
+}
+
+select,input{
+  width:100%;
+  padding:12px;
+  border-radius:9px;
+  border:1px solid var(--border);
+  background:var(--panel2);
+  color:var(--text);
+  font-size:16px;
+}
+
+button{
+  border:0;
+  border-radius:9px;
+  padding:12px 16px;
+  background:var(--gold);
+  color:#17202d;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+button:hover{
+  background:var(--gold2);
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
+}
+
+.resources{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:12px;
+}
+
+.resource{
+  background:var(--panel2);
+  padding:14px;
+  border-radius:10px;
+  min-width:0;
+}
+
+.resource strong{
+  display:block;
+  color:var(--gold2);
+  margin-bottom:9px;
+}
+
+.resource-value{
+  font-size:19px;
+  font-weight:bold;
+  overflow-wrap:anywhere;
+}
+
+.small{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:6px;
+}
+
+.level-card{
+  background:var(--panel2);
+  border:1px solid var(--border);
+  padding:15px;
+  border-radius:12px;
+  margin-bottom:12px;
+}
+
+.level-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.level-number{
+  color:var(--gold);
+  font-size:18px;
+  font-weight:bold;
+}
+
+.badge{
+  color:var(--green);
+  font-size:12px;
+}
+
+.requirements{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:8px;
+  margin-top:12px;
+}
+
+.requirement{
+  background:rgba(0,0,0,.15);
+  border-radius:8px;
+  padding:10px;
+  font-size:14px;
+}
+
+.cost-row{
+  display:flex;
+  justify-content:space-between;
+  gap:8px;
+  padding:8px 0;
+  border-bottom:1px solid var(--border);
+  font-size:14px;
+}
+
+.cost-row:last-child{
+  border-bottom:0;
+}
+
+.checkline{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-top:12px;
+  color:var(--muted);
+  font-size:13px;
+}
+
+.checkline input{
+  width:19px;
+  height:19px;
+  accent-color:var(--gold);
+}
+
+.progress{
+  height:9px;
+  background:#101827;
+  border-radius:10px;
+  overflow:hidden;
+  margin:12px 0;
+}
+
+.progress-bar{
+  height:100%;
+  width:0;
+  background:var(--green);
+  transition:.2s;
+}
+
+.notice{
+  background:rgba(232,189,104,.08);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:13px;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.5;
+}
+
+.shortage{
+  color:var(--red);
+}
+
+.enough{
+  color:var(--green);
+}
+
+.back{
+  display:inline-block;
+  margin-bottom:18px;
+  color:var(--gold);
+  text-decoration:none;
+}
+
+@media(max-width:650px){
+  body{padding:12px}
+  .grid,.requirements{grid-template-columns:1fr}
+  .resources{grid-template-columns:1fr}
+  .panel{padding:14px}
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<a class="back" href="index.html">← На главную</a>
+
+<header>
+  <h1>🏰 Развитие города</h1>
+  <div class="subtitle">
+    Планировщик улучшения главного здания • Уровни 1–25
+  </div>
+</header>
+
+<section class="panel">
+  <h2>🧮 Калькулятор развития</h2>
+
+  <div class="grid">
+    <div>
+      <label>Текущий уровень главного здания</label>
+      <select id="currentLevel"></select>
+    </div>
+
+    <div>
+      <label>Желаемый уровень</label>
+      <select id="targetLevel"></select>
+    </div>
+  </div>
+
+  <button onclick="calculate()" style="margin-top:14px;width:100%">
+    Рассчитать развитие
+  </button>
+
+  <div id="summary" style="margin-top:16px"></div>
+</section>
+
+<section class="panel">
+  <h2>📦 Мои ресурсы</h2>
+
+  <div class="resources">
+    <div class="resource">
+      <strong>🌾 Еда</strong>
+      <input id="ownedFood" type="number" min="0" placeholder="Количество">
+    </div>
+
+    <div class="resource">
+      <strong>🪵 Дерево</strong>
+      <input id="ownedWood" type="number" min="0" placeholder="Количество">
+    </div>
+
+    <div class="resource">
+      <strong>⛏️ Железная руда</strong>
+      <input id="ownedIron" type="number" min="0" placeholder="Количество">
+    </div>
+  </div>
+
+  <div id="resourceResult" style="margin-top:15px"></div>
+</section>
+
+<section class="panel">
+  <h2>📋 План улучшений</h2>
+  <div class="small">
+    Отмечайте выполненные требования по мере развития города.
+  </div>
+
+  <div class="progress">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+
+  <div id="progressText" class="small">Выполнено: 0%</div>
+
+  <div id="plan"></div>
+</section>
+
+<section class="panel">
+  <h2>ℹ️ Об источнике данных</h2>
+  <div class="notice">
+    Базовые требования и стоимость взяты из Royal Crown Vault.
+    Значения, отмеченные знаком ~, являются приблизительными.
+    Для уровней, по которым нет подтверждённых данных,
+    расчёт не производится.
+    <br><br>
+    Данные могут измениться после обновлений игры.
+    Перед крупными улучшениями сверяйте требования с игрой.
+  </div>
+</section>
+
+</div>
+
+<script>
+const data = {
+  11:{food:2300000,wood:2300000,iron:1700000,exact:true,
+      req:[["Академия",10],["Центр альянса",10]]},
+
+  12:{food:3300000,wood:3300000,iron:2500000,
+      req:[["Академия",11],["Стрельбище",11]]},
+
+  13:{food:4800000,wood:4800000,iron:3600000,
+      req:[["Академия",12],["Городская стена",12]]},
+
+  14:{food:7000000,wood:7000000,iron:5200000,
+      req:[["Академия",13],["Тренировочная площадка",13]]},
+
+  15:{food:10200000,wood:10200000,iron:7600000,
+      req:[["Академия",14],["Центр альянса",14]]},
+
+  16:{food:15000000,wood:15000000,iron:11000000,exact:true,
+      req:[["Академия",15],["Лагерь магов",15]]},
+
+  17:{food:23000000,wood:23000000,iron:17000000,
+      req:[["Академия",16],["Городская стена",16]]},
+
+  18:{food:35000000,wood:35000000,iron:26000000,
+      req:[["Академия",17],["Тренировочная площадка",17]]},
+
+  19:{food:53000000,wood:53000000,iron:40000000,exact:true,
+      req:[["Академия",18],["Центр альянса",18]]},
+
+  20:{food:110000000,wood:110000000,iron:86000000,exact:true,
+      req:[["Академия",19],["Стрельбище",19]]},
+
+  21:{food:190000000,wood:190000000,iron:140000000,exact:true,
+      req:[["Академия",20],["Городская стена",20]]},
+
+  22:{food:310000000,wood:310000000,iron:230000000,exact:true,
+      req:[["Академия",21],["Тренировочная площадка",21]]},
+
+  23:{food:480000000,wood:480000000,iron:360000000,exact:true,
+      req:[["Академия",22],["Центр альянса",22]]},
+
+  24:{food:710000000,wood:710000000,iron:540000000,exact:true,
+      req:[["Академия",23],["Казармы воинов",23]]},
+
+  25:{food:1400000000,wood:1400000000,iron:1000000000,exact:true,
+      req:[]}
+};
+
+const names = {
+  food:"Еда",
+  wood:"Дерево",
+  iron:"Железная руда"
+};
+
+const $ = id => document.getElementById(id);
+
+function format(n){
+  if(n>=1000000000)
+    return (n/1000000000).toFixed(2).replace(/\.?0+$/,"")+" млрд";
+
+  if(n>=1000000)
+    return (n/1000000).toFixed(2).replace(/\.?0+$/,"")+" млн";
+
+  if(n>=1000)
+    return (n/1000).toFixed(1)+" тыс.";
+
+  return Math.round(n).toLocaleString("ru-RU");
+}
+
+function init(){
+  for(let i=1;i<=25;i++){
+    $("currentLevel").add(new Option("Уровень "+i,i));
+    $("targetLevel").add(new Option("Уровень "+i,i));
+  }
+
+  $("currentLevel").value=10;
+  $("targetLevel").value=25;
+
+  const saved=localStorage.getItem("rcw_development");
+  if(saved){
+    try{
+      const state=JSON.parse(saved);
+      $("currentLevel").value=state.current||10;
+      $("targetLevel").value=state.target||25;
+      $("ownedFood").value=state.food||"";
+      $("ownedWood").value=state.wood||"";
+      $("ownedIron").value=state.iron||"";
+    }catch(e){}
+  }
+
+  ["currentLevel","targetLevel","ownedFood","ownedWood","ownedIron"]
+    .forEach(id=>{
+      $(id).addEventListener("change",save);
+      $(id).addEventListener("input",save);
+    });
+
+  calculate();
+}
+
+function save(){
+  localStorage.setItem("rcw_development",JSON.stringify({
+    current:+$("currentLevel").value,
+    target:+$("targetLevel").value,
+    food:$("ownedFood").value,
+    wood:$("ownedWood").value,
+    iron:$("ownedIron").value
+  }));
+}
+
+function calculate(){
+  const current=+$("currentLevel").value;
+  const target=+$("targetLevel").value;
+
+  if(target<=current){
+    $("summary").innerHTML=
+      '<div class="notice">Выберите целевой уровень выше текущего.</div>';
+    $("plan").innerHTML="";
+    $("resourceResult").innerHTML="";
+    return;
+  }
+
+  let total={food:0,wood:0,iron:0};
+  let cards="";
+  let known=true;
+  let count=0;
+
+  for(let level=current+1;level<=target;level++){
+    const item=data[level];
+
+    if(!item){
+      known=false;
+      cards+=`
+        <div class="level-card">
+          <div class="level-top">
+            <span class="level-number">Главное здание ${level}</span>
+            <span class="badge">Нет данных</span>
+          </div>
+          <div class="notice" style="margin-top:12px">
+            Требования и стоимость этого уровня пока не внесены.
+          </div>
+        </div>`;
+      continue;
+    }
+
+    total.food+=item.food;
+    total.wood+=item.wood;
+    total.iron+=item.iron;
+    count++;
+
+    const req=item.req.length
+      ?item.req.map(r=>`
+        <div class="requirement">
+          🏰 ${r[0]} — уровень ${r[1]}
+        </div>`).join("")
+      :'<div class="requirement">Требования не указаны в доступной таблице.</div>';
+
+    const estimate=item.exact?"":"~";
+
+    cards+=`
+      <div class="level-card">
+        <div class="level-top">
+          <span class="level-number">Главное здание ${level}</span>
+          <span class="badge">${item.exact?"Значение источника":"Приблизительно"}</span>
+        </div>
+
+        <div class="requirements">${req}</div>
+
+        <h3>Стоимость улучшения</h3>
+        <div class="cost-row">
+          <span>🌾 Еда</span>
+          <b>${estimate}${format(item.food)}</b>
+        </div>
+        <div class="cost-row">
+          <span>🪵 Дерево</span>
+          <b>${estimate}${format(item.wood)}</b>
+        </div>
+        <div class="cost-row">
+          <span>⛏️ Железная руда</span>
+          <b>${estimate}${format(item.iron)}</b>
+        </div>
+
+        <label class="checkline">
+          <input type="checkbox" class="done-check" data-level="${level}">
+          Уровень улучшен
+        </label>
+      </div>`;
+  }
+
+  $("summary").innerHTML=`
+    <div class="grid">
+      <div class="resource">
+        <strong>Маршрут</strong>
+        <div class="resource-value">${current} → ${target}</div>
+      </div>
+      <div class="resource">
+        <strong>Уровней с данными</strong>
+        <div class="resource-value">${count}</div>
+      </div>
+    </div>
+    ${!known?'<div class="notice" style="margin-top:12px">Часть уровней не включена в сумму: для них нет подтверждённых данных.</div>':""}
+    <h3>Общая стоимость доступных уровней</h3>
+    <div class="resources">
+      <div class="resource">
+        <strong>🌾 Еда</strong>
+        <div class="resource-value">${format(total.food)}</div>
+      </div>
+      <div class="resource">
+        <strong>🪵 Дерево</strong>
+        <div class="resource-value">${format(total.wood)}</div>
+      </div>
+      <div class="resource">
+        <strong>⛏️ Железо</strong>
+        <div class="resource-value">${format(total.iron)}</div>
+      </div>
+    </div>`;
+
+  $("plan").innerHTML=cards;
+
+  document.querySelectorAll(".done-check").forEach(box=>{
+    const key="rcw_development_done_"+box.dataset.level;
+    box.checked=localStorage.getItem(key)==="1";
+
+    box.addEventListener("change",()=>{
+      localStorage.setItem(key,box.checked?"1":"0");
+      updateProgress();
+    });
+  });
+
+  updateProgress();
+  updateResources(total,known);
+}
+
+function updateResources(total,known){
+  const owned={
+    food:+$("ownedFood").value||0,
+    wood:+$("ownedWood").value||0,
+    iron:+$("ownedIron").value||0
+  };
+
+  let html="";
+
+  Object.keys(total).forEach(key=>{
+    const missing=Math.max(0,total[key]-owned[key]);
+    const enough=owned[key]>=total[key];
+
+    html+=`
+      <div class="cost-row">
+        <span>${names[key]}</span>
+        <b class="${enough?"enough":"shortage"}">
+          ${enough?"Достаточно":"Не хватает: "+format(missing)}
+        </b>
+      </div>`;
+  });
+
+  if(!known){
+    html+='<div class="small">Расчёт дефицита неполный: часть уровней отсутствует в базе.</div>';
+  }
+
+  $("resourceResult").innerHTML=html;
+}
+
+function updateProgress(){
+  const checks=[...document.querySelectorAll(".done-check")];
+  const done=checks.filter(x=>x.checked).length;
+  const percent=checks.length?Math.round(done/checks.length*100):0;
+
+  $("progressBar").style.width=percent+"%";
+  $("progressText").textContent=
+    `Выполнено: ${done} из ${checks.length} (${percent}%)`;
+}
+
+init();
+</script>
+</body>
+</html>
