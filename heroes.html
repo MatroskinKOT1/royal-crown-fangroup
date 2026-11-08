@@ -18,86 +18,62 @@
   --muted:#aab5c3;
   --line:rgba(216,181,106,.23);
 }
-
-* {box-sizing:border-box}
-
-body {
+*{box-sizing:border-box}
+body{
   margin:0;
   background:radial-gradient(ellipse at 50% -20%,#26364a 0%,var(--bg) 55%);
   color:var(--text);
   font-family:Arial,Helvetica,sans-serif;
   line-height:1.5;
 }
-
-a {color:inherit;text-decoration:none}
-
-.wrap {
-  width:min(1120px,calc(100% - 28px));
-  margin:auto;
-}
-
-header {
+a{color:inherit;text-decoration:none}
+.wrap{width:min(1120px,calc(100% - 28px));margin:auto}
+header{
   padding:20px 0;
   border-bottom:1px solid var(--line);
   background:rgba(13,20,30,.6);
 }
-
-.top {
+.top{
   display:flex;
   align-items:center;
   justify-content:space-between;
   gap:12px;
   flex-wrap:wrap;
 }
-
-.brand {
-  font-weight:800;
-  color:var(--gold2);
-  letter-spacing:.7px;
-}
-
-.back {
+.brand{font-weight:800;color:var(--gold2);letter-spacing:.7px}
+.back{
   border:1px solid var(--line);
   border-radius:30px;
   padding:8px 14px;
   color:var(--gold2);
   font-size:13px;
 }
-
-.hero {
-  padding:38px 0 25px;
-  text-align:center;
-}
-
-.eyebrow {
+.hero{padding:38px 0 25px;text-align:center}
+.eyebrow{
   color:var(--gold);
   font-size:11px;
   font-weight:800;
   letter-spacing:2px;
 }
-
-.hero h1 {
+.hero h1{
   font-size:clamp(32px,6vw,48px);
   color:var(--gold2);
   margin:10px 0;
 }
-
-.hero p {
+.hero p{
   max-width:650px;
   margin:auto;
   color:var(--muted);
   font-size:14px;
 }
-
-.stats {
+.stats{
   display:flex;
   justify-content:center;
   gap:10px;
   flex-wrap:wrap;
   margin-top:22px;
 }
-
-.stat {
+.stat{
   background:var(--panel);
   border:1px solid var(--line);
   border-radius:12px;
@@ -105,14 +81,8 @@ header {
   color:var(--muted);
   font-size:12px;
 }
-
-.stat b {
-  color:var(--gold2);
-  font-size:17px;
-  margin-right:5px;
-}
-
-.toolbar {
+.stat b{color:var(--gold2);font-size:17px;margin-right:5px}
+.toolbar{
   position:sticky;
   top:0;
   z-index:5;
@@ -121,13 +91,8 @@ header {
   border-top:1px solid var(--line);
   border-bottom:1px solid var(--line);
 }
-
-.controls {
-  display:grid;
-  gap:10px;
-}
-
-.search {
+.controls{display:grid;gap:10px}
+.search{
   width:100%;
   padding:13px 15px;
   border:1px solid var(--line);
@@ -137,15 +102,13 @@ header {
   font-size:14px;
   outline:none;
 }
-
-.filters {
+.filters{
   display:flex;
   gap:7px;
   overflow-x:auto;
   padding-bottom:3px;
 }
-
-.filter {
+.filter{
   white-space:nowrap;
   border:1px solid var(--line);
   background:var(--panel);
@@ -155,40 +118,26 @@ header {
   font-size:12px;
   cursor:pointer;
 }
-
-.filter.active {
+.filter.active{
   background:linear-gradient(135deg,#d8b56a,#a9843d);
   color:#171d26;
   font-weight:800;
 }
-
-main {padding:25px 0 50px}
-
-.section-head {
+main{padding:25px 0 50px}
+.section-head{
   display:flex;
   align-items:center;
   justify-content:space-between;
   margin-bottom:15px;
 }
-
-.section-head h2 {
-  margin:0;
-  color:var(--gold2);
-  font-size:20px;
-}
-
-.section-head span {
-  font-size:12px;
-  color:var(--muted);
-}
-
-.grid {
+.section-head h2{margin:0;color:var(--gold2);font-size:20px}
+.section-head span{font-size:12px;color:var(--muted)}
+.grid{
   display:grid;
   grid-template-columns:repeat(2,minmax(0,1fr));
   gap:12px;
 }
-
-.card {
+.card{
   overflow:hidden;
   background:linear-gradient(150deg,#223248,#16202f);
   border:1px solid var(--line);
@@ -196,42 +145,38 @@ main {padding:25px 0 50px}
   cursor:pointer;
   transition:.2s;
 }
-
-.card:hover {
-  transform:translateY(-3px);
-  border-color:var(--gold);
-}
-
-.portrait {
+.card:hover{transform:translateY(-3px);border-color:var(--gold)}
+.portrait{
   height:145px;
   display:flex;
   align-items:center;
   justify-content:center;
   position:relative;
+  overflow:hidden;
   background:radial-gradient(circle,rgba(216,181,106,.23),transparent 65%),linear-gradient(145deg,#2b3b50,#111b29);
   border-bottom:1px solid var(--line);
 }
-
-.portrait:before {
+.portrait img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center 25%;
+}
+.portrait:before{
   content:"";
   position:absolute;
   width:95px;
   height:95px;
   border:1px solid rgba(240,217,157,.3);
   border-radius:50%;
+  pointer-events:none;
 }
-
-.sigil {
-  position:relative;
-  color:var(--gold2);
-  font-family:Georgia,serif;
-  font-size:44px;
-}
-
-.rarity {
+.sigil{position:relative;color:var(--gold2);font-family:Georgia,serif;font-size:44px}
+.rarity{
   position:absolute;
   top:9px;
   left:9px;
+  z-index:2;
   background:#101722dd;
   border:1px solid var(--line);
   color:var(--gold2);
@@ -240,27 +185,11 @@ main {padding:25px 0 50px}
   font-size:10px;
   font-weight:bold;
 }
-
-.class-icon {
-  position:absolute;
-  right:10px;
-  top:8px;
-  font-size:18px;
-}
-
-.card-info {padding:11px}
-
-.name {
-  font-weight:800;
-  font-size:14px;
-}
-
-.original {
-  font-size:10px;
-  color:var(--muted);
-}
-
-.class {
+.class-icon{position:absolute;right:10px;top:8px;z-index:2;font-size:18px}
+.card-info{padding:11px}
+.name{font-weight:800;font-size:14px}
+.original{font-size:10px;color:var(--muted)}
+.class{
   display:inline-block;
   margin-top:7px;
   color:var(--gold2);
@@ -269,8 +198,7 @@ main {padding:25px 0 50px}
   padding:3px 8px;
   border-radius:20px;
 }
-
-.notice {
+.notice{
   margin-top:25px;
   padding:15px;
   border:1px solid var(--line);
@@ -279,18 +207,15 @@ main {padding:25px 0 50px}
   color:var(--muted);
   font-size:12px;
 }
-
-.notice b {color:var(--gold2)}
-
-footer {
+.notice b{color:var(--gold2)}
+footer{
   border-top:1px solid var(--line);
   padding:22px 0;
   text-align:center;
   color:var(--muted);
   font-size:11px;
 }
-
-.modal {
+.modal{
   display:none;
   position:fixed;
   inset:0;
@@ -299,14 +224,12 @@ footer {
   padding:15px;
   overflow:auto;
 }
-
-.modal.open {
+.modal.open{
   display:flex;
   justify-content:center;
   align-items:flex-start;
 }
-
-.modal-box {
+.modal-box{
   width:min(650px,100%);
   margin:auto;
   background:#172333;
@@ -314,16 +237,14 @@ footer {
   border-radius:17px;
   overflow:hidden;
 }
-
-.modal-top {
+.modal-top{
   display:flex;
   justify-content:space-between;
   align-items:center;
   padding:13px 16px;
   border-bottom:1px solid var(--line);
 }
-
-.close {
+.close{
   background:none;
   color:var(--gold2);
   border:1px solid var(--line);
@@ -333,65 +254,34 @@ footer {
   font-size:20px;
   cursor:pointer;
 }
-
-.modal-content {padding:18px}
-
-.modal-title {
-  font-size:26px;
-  color:var(--gold2);
-  font-weight:800;
-}
-
-.modal-sub {
-  color:var(--muted);
-  font-size:12px;
-}
-
-.modal-content h3 {
-  color:var(--gold);
-  font-size:14px;
-  margin:20px 0 8px;
-}
-
-.skill-list {
-  display:grid;
-  gap:8px;
-}
-
-.skill {
+.modal-content{padding:18px}
+.modal-title{font-size:26px;color:var(--gold2);font-weight:800}
+.modal-sub{color:var(--muted);font-size:12px}
+.modal-content h3{color:var(--gold);font-size:14px;margin:20px 0 8px}
+.skill-list{display:grid;gap:8px}
+.skill{
   padding:11px;
   background:var(--panel2);
   border-radius:10px;
   font-size:12px;
   color:#dce3eb;
 }
-
-.skill b {
-  display:block;
-  color:var(--gold2);
-  margin-bottom:4px;
-}
-
-.pending {
+.skill b{display:block;color:var(--gold2);margin-bottom:4px}
+.pending{
   color:var(--muted);
   font-size:12px;
   background:var(--panel2);
   padding:12px;
   border-radius:10px;
 }
-
-@media(min-width:600px) {
-  .controls {
-    grid-template-columns:1fr auto;
-    align-items:center;
-  }
-  .grid {grid-template-columns:repeat(3,1fr)}
-  .portrait {height:165px}
+@media(min-width:600px){
+  .controls{grid-template-columns:1fr auto;align-items:center}
+  .grid{grid-template-columns:repeat(3,1fr)}
+  .portrait{height:165px}
 }
-
-@media(min-width:900px) {
-  .grid {grid-template-columns:repeat(4,1fr);gap:15px}
-  .portrait {height:185px}
+@media(min-width:900px){
+  .grid{grid-template-columns:repeat(4,1fr);gap:15px}
+  .portrait{height:185px}
 }
 </style>
 </head>
@@ -409,9 +299,8 @@ footer {
   <div class="eyebrow">БАЗА ЗНАНИЙ FANGROUP</div>
   <h1>Герои</h1>
   <p>Справочник персонажей Royal Crown: Kingdom Wars. Изучайте классы, навыки и подбирайте героев для своего отряда.</p>
-
   <div class="stats">
-    <div class="stat"><b id="totalCount">18</b>героев</div>
+    <div class="stat"><b id="totalCount">0</b>героев</div>
     <div class="stat"><b>UR</b>и <b>SSR</b></div>
     <div class="stat"><b>RU</b>русский каталог</div>
   </div>
@@ -420,7 +309,6 @@ footer {
 <div class="toolbar">
   <div class="wrap controls">
     <input id="search" class="search" type="search" placeholder="🔍 Найти героя...">
-
     <div class="filters" id="filters">
       <button class="filter active" data-filter="all">Все герои</button>
       <button class="filter" data-filter="UR">UR</button>
@@ -436,18 +324,14 @@ footer {
 <main class="wrap">
   <div class="section-head">
     <h2>Каталог персонажей</h2>
-    <span id="resultCount">18 персонажей</span>
+    <span id="resultCount">0 персонажей</span>
   </div>
-
   <div class="grid" id="heroGrid"></div>
   <div class="pending" id="empty" style="display:none">Ничего не найдено.</div>
-
   <div class="notice">
     <b>О каталоге:</b> это первая версия справочника FANGroup.
-    Имена и классы собраны по открытым сторонним материалам.
-    Русские названия являются рабочей локализацией.
+    Имена и классы являются рабочей локализацией.
     Навыки и характеристики будут постепенно проверяться и дополняться.
-    Новых героев можно добавлять без переделки страницы.
   </div>
 </main>
 
@@ -467,69 +351,59 @@ footer {
 
 <script>
 const heroes = [
-{name:"Валькирия",en:"Valkyrie",rarity:"UR",role:"Воин",icon:"⚔️",initial:"В",skills:[
+{name:"Валькирия",en:"Valkyrie",rarity:"UR",role:"Воин",icon:"⚔️",initial:"В",image:"valkyrie.jpg",skills:[
 ["Северный удар","Наносит прямой урон выбранному отряду и на 3 секунды увеличивает получаемый им урон от навыков."],
 ["Валькирия","При командовании отрядом воинов снижает получаемый урон от лучников, повышает атаку и защиту воинов."],
 ["Первенец богов","Обычные атаки с вероятностью наносят цели дополнительный прямой урон."],
 ["Война судного дня","Увеличивает вместимость отряда, а также атаку, защиту и здоровье воинов."]
 ]},
-{name:"Аскара",en:"Askara",rarity:"UR",role:"Воин",icon:"⚔️",initial:"А",skills:[
-["Прыжок эгиды","Накладывает на свои войска щит на 4 секунды. Пока щит действует, наносимый отрядом урон увеличен."],
-["Благословение хранителя","При командовании воинами снижает получаемый урон от лучников и повышает атаку и защиту воинов."],
-["Стойкая контратака","Увеличивает урон, наносимый контратаками."],
-["Командование Железной стражи","Увеличивает вместимость отряда, а также атаку, защиту и здоровье воинов."]
-]},
-{name:"Юнь",en:"Yun",rarity:"UR",role:"Воин",icon:"⚔️",initial:"Ю",skills:[
+{name:"Аскара",en:"Askara",rarity:"UR",role:"Воин",icon:"⚔️",initial:"А"},
+{name:"Юнь",en:"Yun",rarity:"UR",role:"Воин",icon:"⚔️",initial:"Ю",image:"yun.jpg",skills:[
 ["Вперёд, в атаку","Наносит урон до пяти отрядам в секторе перед собой, снижая наносимый ими урон и скорость передвижения на 2 секунды."],
 ["Отвага и мощь","При командовании воинами снижает получаемый урон от лучников и повышает атаку и защиту воинов."],
 ["Жестокая битва","Снижает весь урон, получаемый своими войсками, и увеличивает эффективность получаемого лечения."],
 ["Несокрушимая доблесть","Увеличивает вместимость отряда, а также атаку, защиту и здоровье воинов."]
 ]},
 {name:"Митридат",en:"Mithridates",rarity:"UR",role:"Танк",icon:"🛡️",initial:"М"},
-{name:"Артемида",en:"Artemis",rarity:"UR",role:"Стрелок",icon:"🏹",initial:"А",skills:[
+{name:"Артемида",en:"Artemis",rarity:"UR",role:"Стрелок",icon:"🏹",initial:"А",image:"artemida.jpg",skills:[
 ["Метеоритный дождь","Наносит урон до пяти отрядам в круглой области перед собой, снижая их атаку и скорость передвижения на 3 секунды."],
 ["Печать стремительного ветра","При командовании лучниками снижает получаемый урон от магов и повышает атаку и защиту лучников."],
 ["Проворная контратака","Обычные атаки с вероятностью активируют лечение и восстанавливают ярость; также увеличивается скорость передвижения отряда."],
 ["Лунный натиск","Увеличивает вместимость отряда, а также атаку, защиту и здоровье стрелков."]
 ]},
-{name:"Катерина",en:"Katerina",rarity:"UR",role:"Стрелок",icon:"🏹",initial:"К"},
+{name:"Катерина",en:"Katerina",rarity:"UR",role:"Стрелок",icon:"🏹",initial:"К",image:"katarina.jpg"},
 {name:"Атропос",en:"Atropos",rarity:"UR",role:"Стрелок",icon:"🏹",initial:"А"},
-{name:"Да Винчи",en:"Da Vinci",rarity:"UR",role:"Стрелок",icon:"🏹",initial:"Д",skills:[
+{name:"Да Винчи",en:"Da Vinci",rarity:"UR",role:"Стрелок",icon:"🏹",initial:"Д",image:"davinci.jpg",skills:[
 ["Тактический захват","Один раз наносит прямой урон до трёх целям; урон уменьшается за каждую дополнительную цель, а защита поражённых целей снижается на 3 раунда."],
 ["Залп арбалета","Снижает получаемый урон от магов и повышает атаку и защиту лучников."],
 ["Небесный дождь стрел","Увеличивает наносимый урон на 25%, когда численность отряда опускается ниже 50%."],
 ["Кристальная стража","Увеличивает вместимость армии, а также атаку, защиту и здоровье лучников."]
 ]},
-{name:"Дракула",en:"Dracula",rarity:"UR",role:"Маг",icon:"🔮",initial:"Д",skills:[
+{name:"Дракула",en:"Dracula",rarity:"UR",role:"Маг",icon:"🔮",initial:"Д",image:"dracula.jpg",skills:[
 ["Багровый приговор","Наносит урон до трёх отрядам в секторе перед собой и на 5 секунд снижает получаемое ими лечение."],
 ["Ночное благословение","При командовании магами снижает получаемый урон от воинов и повышает атаку и защиту магов."],
 ["Эхо кровожадности","Снижает получаемый урон от контратак. При получении обычной атаки может нанести прямой урон атакующему."],
 ["Последняя трапеза","Увеличивает вместимость отряда, а также атаку, защиту и здоровье магов."]
 ]},
-{name:"Хаттори Хандзо",en:"Hattori Hanzo",rarity:"UR",role:"Маг",icon:"🔮",initial:"Х",skills:[
-["Божественный барьер","Наносит прямой урон цели, уменьшает её ярость и накладывает немоту на 2 секунды."],
-["Усиление тайной магии","При командовании магами снижает получаемый урон от воинов и повышает атаку и защиту магов."],
-["Призрачный клинок","Увеличивает урон обычных атак; обычные атаки могут дать 100 дополнительной ярости. Перезарядка: 5 секунд."],
-["Теневое преследование","Увеличивает вместимость отряда, а также атаку, защиту и здоровье магов."]
-]},
-{name:"Кир",en:"Cyrus",rarity:"UR",role:"Маг",icon:"🔮",initial:"К",skills:[
+{name:"Хаттори Хандзо",en:"Hattori Hanzo",rarity:"UR",role:"Маг",icon:"🔮",initial:"Х"},
+{name:"Кир",en:"Cyrus",rarity:"UR",role:"Маг",icon:"🔮",initial:"К",image:"cyrus.jpg",skills:[
 ["Песчаная буря полумесяца","Наносит урон до пяти отрядам в секторе перед собой и на 2 секунды снижает их атаку, защиту и здоровье."],
 ["Сумрачное истощение","При командовании магами снижает получаемый урон от воинов и повышает атаку и защиту магов."],
 ["Пески, сковывающие шаг","При запуске совместной атаки увеличивает её вместимость и атаку."],
 ["Охота дикого ветра","Увеличивает вместимость отряда, а также атаку, защиту и здоровье магов."]
 ]},
-{name:"Екатерина",en:"Catherine",rarity:"UR",role:"Маг",icon:"🔮",initial:"Е",skills:[
+{name:"Екатерина",en:"Catherine",rarity:"UR",role:"Маг",icon:"🔮",initial:"Е",image:"katrin.jpg",skills:[
 ["Морозный танец","Наносит прямой урон одной цели; обычные атаки получают шанс заморозить её на 1 ход в течение следующих 3 секунд."],
 ["Владения ледяного конуса","Снижает получаемый урон от воинов и повышает атаку и защиту магов."],
 ["Вечные объятия","При получении обычной атаки с вероятностью 25% снижает атаку противника на 20% на 2 секунды."],
 ["Кристальная защита","Увеличивает вместимость отряда, а также атаку, защиту и здоровье магов."]
 ]},
 {name:"Айви",en:"Ivy",rarity:"SSR",role:"Воин",icon:"⚔️",initial:"А"},
-{name:"Ланселот",en:"Lancelot",rarity:"SSR",role:"Танк",icon:"🛡️",initial:"Л"},
-{name:"Глинк",en:"Glink",rarity:"SSR",role:"Стрелок",icon:"🏹",initial:"Г"},
-{name:"Робин",en:"Robin",rarity:"SSR",role:"Стрелок",icon:"🏹",initial:"Р"},
-{name:"Лилит",en:"Lilith",rarity:"SSR",role:"Маг",icon:"🔮",initial:"Л"},
-{name:"Ния",en:"Nia",rarity:"SSR",role:"Маг",icon:"🔮",initial:"Н"}
+{name:"Ланселот",en:"Lancelot",rarity:"SSR",role:"Танк",icon:"🛡️",initial:"Л",image:"lancelot.jpg"},
+{name:"Глинк",en:"Glink",rarity:"SSR",role:"Стрелок",icon:"🏹",initial:"Г",image:"grink.jpg"},
+{name:"Робин",en:"Robin",rarity:"SSR",role:"Стрелок",icon:"🏹",initial:"Р",image:"robin.jpg"},
+{name:"Лилит",en:"Lilith",rarity:"SSR",role:"Маг",icon:"🔮",initial:"Л",image:"lilith.jpg"},
+{name:"Ния",en:"Nia",rarity:"SSR",role:"Маг",icon:"🔮",initial:"Н",image:"niya.jpg"}
 ];
 
 const grid=document.getElementById("heroGrid");
@@ -538,7 +412,6 @@ let activeFilter="all";
 
 function render(){
   const q=search.value.trim().toLowerCase();
-
   const list=heroes.filter(h=>{
     const matches=(h.name+" "+h.en+" "+h.role+" "+h.rarity).toLowerCase().includes(q);
     const by=activeFilter==="all"||h.rarity===activeFilter||h.role===activeFilter;
@@ -548,9 +421,9 @@ function render(){
   grid.innerHTML=list.map(h=>`
     <article class="card" tabindex="0" data-en="${h.en}">
       <div class="portrait">
+        ${h.image?`<img src="assets/heroes/${h.image}" alt="${h.name}" onerror="this.remove()">`:`<span class="sigil">${h.initial}</span>`}
         <span class="rarity">${h.rarity}</span>
         <span class="class-icon">${h.icon}</span>
-        <span class="sigil">${h.initial}</span>
       </div>
       <div class="card-info">
         <div class="name">${h.name}</div>
@@ -574,32 +447,26 @@ function render(){
 
 function openHero(h){
   const hasSkills=Array.isArray(h.skills);
-
   document.getElementById("modalContent").innerHTML=`
     <div class="modal-title">${h.name}</div>
     <div class="modal-sub">${h.en} · ${h.rarity} · ${h.icon} ${h.role}</div>
-
     <h3>О персонаже</h3>
     <div class="pending">
       ${hasSkills
-      ?"Ниже представлены предварительные переводы описаний навыков из открытых источников. Их необходимо сверить с русской версией игры."
+      ?"Ниже представлены предварительные переводы описаний навыков. Их необходимо сверить с русской версией игры."
       :"Информация о навыках и характеристиках пока собирается. Данные будут добавлены после проверки."}
     </div>
-
     <h3>Навыки</h3>
-
     ${hasSkills
       ? `<div class="skill-list">${h.skills.map((s,i)=>`
           <div class="skill"><b>${i+1}. ${s[0]}</b>${s[1]}</div>
         `).join("")}</div>`
       : `<div class="pending">Описания навыков будут добавлены позже.</div>`}
-
     <h3>Рекомендации FANGroup</h3>
     <div class="pending">
       Связки и оценка эффективности будут опубликованы после анализа навыков и их взаимодействия.
     </div>
   `;
-
   document.getElementById("modal").classList.add("open");
   document.body.style.overflow="hidden";
 }
@@ -614,22 +481,17 @@ search.addEventListener("input",render);
 document.getElementById("filters").addEventListener("click",e=>{
   const btn=e.target.closest("button[data-filter]");
   if(!btn)return;
-
   activeFilter=btn.dataset.filter;
-
   document.querySelectorAll(".filter").forEach(b=>{
     b.classList.toggle("active",b===btn);
   });
-
   render();
 });
 
 document.getElementById("closeModal").addEventListener("click",closeModal);
-
 document.getElementById("modal").addEventListener("click",e=>{
   if(e.target.id==="modal")closeModal();
 });
-
 document.addEventListener("keydown",e=>{
   if(e.key==="Escape")closeModal();
 });
@@ -637,6 +499,5 @@ document.addEventListener("keydown",e=>{
 document.getElementById("totalCount").textContent=heroes.length;
 render();
 </script>
-
 </body>
 </html>
