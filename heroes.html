@@ -1,503 +1,699 @@
-<!DOCTYPE html>
-<html lang="ru">
+<!DOCTYPE html><html lang="ru">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#101722">
-<meta name="description" content="Герои Royal Crown: Kingdom Wars — каталог персонажей, классы, навыки и рекомендации FANGroup.">
-<title>Герои | Royal Crown: Kingdom Wars — FANGroup</title>
-
-<style>
+<meta name="description" content="Герои Royal Crown: Kingdom Wars — характеристики, редкость, классы и навыки.">
+<title>Герои | Royal Crown: Kingdom Wars — FANGroup</title><style>
 :root {
-  --bg:#101722;
-  --panel:#192536;
-  --panel2:#223248;
-  --gold:#d8b56a;
-  --gold2:#f0d99d;
-  --text:#f4f0e7;
-  --muted:#aab5c3;
-  --line:rgba(216,181,106,.23);
+  --bg: #101722;
+  --panel: #182433;
+  --panel2: #202f40;
+  --gold: #d9b66b;
+  --gold2: #f1d99b;
+  --text: #f4f0e6;
+  --muted: #aab5c2;
+  --border: rgba(217,182,107,.25);
+  --ur: #d9a64e;
+  --ssr: #9b83df;
 }
-*{box-sizing:border-box}
-body{
-  margin:0;
-  background:radial-gradient(ellipse at 50% -20%,#26364a 0%,var(--bg) 55%);
-  color:var(--text);
-  font-family:Arial,Helvetica,sans-serif;
-  line-height:1.5;
-}
-a{color:inherit;text-decoration:none}
-.wrap{width:min(1120px,calc(100% - 28px));margin:auto}
-header{
-  padding:20px 0;
-  border-bottom:1px solid var(--line);
-  background:rgba(13,20,30,.6);
-}
-.top{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  flex-wrap:wrap;
-}
-.brand{font-weight:800;color:var(--gold2);letter-spacing:.7px}
-.back{
-  border:1px solid var(--line);
-  border-radius:30px;
-  padding:8px 14px;
-  color:var(--gold2);
-  font-size:13px;
-}
-.hero{padding:38px 0 25px;text-align:center}
-.eyebrow{
-  color:var(--gold);
-  font-size:11px;
-  font-weight:800;
-  letter-spacing:2px;
-}
-.hero h1{
-  font-size:clamp(32px,6vw,48px);
-  color:var(--gold2);
-  margin:10px 0;
-}
-.hero p{
-  max-width:650px;
-  margin:auto;
-  color:var(--muted);
-  font-size:14px;
-}
-.stats{
-  display:flex;
-  justify-content:center;
-  gap:10px;
-  flex-wrap:wrap;
-  margin-top:22px;
-}
-.stat{
-  background:var(--panel);
-  border:1px solid var(--line);
-  border-radius:12px;
-  padding:9px 15px;
-  color:var(--muted);
-  font-size:12px;
-}
-.stat b{color:var(--gold2);font-size:17px;margin-right:5px}
-.toolbar{
-  position:sticky;
-  top:0;
-  z-index:5;
-  background:rgba(16,23,34,.96);
-  padding:12px 0;
-  border-top:1px solid var(--line);
-  border-bottom:1px solid var(--line);
-}
-.controls{display:grid;gap:10px}
-.search{
-  width:100%;
-  padding:13px 15px;
-  border:1px solid var(--line);
-  border-radius:11px;
-  background:var(--panel);
-  color:var(--text);
-  font-size:14px;
-  outline:none;
-}
-.filters{
-  display:flex;
-  gap:7px;
-  overflow-x:auto;
-  padding-bottom:3px;
-}
-.filter{
-  white-space:nowrap;
-  border:1px solid var(--line);
-  background:var(--panel);
-  color:var(--muted);
-  border-radius:30px;
-  padding:8px 13px;
-  font-size:12px;
-  cursor:pointer;
-}
-.filter.active{
-  background:linear-gradient(135deg,#d8b56a,#a9843d);
-  color:#171d26;
-  font-weight:800;
-}
-main{padding:25px 0 50px}
-.section-head{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:15px;
-}
-.section-head h2{margin:0;color:var(--gold2);font-size:20px}
-.section-head span{font-size:12px;color:var(--muted)}
-.grid{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:12px;
-}
-.card{
-  overflow:hidden;
-  background:linear-gradient(150deg,#223248,#16202f);
-  border:1px solid var(--line);
-  border-radius:15px;
-  cursor:pointer;
-  transition:.2s;
-}
-.card:hover{transform:translateY(-3px);border-color:var(--gold)}
-.portrait{
-  height:145px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  position:relative;
-  overflow:hidden;
-  background:radial-gradient(circle,rgba(216,181,106,.23),transparent 65%),linear-gradient(145deg,#2b3b50,#111b29);
-  border-bottom:1px solid var(--line);
-}
-.portrait img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  object-position:center 25%;
-}
-.portrait:before{
-  content:"";
-  position:absolute;
-  width:95px;
-  height:95px;
-  border:1px solid rgba(240,217,157,.3);
-  border-radius:50%;
-  pointer-events:none;
-}
-.sigil{position:relative;color:var(--gold2);font-family:Georgia,serif;font-size:44px}
-.rarity{
-  position:absolute;
-  top:9px;
-  left:9px;
-  z-index:2;
-  background:#101722dd;
-  border:1px solid var(--line);
-  color:var(--gold2);
-  border-radius:6px;
-  padding:3px 7px;
-  font-size:10px;
-  font-weight:bold;
-}
-.class-icon{position:absolute;right:10px;top:8px;z-index:2;font-size:18px}
-.card-info{padding:11px}
-.name{font-weight:800;font-size:14px}
-.original{font-size:10px;color:var(--muted)}
-.class{
-  display:inline-block;
-  margin-top:7px;
-  color:var(--gold2);
-  font-size:10px;
-  border:1px solid var(--line);
-  padding:3px 8px;
-  border-radius:20px;
-}
-.notice{
-  margin-top:25px;
-  padding:15px;
-  border:1px solid var(--line);
-  border-radius:12px;
-  background:var(--panel);
-  color:var(--muted);
-  font-size:12px;
-}
-.notice b{color:var(--gold2)}
-footer{
-  border-top:1px solid var(--line);
-  padding:22px 0;
-  text-align:center;
-  color:var(--muted);
-  font-size:11px;
-}
-.modal{
-  display:none;
-  position:fixed;
-  inset:0;
-  z-index:20;
-  background:#000c;
-  padding:15px;
-  overflow:auto;
-}
-.modal.open{
-  display:flex;
-  justify-content:center;
-  align-items:flex-start;
-}
-.modal-box{
-  width:min(650px,100%);
-  margin:auto;
-  background:#172333;
-  border:1px solid var(--gold);
-  border-radius:17px;
-  overflow:hidden;
-}
-.modal-top{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:13px 16px;
-  border-bottom:1px solid var(--line);
-}
-.close{
-  background:none;
-  color:var(--gold2);
-  border:1px solid var(--line);
-  border-radius:50%;
-  width:34px;
-  height:34px;
-  font-size:20px;
-  cursor:pointer;
-}
-.modal-content{padding:18px}
-.modal-title{font-size:26px;color:var(--gold2);font-weight:800}
-.modal-sub{color:var(--muted);font-size:12px}
-.modal-content h3{color:var(--gold);font-size:14px;margin:20px 0 8px}
-.skill-list{display:grid;gap:8px}
-.skill{
-  padding:11px;
-  background:var(--panel2);
-  border-radius:10px;
-  font-size:12px;
-  color:#dce3eb;
-}
-.skill b{display:block;color:var(--gold2);margin-bottom:4px}
-.pending{
-  color:var(--muted);
-  font-size:12px;
-  background:var(--panel2);
-  padding:12px;
-  border-radius:10px;
-}
-@media(min-width:600px){
-  .controls{grid-template-columns:1fr auto;align-items:center}
-  .grid{grid-template-columns:repeat(3,1fr)}
-  .portrait{height:165px}
-}
-@media(min-width:900px){
-  .grid{grid-template-columns:repeat(4,1fr);gap:15px}
-  .portrait{height:185px}
-}
-</style>
-</head>
 
-<body>
+* {
+  box-sizing: border-box;
+}
 
-<header>
-  <div class="wrap top">
-    <a class="brand" href="index.html">👑 ROYAL CROWN | FANGROUP</a>
-    <a class="back" href="index.html">← На главную</a>
-  </div>
-</header>
+body {
+  margin: 0;
+  background:
+    radial-gradient(circle at top, #26374a 0, transparent 42%),
+    var(--bg);
+  color: var(--text);
+  font-family: Arial, sans-serif;
+}
 
-<section class="hero wrap">
-  <div class="eyebrow">БАЗА ЗНАНИЙ FANGROUP</div>
-  <h1>Герои</h1>
-  <p>Справочник персонажей Royal Crown: Kingdom Wars. Изучайте классы, навыки и подбирайте героев для своего отряда.</p>
-  <div class="stats">
-    <div class="stat"><b id="totalCount">0</b>героев</div>
-    <div class="stat"><b>UR</b>и <b>SSR</b></div>
-    <div class="stat"><b>RU</b>русский каталог</div>
-  </div>
-</section>
+header {
+  text-align: center;
+  padding: 30px 16px 22px;
+}
 
-<div class="toolbar">
-  <div class="wrap controls">
-    <input id="search" class="search" type="search" placeholder="🔍 Найти героя...">
-    <div class="filters" id="filters">
-      <button class="filter active" data-filter="all">Все герои</button>
-      <button class="filter" data-filter="UR">UR</button>
-      <button class="filter" data-filter="SSR">SSR</button>
-      <button class="filter" data-filter="Воин">⚔️ Воины</button>
-      <button class="filter" data-filter="Танк">🛡️ Танки</button>
-      <button class="filter" data-filter="Стрелок">🏹 Стрелки</button>
-      <button class="filter" data-filter="Маг">🔮 Маги</button>
-    </div>
-  </div>
-</div>
+header h1 {
+  color: var(--gold2);
+  font-size: clamp(25px, 5vw, 38px);
+  margin: 0 0 10px;
+}
 
-<main class="wrap">
-  <div class="section-head">
-    <h2>Каталог персонажей</h2>
-    <span id="resultCount">0 персонажей</span>
-  </div>
-  <div class="grid" id="heroGrid"></div>
-  <div class="pending" id="empty" style="display:none">Ничего не найдено.</div>
-  <div class="notice">
-    <b>О каталоге:</b> это первая версия справочника FANGroup.
-    Имена и классы являются рабочей локализацией.
-    Навыки и характеристики будут постепенно проверяться и дополняться.
-  </div>
-</main>
+header p {
+  color: var(--muted);
+  margin: 0 auto;
+  max-width: 650px;
+  line-height: 1.5;
+}
 
-<footer>
-  <div class="wrap">Royal Crown: Kingdom Wars | FANGroup · Справочник сообщества</div>
-</footer>
+.back {
+  display: inline-block;
+  margin-top: 18px;
+  padding: 10px 17px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--gold2);
+  text-decoration: none;
+}
 
-<div class="modal" id="modal">
+.back:hover {
+  background: rgba(217,182,107,.1);
+}
+
+.container {
+  width: min(1200px, 94%);
+  margin: auto;
+  padding-bottom: 45px;
+}
+
+.stats {
+  text-align: center;
+  color: var(--muted);
+  margin: 8px 0 20px;
+}
+
+.stats strong {
+  color: var(--gold2);
+}
+
+.filters {
+  background: rgba(24,36,51,.9);
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  padding: 15px;
+  margin-bottom: 22px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+}
+
+.filters input,
+.filters select {
+  width: 100%;
+  min-width: 0;
+  padding: 12px;
+  border-radius: 9px;
+  border: 1px solid var(--border);
+  background: #101a27;
+  color: var(--text);
+  outline: none;
+}
+
+.filters input:focus,
+.filters select:focus {
+  border-color: var(--gold);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
+  gap: 15px;
+}
+
+.card {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(160deg, #26374a, #172331 75%);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  border-color: var(--gold);
+  box-shadow: 0 8px 25px rgba(0,0,0,.25);
+}
+
+.portrait {
+  width: 100%;
+  aspect-ratio: 1 / 1.12;
+  background: linear-gradient(145deg, #34465b, #192635);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.fallback {
+  color: var(--gold2);
+  font-size: 55px;
+  font-weight: bold;
+}
+
+.card-info {
+  padding: 11px;
+}
+
+.card h3 {
+  font-size: 16px;
+  margin: 0 0 9px;
+  text-align: center;
+}
+
+.tags {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.tag {
+  font-size: 11px;
+  padding: 5px 8px;
+  border-radius: 20px;
+  background: rgba(255,255,255,.08);
+  color: var(--muted);
+}
+
+.tag.ur {
+  color: #ffe0a0;
+  background: rgba(217,166,78,.18);
+}
+
+.tag.ssr {
+  color: #d9ccff;
+  background: rgba(155,131,223,.2);
+}
+
+.empty {
+  text-align: center;
+  color: var(--muted);
+  padding: 35px 10px;
+  grid-column: 1 / -1;
+}
+
+footer {
+  text-align: center;
+  color: var(--muted);
+  font-size: 13px;
+  padding: 25px 12px;
+}
+
+/* Окно героя */
+
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  background: rgba(0,0,0,.78);
+  padding: 18px;
+  overflow-y: auto;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal.open {
+  display: flex;
+}
+
+.modal-box {
+  width: min(620px, 100%);
+  max-height: 92vh;
+  overflow-y: auto;
+  background: #182433;
+  border: 1px solid var(--gold);
+  border-radius: 17px;
+  padding: 20px;
+  position: relative;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 13px;
+  border: 0;
+  background: transparent;
+  color: white;
+  font-size: 29px;
+  cursor: pointer;
+}
+
+.modal-top {
+  display: flex;
+  gap: 17px;
+  align-items: center;
+  padding-right: 25px;
+}
+
+.modal-image {
+  width: 115px;
+  height: 130px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #29394b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.modal-image .fallback {
+  font-size: 45px;
+}
+
+.modal h2 {
+  color: var(--gold2);
+  margin: 0 0 10px;
+}
+
+.modal-meta {
+  color: var(--muted);
+  line-height: 1.7;
+  font-size: 14px;
+}
+
+.skills-title {
+  color: var(--gold2);
+  margin: 22px 0 12px;
+}
+
+.skill {
+  background: #223246;
+  border: 1px solid rgba(217,182,107,.15);
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 9px;
+}
+
+.skill h4 {
+  margin: 0 0 6px;
+  color: #f1d99b;
+}
+
+.skill p {
+  margin: 0;
+  color: #c3ccd6;
+  line-height: 1.5;
+  font-size: 14px;
+}
+
+@media (max-width: 650px) {
+  .filters {
+    grid-template-columns: 1fr;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .card h3 {
+    font-size: 14px;
+  }
+
+  .modal-top {
+    align-items: flex-start;
+  }
+
+  .modal-image {
+    width: 95px;
+    height: 110px;
+  }
+}
+</style></head><body><header>
+  <h1>⚔️ Герои Royal Crown</h1>
+  <p>Каталог героев Royal Crown: Kingdom Wars. Изучайте редкость, классы и доступную информацию о навыках.</p>
+  <a class="back" href="index.html">← На главную FANGroup</a>
+</header><main class="container">  <div class="stats">
+    Всего героев в каталоге: <strong id="totalCount">21</strong>
+    · Найдено: <strong id="foundCount">21</strong>
+  </div>  <section class="filters">
+    <input id="search" type="search" placeholder="🔎 Найти героя..."><select id="rarityFilter">
+  <option value="">Все редкости</option>
+  <option value="UR">UR</option>
+  <option value="SSR">SSR</option>
+</select>
+
+<select id="classFilter">
+  <option value="">Все классы</option>
+  <option value="Пехота">Пехота</option>
+  <option value="Лучник">Лучник</option>
+  <option value="Маг">Маг</option>
+  <option value="Не указано">Класс не указан</option>
+</select>
+
+  </section>  <section class="grid" id="heroGrid"></section></main><footer>
+  Royal Crown: Kingdom Wars | FANGroup
+</footer><div class="modal" id="heroModal">
   <div class="modal-box">
-    <div class="modal-top">
-      <span class="eyebrow">КАРТОЧКА ГЕРОЯ</span>
-      <button class="close" id="closeModal">×</button>
-    </div>
-    <div class="modal-content" id="modalContent"></div>
+    <button class="close" id="closeModal" aria-label="Закрыть">×</button><div class="modal-top">
+  <div class="modal-image" id="modalImage"></div>
+  <div>
+    <h2 id="modalName"></h2>
+    <div class="modal-meta" id="modalMeta"></div>
   </div>
 </div>
 
-<script>
+<h3 class="skills-title">Навыки героя</h3>
+<div id="modalSkills"></div>
+
+  </div>
+</div><script>
 const heroes = [
-{name:"Валькирия",en:"Valkyrie",rarity:"UR",role:"Воин",icon:"⚔️",initial:"В",image:"valkyrie.jpg",skills:[
-["Северный удар","Наносит прямой урон выбранному отряду и на 3 секунды увеличивает получаемый им урон от навыков."],
-["Валькирия","При командовании отрядом воинов снижает получаемый урон от лучников, повышает атаку и защиту воинов."],
-["Первенец богов","Обычные атаки с вероятностью наносят цели дополнительный прямой урон."],
-["Война судного дня","Увеличивает вместимость отряда, а также атаку, защиту и здоровье воинов."]
-]},
-{name:"Аскара",en:"Askara",rarity:"UR",role:"Воин",icon:"⚔️",initial:"А"},
-{name:"Юнь",en:"Yun",rarity:"UR",role:"Воин",icon:"⚔️",initial:"Ю",image:"yun.jpg",skills:[
-["Вперёд, в атаку","Наносит урон до пяти отрядам в секторе перед собой, снижая наносимый ими урон и скорость передвижения на 2 секунды."],
-["Отвага и мощь","При командовании воинами снижает получаемый урон от лучников и повышает атаку и защиту воинов."],
-["Жестокая битва","Снижает весь урон, получаемый своими войсками, и увеличивает эффективность получаемого лечения."],
-["Несокрушимая доблесть","Увеличивает вместимость отряда, а также атаку, защиту и здоровье воинов."]
-]},
-{name:"Митридат",en:"Mithridates",rarity:"UR",role:"Танк",icon:"🛡️",initial:"М"},
-{name:"Артемида",en:"Artemis",rarity:"UR",role:"Стрелок",icon:"🏹",initial:"А",image:"artemida.jpg",skills:[
-["Метеоритный дождь","Наносит урон до пяти отрядам в круглой области перед собой, снижая их атаку и скорость передвижения на 3 секунды."],
-["Печать стремительного ветра","При командовании лучниками снижает получаемый урон от магов и повышает атаку и защиту лучников."],
-["Проворная контратака","Обычные атаки с вероятностью активируют лечение и восстанавливают ярость; также увеличивается скорость передвижения отряда."],
-["Лунный натиск","Увеличивает вместимость отряда, а также атаку, защиту и здоровье стрелков."]
-]},
-{name:"Катерина",en:"Katerina",rarity:"UR",role:"Стрелок",icon:"🏹",initial:"К",image:"katarina.jpg"},
-{name:"Атропос",en:"Atropos",rarity:"UR",role:"Стрелок",icon:"🏹",initial:"А"},
-{name:"Да Винчи",en:"Da Vinci",rarity:"UR",role:"Стрелок",icon:"🏹",initial:"Д",image:"davinci.jpg",skills:[
-["Тактический захват","Один раз наносит прямой урон до трёх целям; урон уменьшается за каждую дополнительную цель, а защита поражённых целей снижается на 3 раунда."],
-["Залп арбалета","Снижает получаемый урон от магов и повышает атаку и защиту лучников."],
-["Небесный дождь стрел","Увеличивает наносимый урон на 25%, когда численность отряда опускается ниже 50%."],
-["Кристальная стража","Увеличивает вместимость армии, а также атаку, защиту и здоровье лучников."]
-]},
-{name:"Дракула",en:"Dracula",rarity:"UR",role:"Маг",icon:"🔮",initial:"Д",image:"dracula.jpg",skills:[
-["Багровый приговор","Наносит урон до трёх отрядам в секторе перед собой и на 5 секунд снижает получаемое ими лечение."],
-["Ночное благословение","При командовании магами снижает получаемый урон от воинов и повышает атаку и защиту магов."],
-["Эхо кровожадности","Снижает получаемый урон от контратак. При получении обычной атаки может нанести прямой урон атакующему."],
-["Последняя трапеза","Увеличивает вместимость отряда, а также атаку, защиту и здоровье магов."]
-]},
-{name:"Хаттори Хандзо",en:"Hattori Hanzo",rarity:"UR",role:"Маг",icon:"🔮",initial:"Х"},
-{name:"Кир",en:"Cyrus",rarity:"UR",role:"Маг",icon:"🔮",initial:"К",image:"cyrus.jpg",skills:[
-["Песчаная буря полумесяца","Наносит урон до пяти отрядам в секторе перед собой и на 2 секунды снижает их атаку, защиту и здоровье."],
-["Сумрачное истощение","При командовании магами снижает получаемый урон от воинов и повышает атаку и защиту магов."],
-["Пески, сковывающие шаг","При запуске совместной атаки увеличивает её вместимость и атаку."],
-["Охота дикого ветра","Увеличивает вместимость отряда, а также атаку, защиту и здоровье магов."]
-]},
-{name:"Екатерина",en:"Catherine",rarity:"UR",role:"Маг",icon:"🔮",initial:"Е",image:"katrin.jpg",skills:[
-["Морозный танец","Наносит прямой урон одной цели; обычные атаки получают шанс заморозить её на 1 ход в течение следующих 3 секунд."],
-["Владения ледяного конуса","Снижает получаемый урон от воинов и повышает атаку и защиту магов."],
-["Вечные объятия","При получении обычной атаки с вероятностью 25% снижает атаку противника на 20% на 2 секунды."],
-["Кристальная защита","Увеличивает вместимость отряда, а также атаку, защиту и здоровье магов."]
-]},
-{name:"Айви",en:"Ivy",rarity:"SSR",role:"Воин",icon:"⚔️",initial:"А"},
-{name:"Ланселот",en:"Lancelot",rarity:"SSR",role:"Танк",icon:"🛡️",initial:"Л",image:"lancelot.jpg"},
-{name:"Глинк",en:"Glink",rarity:"SSR",role:"Стрелок",icon:"🏹",initial:"Г",image:"grink.jpg"},
-{name:"Робин",en:"Robin",rarity:"SSR",role:"Стрелок",icon:"🏹",initial:"Р",image:"robin.jpg"},
-{name:"Лилит",en:"Lilith",rarity:"SSR",role:"Маг",icon:"🔮",initial:"Л",image:"lilith.jpg"},
-{name:"Ния",en:"Nia",rarity:"SSR",role:"Маг",icon:"🔮",initial:"Н",image:"niya.jpg"}
+
+  // UR
+
+  {
+    name: "Валькирия",
+    rarity: "UR",
+    heroClass: "Пехота",
+    image: "valkyrie.jpg",
+    skills: []
+  },
+  {
+    name: "Аскара",
+    rarity: "UR",
+    heroClass: "Не указано",
+    image: "",
+    skills: []
+  },
+  {
+    name: "Юнь",
+    rarity: "UR",
+    heroClass: "Пехота",
+    image: "yun.jpg",
+    skills: []
+  },
+  {
+    name: "Митридат",
+    rarity: "UR",
+    heroClass: "Не указано",
+    image: "",
+    skills: []
+  },
+  {
+    name: "Артемида",
+    rarity: "UR",
+    heroClass: "Лучник",
+    image: "artemida.jpg",
+    skills: []
+  },
+  {
+    name: "Катерина",
+    rarity: "UR",
+    heroClass: "Не указано",
+    image: "katarina.jpg",
+    skills: []
+  },
+  {
+    name: "Атропос",
+    rarity: "UR",
+    heroClass: "Не указано",
+    image: "",
+    skills: []
+  },
+  {
+    name: "Да Винчи",
+    rarity: "UR",
+    heroClass: "Лучник",
+    image: "davinci.jpg",
+    skills: []
+  },
+  {
+    name: "Дракула",
+    rarity: "UR",
+    heroClass: "Маг",
+    image: "dracula.jpg",
+    skills: []
+  },
+  {
+    name: "Хаттори Хандзо",
+    rarity: "UR",
+    heroClass: "Не указано",
+    image: "",
+    skills: []
+  },
+  {
+    name: "Кир",
+    rarity: "UR",
+    heroClass: "Маг",
+    image: "cyrus.jpg",
+    skills: []
+  },
+  {
+    name: "Екатерина",
+    rarity: "UR",
+    heroClass: "Маг",
+    image: "katrin.jpg",
+    skills: []
+  },
+
+  // SSR
+
+  {
+    name: "Айви",
+    rarity: "SSR",
+    heroClass: "Не указано",
+    image: "",
+    skills: []
+  },
+  {
+    name: "Ланселот",
+    rarity: "SSR",
+    heroClass: "Пехота",
+    image: "lancelot.jpg",
+    skills: []
+  },
+  {
+    name: "Глинк",
+    rarity: "SSR",
+    heroClass: "Пехота",
+    image: "grink.jpg",
+    skills: []
+  },
+  {
+    name: "Робин",
+    rarity: "SSR",
+    heroClass: "Лучник",
+    image: "robin.jpg",
+    skills: []
+  },
+  {
+    name: "Лилит",
+    rarity: "SSR",
+    heroClass: "Маг",
+    image: "lilith.jpg",
+    skills: []
+  },
+  {
+    name: "Ния",
+    rarity: "SSR",
+    heroClass: "Маг",
+    image: "niya.jpg",
+    skills: []
+  },
+  {
+    name: "Виктор",
+    rarity: "SSR",
+    heroClass: "Пехота",
+    image: "viktor.jpg",
+    skills: []
+  },
+  {
+    name: "Алвин",
+    rarity: "SSR",
+    heroClass: "Пехота",
+    image: "alvin.jpg",
+    skills: []
+  },
+  {
+    name: "Белла",
+    rarity: "SSR",
+    heroClass: "Маг",
+    image: "bella.jpg",
+    skills: []
+  }
+
 ];
 
-const grid=document.getElementById("heroGrid");
-const search=document.getElementById("search");
-let activeFilter="all";
+const grid = document.getElementById("heroGrid");
+const search = document.getElementById("search");
+const rarityFilter = document.getElementById("rarityFilter");
+const classFilter = document.getElementById("classFilter");
+const foundCount = document.getElementById("foundCount");
 
-function render(){
-  const q=search.value.trim().toLowerCase();
-  const list=heroes.filter(h=>{
-    const matches=(h.name+" "+h.en+" "+h.role+" "+h.rarity).toLowerCase().includes(q);
-    const by=activeFilter==="all"||h.rarity===activeFilter||h.role===activeFilter;
-    return matches&&by;
+document.getElementById("totalCount").textContent = heroes.length;
+
+function createPortrait(hero, modal = false) {
+  const wrapper = document.createElement("div");
+
+  if (modal) {
+    wrapper.className = "modal-image";
+  } else {
+    wrapper.className = "portrait";
+  }
+
+  const fallback = document.createElement("span");
+  fallback.className = "fallback";
+  fallback.textContent = hero.name.charAt(0).toUpperCase();
+
+  if (hero.image) {
+    const img = document.createElement("img");
+    img.src = "assets/heroes/" + hero.image;
+    img.alt = hero.name;
+    img.onerror = function() {
+      this.remove();
+      fallback.style.display = "block";
+    };
+
+    fallback.style.display = "none";
+    wrapper.appendChild(fallback);
+    wrapper.appendChild(img);
+  } else {
+    wrapper.appendChild(fallback);
+  }
+
+  return wrapper;
+}
+
+function renderHeroes() {
+  const query = search.value.trim().toLowerCase();
+  const rarity = rarityFilter.value;
+  const heroClass = classFilter.value;
+
+  const filtered = heroes.filter(hero => {
+    const matchesName = hero.name.toLowerCase().includes(query);
+    const matchesRarity = !rarity || hero.rarity === rarity;
+    const matchesClass = !heroClass || hero.heroClass === heroClass;
+
+    return matchesName && matchesRarity && matchesClass;
   });
 
-  grid.innerHTML=list.map(h=>`
-    <article class="card" tabindex="0" data-en="${h.en}">
-      <div class="portrait">
-        ${h.image?`<img src="assets/heroes/${h.image}" alt="${h.name}" onerror="this.remove()">`:`<span class="sigil">${h.initial}</span>`}
-        <span class="rarity">${h.rarity}</span>
-        <span class="class-icon">${h.icon}</span>
-      </div>
-      <div class="card-info">
-        <div class="name">${h.name}</div>
-        <div class="original">${h.en}</div>
-        <span class="class">${h.icon} ${h.role}</span>
-      </div>
-    </article>
-  `).join("");
+  grid.innerHTML = "";
+  foundCount.textContent = filtered.length;
 
-  document.getElementById("resultCount").textContent=list.length+" персонажей";
-  document.getElementById("empty").style.display=list.length?"none":"block";
+  if (!filtered.length) {
+    grid.innerHTML = '<div class="empty">Герои не найдены. Попробуйте изменить фильтры.</div>';
+    return;
+  }
 
-  grid.querySelectorAll(".card").forEach(card=>{
-    const hero=heroes.find(h=>h.en===card.dataset.en);
-    card.addEventListener("click",()=>openHero(hero));
-    card.addEventListener("keydown",e=>{
-      if(e.key==="Enter")openHero(hero);
+  filtered.forEach(hero => {
+    const card = document.createElement("article");
+    card.className = "card";
+
+    const portrait = createPortrait(hero);
+
+    const info = document.createElement("div");
+    info.className = "card-info";
+
+    const title = document.createElement("h3");
+    title.textContent = hero.name;
+
+    const tags = document.createElement("div");
+    tags.className = "tags";
+
+    const rarityTag = document.createElement("span");
+    rarityTag.className = "tag " + hero.rarity.toLowerCase();
+    rarityTag.textContent = hero.rarity;
+
+    const classTag = document.createElement("span");
+    classTag.className = "tag";
+    classTag.textContent = hero.heroClass;
+
+    tags.appendChild(rarityTag);
+    tags.appendChild(classTag);
+
+    info.appendChild(title);
+    info.appendChild(tags);
+
+    card.appendChild(portrait);
+    card.appendChild(info);
+
+    card.addEventListener("click", () => openHero(hero));
+
+    grid.appendChild(card);
+  });
+}
+
+function openHero(hero) {
+  const modal = document.getElementById("heroModal");
+  const modalImage = document.getElementById("modalImage");
+  const modalSkills = document.getElementById("modalSkills");
+
+  modalImage.innerHTML = "";
+  modalImage.appendChild(createPortrait(hero, true));
+
+  document.getElementById("modalName").textContent = hero.name;
+
+  document.getElementById("modalMeta").innerHTML =
+    "Редкость: <strong>" + hero.rarity + "</strong><br>" +
+    "Класс: <strong>" + hero.heroClass + "</strong>";
+
+  modalSkills.innerHTML = "";
+
+  if (hero.skills && hero.skills.length) {
+    hero.skills.forEach((skill, index) => {
+      const block = document.createElement("div");
+      block.className = "skill";
+
+      const title = document.createElement("h4");
+      title.textContent = skill.name || ("Навык " + (index + 1));
+
+      const description = document.createElement("p");
+      description.textContent = skill.description || "Описание навыка будет добавлено.";
+
+      block.appendChild(title);
+      block.appendChild(description);
+      modalSkills.appendChild(block);
     });
-  });
+  } else {
+    const block = document.createElement("div");
+    block.className = "skill";
+
+    const message = document.createElement("p");
+    message.textContent = "Информация о навыках этого героя будет добавлена после обработки игровых материалов.";
+
+    block.appendChild(message);
+    modalSkills.appendChild(block);
+  }
+
+  modal.classList.add("open");
+  document.body.style.overflow = "hidden";
 }
 
-function openHero(h){
-  const hasSkills=Array.isArray(h.skills);
-  document.getElementById("modalContent").innerHTML=`
-    <div class="modal-title">${h.name}</div>
-    <div class="modal-sub">${h.en} · ${h.rarity} · ${h.icon} ${h.role}</div>
-    <h3>О персонаже</h3>
-    <div class="pending">
-      ${hasSkills
-      ?"Ниже представлены предварительные переводы описаний навыков. Их необходимо сверить с русской версией игры."
-      :"Информация о навыках и характеристиках пока собирается. Данные будут добавлены после проверки."}
-    </div>
-    <h3>Навыки</h3>
-    ${hasSkills
-      ? `<div class="skill-list">${h.skills.map((s,i)=>`
-          <div class="skill"><b>${i+1}. ${s[0]}</b>${s[1]}</div>
-        `).join("")}</div>`
-      : `<div class="pending">Описания навыков будут добавлены позже.</div>`}
-    <h3>Рекомендации FANGroup</h3>
-    <div class="pending">
-      Связки и оценка эффективности будут опубликованы после анализа навыков и их взаимодействия.
-    </div>
-  `;
-  document.getElementById("modal").classList.add("open");
-  document.body.style.overflow="hidden";
+function closeHero() {
+  document.getElementById("heroModal").classList.remove("open");
+  document.body.style.overflow = "";
 }
 
-function closeModal(){
-  document.getElementById("modal").classList.remove("open");
-  document.body.style.overflow="";
-}
+search.addEventListener("input", renderHeroes);
+rarityFilter.addEventListener("change", renderHeroes);
+classFilter.addEventListener("change", renderHeroes);
 
-search.addEventListener("input",render);
+document.getElementById("closeModal").addEventListener("click", closeHero);
 
-document.getElementById("filters").addEventListener("click",e=>{
-  const btn=e.target.closest("button[data-filter]");
-  if(!btn)return;
-  activeFilter=btn.dataset.filter;
-  document.querySelectorAll(".filter").forEach(b=>{
-    b.classList.toggle("active",b===btn);
-  });
-  render();
+document.getElementById("heroModal").addEventListener("click", event => {
+  if (event.target.id === "heroModal") {
+    closeHero();
+  }
 });
 
-document.getElementById("closeModal").addEventListener("click",closeModal);
-document.getElementById("modal").addEventListener("click",e=>{
-  if(e.target.id==="modal")closeModal();
-});
-document.addEventListener("keydown",e=>{
-  if(e.key==="Escape")closeModal();
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape") {
+    closeHero();
+  }
 });
 
-document.getElementById("totalCount").textContent=heroes.length;
-render();
-</script>
-</body>
+renderHeroes();
+</script></body>
 </html>
