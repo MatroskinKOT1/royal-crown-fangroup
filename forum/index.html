@@ -28,40 +28,180 @@ const $ = id => document.getElementById(id);
 const esc = s => String(s ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const dateText = s => new Date(s).toLocaleString('ru-RU',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
 function safeImageUrl(value){try{const u=new URL(value);return ['https:','http:'].includes(u.protocol)?u.href:'';}catch{return '';}}
-function avatarMarkup(url,nickname,size=34){const safe=safeImageUrl(url);return safe?`<img class="avatar" style="width:${size}px;height:${size}px" src="${esc(safe)}" alt="" loading="lazy">`:`<span class="avatar" style="display:inline-grid;place-items:center;width:${size}px;height:${size}px;font-weight:700;color:var(--gold2)">${esc((nickname||'И').trim().charAt(0).toUpperCase())}</span>`;}
-function status(id,msg,error=false){$(id).textContent=msg;$(id).classList.toggle('error',error)}
-function showMain(which){$('listView').classList.toggle('hidden',which!=='list');$('threadView').classList.toggle('hidden',which!=='thread');$('newTopicView').classList.toggle('hidden',which!=='new')}
-function drawCategories(){ $('categories').innerHTML=CATEGORIES.map(c=>`<button class="cat ${selectedCategory===c?'active':''}" data-cat="${esc(c)}">${esc(c)} <small>${c==='Все темы'?'':(allTopics.filter(t=>t.category===c).length||'')}</small></button>`).join(''); $('newCategory').innerHTML=CATEGORIES.slice(1).map(c=>`<option>${esc(c)}</option>`).join(''); }
-function drawTopics(){let q=$('search').value.trim().toLowerCase();let rows=allTopics.filter(t=>(selectedCategory==='Все темы'||t.category===selectedCategory)&&(!q||`${t.title} ${t.content} ${t.category} ${t.author_name||''}`.toLowerCase().includes(q)));$('topicList').innerHTML=rows.length?rows.map(t=>`<article class="topic" data-id="${t.id}"><div class="topic-title">${esc(t.title)}</div><div class="topic-meta"><span>${esc(t.category)}</span><span>${avatarMarkup(t.author_avatar,t.author_name,24)} ${esc(t.author_name||'Игрок')}</span><span>${dateText(t.created_at)}</span><span>💬 ${t.reply_count||0}</span><span>♥ ${t.like_count||0}</span></div><div class="topic-preview">${esc(t.content)}</div></article>`).join(''):'<div class="empty">Пока здесь нет тем. Будьте первым!</div>';}
-async function loadTopics(){const {data,error}=await db.from('rc_forum_topics').select('id,user_id,category,title,content,created_at,updated_at').order('created_at',{ascending:false}).limit(200);if(error){$('topicList').innerHTML=`<div class="empty">Не удалось загрузить темы: ${esc(error.message)}</div>`;return;}let ids=(data||[]).map(t=>t.id);let [profiles,replies,likes]=await Promise.all([db.from('rc_forum_profiles').select('id,nickname,avatar_url'),ids.length?db.from('rc_forum_replies').select('topic_id').in('topic_id',ids):Promise.resolve({data:[]}),ids.length?db.from('rc_forum_likes').select('topic_id').in('topic_id',ids):Promise.resolve({data:[]})]);let profileMap=Object.fromEntries((profiles.data||[]).map(p=>[p.id,p]));let rc={},lc={};(replies.data||[]).forEach(x=>rc[x.topic_id]=(rc[x.topic_id]||0)+1);(likes.data||[]).forEach(x=>lc[x.topic_id]=(lc[x.topic_id]||0)+1);allTopics=(data||[]).map(t=>({...t,author_name:profileMap[t.user_id]?.nickname||'Игрок',author_avatar:profileMap[t.user_id]?.avatar_url||'',reply_count:rc[t.id]||0,like_count:lc[t.id]||0}));drawCategories();drawTopics();}
-async function refreshUser(){const {data}=await db.auth.getSession();currentUser=data.session?.user||null;currentProfile=null;if(currentUser){const p=await db.from('rc_forum_profiles').select('*').eq('id',currentUser.id).maybeSingle();currentProfile=p.data;} $('userLabel').innerHTML=currentUser?`${avatarMarkup(currentProfile?.avatar_url,currentProfile?.nickname||'Игрок',28)} ${esc(currentProfile?.nickname||currentUser.email)}`:'Гость';$('authBtn').classList.toggle('hidden',!!currentUser);$('profileBtn').classList.toggle('hidden',!currentUser);$('logoutBtn').classList.toggle('hidden',!currentUser);$('newTopicBtn').textContent=currentUser?'＋ Создать тему':'＋ Войти, чтобы писать';}
-function openAuth(mode='login') {authMode=mode;$('authView').classList.remove('hidden');$('forumView').classList.add('hidden');$('authTitle').textContent=mode==='signup'?'Регистрация':'Вход на форум';$('nicknameWrap').classList.toggle('hidden',mode!=='signup');$('tabLogin').classList.toggle('active',mode==='login');$('tabSignup').classList.toggle('active',mode==='signup');$('authSubmit').textContent=mode==='signup'?'Зарегистрироваться':'Войти';status('authStatus','');}
-function closeAuth(){$('authView').classList.add('hidden');$('forumView').classList.remove('hidden');}
-function openProfile(){if(!currentUser){openAuth();return;}$('authView').classList.add('hidden');$('forumView').classList.add('hidden');$('profileView').classList.remove('hidden');$('profileNickname').value=currentProfile?.nickname||'';$('profileAvatarFile').value='';$('profileNicknameLabel').textContent=currentProfile?.nickname||'Игрок';updateAvatarPreview();status('profileStatus','');}
-function updateAvatarPreview(){const nick=$('profileNickname').value.trim()||'Игрок',file=$('profileAvatarFile').files?.[0];$('profileNicknameLabel').textContent=nick;if(file){const old=$('avatarPreview').dataset.objectUrl;if(old)URL.revokeObjectURL(old);const objectUrl=URL.createObjectURL(file);$('avatarPreview').dataset.objectUrl=objectUrl;$('avatarPreview').src=objectUrl;return;}const url=currentProfile?.avatar_url||'';$('avatarPreview').src=safeImageUrl(url)||'data:image/svg+xml,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80"><rect width="100%" height="100%" rx="40" fill="#263952"/><text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-size="34" fill="#f4d895">${nick.charAt(0).toUpperCase()}</text></svg>`);}
-async function saveProfile(){
- if(!currentUser)return;
- const nickname=$('profileNickname').value.trim(),file=$('profileAvatarFile').files?.[0];
- if(nickname.length<2||nickname.length>24){status('profileStatus','Никнейм должен содержать от 2 до 24 символов.',true);return;}
- if(file){
-  if(!['image/jpeg','image/png','image/webp','image/gif'].includes(file.type)){status('profileStatus','Выбери изображение JPG, PNG, WebP или GIF.',true);return;}
-  if(file.size>3*1024*1024){status('profileStatus','Файл слишком большой. Максимальный размер — 3 МБ.',true);return;}
- }
- const button=$('saveProfileBtn');button.disabled=true;status('profileStatus',file?'Загружаем аватар...':'Сохраняем профиль...');
- let avatarUrl=currentProfile?.avatar_url||null;
- if(file){
-  const ext=({ 'image/jpeg':'jpg','image/png':'png','image/webp':'webp','image/gif':'gif'})[file.type];
-  const path=`${currentUser.id}/${Date.now()}-${crypto.randomUUID()}.${ext}`;
-  const {error:uploadError}=await db.storage.from('rc-forum-avatars').upload(path,file,{cacheControl:'3600',upsert:false,contentType:file.type});
-  if(uploadError){button.disabled=false;status('profileStatus','Не удалось загрузить аватар: '+uploadError.message,true);return;}
-  avatarUrl=db.storage.from('rc-forum-avatars').getPublicUrl(path).data.publicUrl;
- }
- const {error}=await db.from('rc_forum_profiles').update({nickname,avatar_url:avatarUrl}).eq('id',currentUser.id);
- button.disabled=false;
- if(error){status('profileStatus',error.message,true);return;}
- await refreshUser();await loadTopics();$('profileAvatarFile').value='';updateAvatarPreview();status('profileStatus','Профиль сохранён! Аватар загружен.');
+ function setStatus(id,msg,error=false){const el=$(id);el.textContent=msg;el.classList.toggle('error',error);}
+function avatarHTML(profile,size=34){const url=safeImageUrl(profile?.avatar_url);const nick=profile?.nickname||'Игрок';return url?`<img class="avatar" style="width:${size}px;height:${size}px" src="${esc(url)}" alt="" onerror="this.style.display='none'">`:`<span class="avatar" style="display:inline-grid;place-items:center;width:${size}px;height:${size}px">♟</span>`;}
+function authorHTML(profile){return `${avatarHTML(profile)}${esc(profile?.nickname||'Игрок')}`;}
+async function getProfile(userId){const {data,error}=await db.from('rc_forum_profiles').select('*').eq('id',userId).maybeSingle();if(error)throw error;return data;}
+async function loadProfile(){if(!currentUser)return;try{currentProfile=await getProfile(currentUser.id);if(!currentProfile){const nickname=currentUser.user_metadata?.nickname||'Игрок-'+currentUser.id.slice(0,8);const {data,error}=await db.from('rc_forum_profiles').insert({id:currentUser.id,nickname}).select().single();if(error)throw error;currentProfile=data;}}catch(e){console.error(e);setStatus('profileStatus','Не удалось загрузить профиль: '+e.message,true);}}
+function updateHeader(){const logged=!!currentUser;$('userLabel').textContent=logged?(currentProfile?.nickname||currentUser.email):'Гость';$('authBtn').classList.toggle('hidden',logged);$('logoutBtn').classList.toggle('hidden',!logged);$('profileBtn').classList.toggle('hidden',!logged);}
+function showMain(){ $('authView').classList.add('hidden');$('profileView').classList.add('hidden');$('forumView').classList.remove('hidden');$('listView').classList.remove('hidden');$('threadView').classList.add('hidden');$('newTopicView').classList.add('hidden');}
+function showAuth(){ $('forumView').classList.add('hidden');$('profileView').classList.add('hidden');$('authView').classList.remove('hidden');$('authStatus').textContent='';}
+function showProfile(){if(!currentUser)return showAuth();$('forumView').classList.add('hidden');$('authView').classList.add('hidden');$('profileView').classList.remove('hidden');$('profileNickname').value=currentProfile?.nickname||'';$('profileNicknameLabel').textContent=currentProfile?.nickname||'Игрок';$('avatarPreview').src=safeImageUrl(currentProfile?.avatar_url)||'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="80" height="80"%3E%3Crect width="100%25" height="100%25" fill="%23263952"/%3E%3Ctext x="50%25" y="58%25" text-anchor="middle" font-size="36" fill="%23e6bd68"%3E♟%3C/text%3E%3C/svg%3E';$('profileAvatarFile').value='';$('profileStatus').textContent='';}
+function renderCategories(){ $('categories').innerHTML=CATEGORIES.map(c=>`<button class="cat ${selectedCategory===c?'active':''}" data-category="${esc(c)}">${esc(c)}${c==='Все темы'?'<small>⌂</small>':''}</button>`).join('');$('newCategory').innerHTML=CATEGORIES.slice(1).map(c=>`<option>${esc(c)}</option>`).join('');}
+async function loadTopics(){ $('topicList').innerHTML='<div class="empty">Загружаем темы...</div>';let q=db.from('rc_forum_topics').select('*').order('created_at',{ascending:false});if(selectedCategory!=='Все темы')q=q.eq('category',selectedCategory);const term=$('search').value.trim();if(term)q=q.or(`title.ilike.%${term}%,content.ilike.%${term}%`);const {data,error}=await q.limit(100);if(error){$('topicList').innerHTML=`<div class="empty">Ошибка загрузки: ${esc(error.message)}</div>`;return;}allTopics=data||[];if(!allTopics.length){$('topicList').innerHTML='<div class="empty">В этом разделе пока нет тем. Будь первым!</div>';return;}const ids=allTopics.map(t=>t.user_id);const {data:profiles}=await db.from('rc_forum_profiles').select('id,nickname,avatar_url').in('id',[...new Set(ids)]);const map=Object.fromEntries((profiles||[]).map(p=>[p.id,p]));$('topicList').innerHTML=allTopics.map(t=>`<article class="topic" data-topic="${t.id}"><div class="topic-title">${esc(t.title)}</div><div class="topic-meta"><span>${authorHTML(map[t.user_id])}</span><span>${esc(t.category)}</span><span>${dateText(t.created_at)}</span></div><div class="topic-preview">${esc(t.content)}</div></article>`).join('');}
+async function openTopic(id){const topic=allTopics.find(t=>String(t.id)===String(id))||((await db.from('rc_forum_topics').select('*').eq('id',id).single()).data);if(!topic)return;currentTopic=topic;$('listView').classList.add('hidden');$('newTopicView').classList.add('hidden');$('threadView').classList.remove('hidden');$('threadView').innerHTML='<div class="empty">Загружаем обсуждение...</div>';const [{data:profile},{data:replies,error:replyError},{data:likes}] = await Promise.all([db.from('rc_forum_profiles').select('id,nickname,avatar_url').eq('id',topic.user_id).maybeSingle(),db.from('rc_forum_replies').select('*').eq('topic_id',id).order('created_at'),db.from('rc_forum_likes').select('user_id').eq('topic_id',id)]);const replyUsers=[...new Set((replies||[]).map(r=>r.user_id))];const {data:replyProfiles}=replyUsers.length?await db.from('rc_forum_profiles').select('id,nickname,avatar_url').in('id',replyUsers):{data:[]};const pm=Object.fromEntries((replyProfiles||[]).map(p=>[p.id,p]));const liked=(likes||[]).some(l=>l.user_id===currentUser?.id);$('threadView').innerHTML=`<button class="btn back" id="backToList">← Ко всем темам</button><h2 class="thread-title">${esc(topic.title)}</h2><div class="topic-meta"><span>${authorHTML(profile)}</span><span>${esc(topic.category)}</span><span>${dateText(topic.created_at)}</span></div><div class="thread-body">${esc(topic.content)}</div><div class="form-actions"><button class="btn like" id="likeBtn">${liked?'♥':'♡'} Нравится (${(likes||[]).length})</button>${currentUser?.id===topic.user_id?'<button class="btn" id="deleteTopicBtn">Удалить тему</button>':''}</div><h3 style="color:var(--gold2);margin-top:24px">Ответы (${(replies||[]).length})</h3><div id="replies">${(replies||[]).map(r=>`<div class="reply"><div>${authorHTML(pm[r.user_id])} <span class="muted">${dateText(r.created_at)}</span></div><p>${esc(r.content)}</p>${currentUser?.id===r.user_id?`<button class="btn" data-delete-reply="${r.id}">Удалить</button>`:''}</div>`).join('')||'<div class="empty">Пока нет ответов.</div>'}</div>${currentUser?`<div class="form"><h3>Ваш ответ</h3><textarea class="field" id="replyContent" maxlength="5000" placeholder="Напишите ответ..."></textarea><div class="form-actions"><button class="btn primary" id="sendReplyBtn">Отправить ответ</button></div><div class="status" id="replyStatus"></div></div>`:'<div class="notice">Войдите, чтобы оставить ответ.</div>'}`;}
+async function publishTopic(){if(!currentUser)return showAuth();const category=$('newCategory').value,title=$('newTitle').value.trim(),content=$('newContent').value.trim();if(!title||!content)return setStatus('topicStatus','Заполни заголовок и сообщение.',true);$('publishBtn').disabled=true;const {error}=await db.from('rc_forum_topics').insert({user_id:currentUser.id,category,title,content});$('publishBtn').disabled=false;if(error)return setStatus('topicStatus',error.message,true);$('newTitle').value='';$('newContent').value='';$('newTopicView').classList.add('hidden');$('listView').classList.remove('hidden');selectedCategory=category;renderCategories();await loadTopics();}
+ async function saveProfile(){
+ if(!currentUser)return showAuth();
+ const nickname=$('profileNickname').value.trim();
+ if(!nickname)return setStatus('profileStatus','Укажи никнейм.',true);
+ if(nickname.length>24)return setStatus('profileStatus','Максимум 24 символа.',true);
+ const btn=$('saveProfileBtn');btn.disabled=true;
+ setStatus('profileStatus','Сохраняем профиль...');
+ try{
+  let avatarUrl=currentProfile?.avatar_url||null;
+  const file=$('profileAvatarFile').files[0];
+  if(file){
+   const allowed=['image/jpeg','image/png','image/webp','image/gif'];
+   if(!allowed.includes(file.type))throw new Error('Выбери JPG, PNG, WebP или GIF.');
+   if(file.size>3*1024*1024)throw new Error('Размер изображения не должен превышать 3 МБ.');
+   const ext=({ 'image/jpeg':'jpg','image/png':'png','image/webp':'webp','image/gif':'gif'})[file.type];
+   const path=`${currentUser.id}/${Date.now()}.${ext}`;
+   const {error:uploadError}=await db.storage.from('rc-forum-avatars').upload(path,file,{contentType:file.type,upsert:false});
+   if(uploadError)throw uploadError;
+   const {data}=db.storage.from('rc-forum-avatars').getPublicUrl(path);
+   avatarUrl=data.publicUrl;
+  }
+  const {data,error}=await db.from('rc_forum_profiles').update({nickname,avatar_url:avatarUrl}).eq('id',currentUser.id).select().single();
+  if(error)throw error;
+  currentProfile=data;
+  updateHeader();
+  $('profileNicknameLabel').textContent=nickname;
+  $('avatarPreview').src=avatarUrl||'';
+  setStatus('profileStatus','Профиль успешно сохранён!');
+  await loadTopics();
+ }catch(e){
+  setStatus('profileStatus',e.message||'Не удалось сохранить профиль.',true);
+ }finally{btn.disabled=false;}
 }
-async function submitAuth(){let email=$('email').value.trim(),password=$('password').value,nickname=$('nickname').value.trim();if(!email||!password){status('authStatus','Заполните почту и пароль.',true);return;}if(password.length<6){status('authStatus','Пароль должен содержать минимум 6 символов.',true);return;}if(authMode==='signup'){if(nickname.length<2){status('authStatus','Укажите никнейм минимум из 2 символов.',true);return;}const {data,error}=await db.auth.signUp({email,password,options:{data:{nickname},emailRedirectTo:location.origin+'/forum/'}});if(error){status('authStatus',error.message,true);return;}status('authStatus','Аккаунт создан! Проверьте почту и перейдите по ссылке подтверждения. После подтверждения вернитесь на форум и войдите.');}else{const {error}=await db.auth.signInWithPassword({email,password});if(error){status('authStatus',error.message,true);return;}await refreshUser();closeAuth();}}
-async function openThread(id){let t=allTopics.find(x=>String(x.id)===String(id));if(!t)return;currentTopic=t;showMain('thread');$('threadView').innerHTML='<button class="btn back" id="backBtn">← К темам</button><h2 class="thread-title">'+esc(t.title)+'</h2><div class="topic-meta"><span>'+esc(t.category)+'</span><span>'+esc(t.author_name)+'</span><span>'+dateText(t.created_at)+'</span></div><div class="thread-body">'+esc(t.content)+'</div><div class="form-actions"><button class="btn like" id="likeBtn">♥ Нравится · '+t.like_count+'</button>'+(currentUser&&currentUser.id===t.user_id?'<button class="btn" id="deleteTopicBtn">Удалить тему</button>':'')+'</div><h3 style="color:var(--gold2);margin-top:24px">Ответы</h3><div id="replies"><div class="empty">Загружаем ответы...</div></div><div id="replyForm" class="form" style="padding:16px 0"><label for="replyText">Ваш ответ</label><textarea id="replyText" class="field" maxlength="5000" placeholder="Напишите ответ..."></textarea><div class="form-actions"><button class="btn primary" id="sendReplyBtn">Отправить ответ</button></div><div class="status" id="replyStatus"></div></div>';
-$('backBtn').onclick=()=>showMain('list');$('likeBtn').onclick=toggleLike;if($('deleteTopicBtn'))$('deleteTopicBtn').onclick=deleteTopic;$('sendReplyBtn').onclick=sendReply;if(!currentUser){$('replyText').disabled=true;$('replyText').placeholder='Войдите и подтвердите почту, чтобы отвечать.';$('sendReplyBtn').disabled=true;}await loadReplies(id);}
-async function loadReplies(id){const {data,error}=await db.from('rc_forum_replies').select('id,user_id,content,created_at').eq('topic_id',id).order('created_at');if(error){$('replies').innerHTML=`<div class="empty">Ошибка: ${esc(error.message)}</div>`;return;}let ids=[...new Set((data||[]).map(x=>x.user_id))];let p=ids.length?await db.from('rc_forum_profiles').select('id,nickname,avatar_url').in('id',ids):{data:[]};let names=Object.fromEntries((p.data||[]).map(x=>[x.id,x]));$('replies').innerHTML=data?.length?data.map(r=>`<div class="reply"><div>
+async function sendReply(){
+ const content=$('replyContent')?.value.trim();
+ if(!content)return setStatus('replyStatus','Напиши текст ответа.',true);
+ const btn=$('sendReplyBtn');btn.disabled=true;
+ const {error}=await db.from('rc_forum_replies').insert({topic_id:currentTopic.id,user_id:currentUser.id,content});
+ btn.disabled=false;
+ if(error)return setStatus('replyStatus',error.message,true);
+ await openTopic(currentTopic.id);
+}
+async function toggleLike(){
+ if(!currentUser)return showAuth();
+ const {data}=await db.from('rc_forum_likes').select('id').eq('topic_id',currentTopic.id).eq('user_id',currentUser.id).maybeSingle();
+ let error;
+ if(data){({error}=await db.from('rc_forum_likes').delete().eq('id',data.id));}
+ else{({error}=await db.from('rc_forum_likes').insert({topic_id:currentTopic.id,user_id:currentUser.id}));}
+ if(error)alert(error.message);else await openTopic(currentTopic.id);
+}
+async function deleteTopic(){
+ if(!currentTopic||!confirm('Удалить эту тему вместе со всеми ответами?'))return;
+ const {error}=await db.from('rc_forum_topics').delete().eq('id',currentTopic.id);
+ if(error)return alert(error.message);
+ currentTopic=null;showMain();await loadTopics();
+}
+async function deleteReply(id){
+ if(!confirm('Удалить свой ответ?'))return;
+ const {error}=await db.from('rc_forum_replies').delete().eq('id',id);
+ if(error)return alert(error.message);
+ await openTopic(currentTopic.id);
+}
+function showNewTopic(){
+ if(!currentUser)return showAuth();
+ $('listView').classList.add('hidden');
+ $('threadView').classList.add('hidden');
+ $('newTopicView').classList.remove('hidden');
+ $('newCategory').value=selectedCategory==='Все темы'?'Новичкам':selectedCategory;
+ $('topicStatus').textContent='';
+}
+function setAuthMode(mode){
+ authMode=mode;
+ $('tabLogin').classList.toggle('active',mode==='login');
+ $('tabSignup').classList.toggle('active',mode==='signup');
+ $('nicknameWrap').classList.toggle('hidden',mode!=='signup');
+ $('authTitle').textContent=mode==='login'?'Вход на форум':'Регистрация';
+ $('authSubmit').textContent=mode==='login'?'Войти':'Создать аккаунт';
+ $('password').autocomplete=mode==='login'?'current-password':'new-password';
+ $('authStatus').textContent='';
+}
+async function submitAuth(){
+ const email=$('email').value.trim(),password=$('password').value;
+ if(!email||!password)return setStatus('authStatus','Заполни почту и пароль.',true);
+ if(authMode==='signup'&&password.length<6)return setStatus('authStatus','Пароль должен содержать минимум 6 символов.',true);
+ $('authSubmit').disabled=true;
+ setStatus('authStatus','Подождите...');
+ try{
+  if(authMode==='signup'){
+   const nickname=$('nickname').value.trim();
+   if(!nickname)return setStatus('authStatus','Укажи никнейм.',true);
+   const {data,error}=await db.auth.signUp({email,password,options:{data:{nickname},emailRedirectTo:location.origin+'/forum/'}});
+   if(error)throw error;
+   if(data.session){
+    currentUser=data.user;await loadProfile();updateHeader();showMain();renderCategories();await loadTopics();
+   }else{
+    setStatus('authStatus','Аккаунт создан! Проверь почту и перейди по ссылке подтверждения.');
+   }
+  }else{
+   const {data,error}=await db.auth.signInWithPassword({email,password});
+   if(error)throw error;
+   currentUser=data.user;await loadProfile();updateHeader();showMain();renderCategories();await loadTopics();
+  }
+ }catch(e){setStatus('authStatus',e.message||'Ошибка авторизации.',true);}
+ finally{$('authSubmit').disabled=false;}
+}
+async function init(){
+ renderCategories();
+ const {data:{session}}=await db.auth.getSession();
+ currentUser=session?.user||null;
+ if(currentUser)await loadProfile();
+ updateHeader();
+ await loadTopics();
+ db.auth.onAuthStateChange(async(event,session)=>{
+  currentUser=session?.user||null;
+  if(currentUser){await loadProfile();}
+  else currentProfile=null;
+  updateHeader();
+  if(event==='SIGNED_IN'||event==='SIGNED_OUT'||event==='USER_UPDATED'){
+   showMain();await loadTopics();
+  }
+ });
+}
+$('authBtn').addEventListener('click',()=>{setAuthMode('login');showAuth();});
+$('logoutBtn').addEventListener('click',async()=>{await db.auth.signOut();});
+$('profileBtn').addEventListener('click',showProfile);
+$('profileBackBtn').addEventListener('click',()=>{showMain();});
+$('tabLogin').addEventListener('click',()=>setAuthMode('login'));
+$('tabSignup').addEventListener('click',()=>setAuthMode('signup'));
+$('authSubmit').addEventListener('click',submitAuth);
+$('authCancel').addEventListener('click',showMain);
+$('saveProfileBtn').addEventListener('click',saveProfile);
+$('profileAvatarFile').addEventListener('change',()=>{
+ const file=$('profileAvatarFile').files[0];
+ if(!file)return;
+ if(!file.type.startsWith('image/'))return setStatus('profileStatus','Это не изображение.',true);
+ if(file.size>3*1024*1024)return setStatus('profileStatus','Файл больше 3 МБ.',true);
+ $('avatarPreview').src=URL.createObjectURL(file);
+});
+$('categories').addEventListener('click',async e=>{
+ const btn=e.target.closest('[data-category]');if(!btn)return;
+ selectedCategory=btn.dataset.category;renderCategories();showMain();await loadTopics();
+});
+$('topicList').addEventListener('click',e=>{
+ const item=e.target.closest('[data-topic]');if(item)openTopic(item.dataset.topic);
+});
+$('newTopicBtn').addEventListener('click',showNewTopic);
+$('publishBtn').addEventListener('click',publishTopic);
+$('cancelTopicBtn').addEventListener('click',showMain);
+$('search').addEventListener('input',()=>{
+ clearTimeout(window.searchTimer);
+ window.searchTimer=setTimeout(loadTopics,350);
+});
+$('threadView').addEventListener('click',e=>{
+ if(e.target.id==='backToList'){showMain();return;}
+ if(e.target.id==='likeBtn'){toggleLike();return;}
+ if(e.target.id==='deleteTopicBtn'){deleteTopic();return;}
+ if(e.target.id==='sendReplyBtn'){sendReply();return;}
+ const del=e.target.closest('[data-delete-reply]');
+ if(del)deleteReply(del.dataset.deleteReply);
+});
+init();
+</script>
+</body>
+</html>
