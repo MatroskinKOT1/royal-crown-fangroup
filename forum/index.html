@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101722">
+<title>Форум | Royal Crown: Kingdom Wars — FANGroup</title>
+
+<style>
+:root {
+  --bg: #0b111a;
+  --panel: #141f2d;
+  --panel2: #19283a;
+  --gold: #d9ae55;
+  --gold2: #f1d18a;
+  --text: #f2f4f7;
+  --muted: #9ba9b8;
+  --border: rgba(217,174,85,.2);
+}
+
+* {box-sizing:border-box}
+
+body {
+  margin:0;
+  background:
+  radial-gradient(ellipse at top,#20344a 0%,#0b111a 65%);
+  color:var(--text);
+  font-family:Arial,sans-serif;
+  min-height:100vh;
+}
+
+button,input,textarea {font:inherit}
+
+header {
+  padding:22px 16px;
+  border-bottom:1px solid var(--border);
+  background:rgba(10,17,26,.85);
+  text-align:center;
+}
+
+.logo {
+  color:var(--gold2);
+  font-size:21px;
+  font-weight:900;
+  letter-spacing:1px;
+}
+
+.subtitle {
+  color:var(--muted);
+  font-size:12px;
+  margin-top:7px;
+}
+
+.container {
+  max-width:1050px;
+  margin:auto;
+  padding:22px 15px 60px;
+}
+
+.back {
+  display:inline-block;
+  color:var(--gold);
+  text-decoration:none;
+  margin-bottom:20px;
+  font-size:13px;
+}
+
+.hero {
+  padding:25px;
+  border:1px solid var(--border);
+  border-radius:16px;
+  background:linear-gradient(135deg,#1c3045,#111c2a);
+  margin-bottom:22px;
+}
+
+.hero h1 {
+  margin:0 0 10px;
+  font-size:27px;
+  color:var(--gold2);
+}
+
+.hero p {
+  color:var(--muted);
+  line-height:1.5;
+  font-size:14px;
+  margin:0;
+}
+
+.stats {
+  display:flex;
+  gap:22px;
+  margin-top:20px;
+  font-size:12px;
+  color:var(--muted);
+}
+
+.stats b {color:var(--gold2)}
+
+.actions {
+  display:flex;
+  gap:10px;
+  margin-bottom:18px;
+}
+
+.search {
+  flex:1;
+  min-width:0;
+  padding:13px;
+  border-radius:10px;
+  border:1px solid var(--border);
+  background:#111c29;
+  color:white;
+  outline:none;
+}
+
+.btn {
+  border:0;
+  border-radius:10px;
+  padding:12px 17px;
+  background:linear-gradient(135deg,#e8c578,#b98735);
+  color:#18202a;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.section-title {
+  color:var(--gold2);
+  font-size:17px;
+  margin:28px 0 14px;
+}
+
+.categories {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+
+.category {
+  padding:17px;
+  border:1px solid var(--border);
+  border-radius:12px;
+  background:var(--panel);
+  cursor:pointer;
+  transition:.2s;
+}
+
+.category:hover,.topic:hover {
+  border-color:var(--gold);
+  transform:translateY(-2px);
+}
+
+.cat-icon {
+  font-size:25px;
+  margin-bottom:10px;
+}
+
+.category h3 {
+  margin:0 0 7px;
+  font-size:14px;
+}
+
+.category p {
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.4;
+  margin:0;
+}
+
+.cat-count {
+  display:block;
+  margin-top:12px;
+  color:var(--gold);
+  font-size:11px;
+}
+
+.filters {
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  padding-bottom:8px;
+}
+
+.filter {
+  white-space:nowrap;
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:20px;
+  color:var(--muted);
+  padding:9px 14px;
+  cursor:pointer;
+  font-size:12px;
+}
+
+.filter.active {
+  background:#594526;
+  color:var(--gold2);
+  border-color:var(--gold);
+}
+
+.topics {
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.topic {
+  background:var(--panel);
+  border:1px solid var(--border);
+  padding:17px;
+  border-radius:12px;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.topic h3 {
+  font-size:15px;
+  margin:0 0 9px;
+}
+
+.topic p {
+  color:var(--muted);
+  font-size:12px;
+  margin:0 0 13px;
+  line-height:1.5;
+}
+
+.topic-info {
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  flex-wrap:wrap;
+  color:var(--muted);
+  font-size:11px;
+}
+
+.tag {
+  color:var(--gold);
+}
+
+.empty {
+  text-align:center;
+  padding:35px;
+  color:var(--muted);
+  background:var(--panel);
+  border-radius:12px;
+}
+
+footer {
+  text-align:center;
+  color:#718093;
+  font-size:11px;
+  padding:25px;
+  border-top:1px solid var(--border);
+}
+
+/* MODAL */
+
+.modal {
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.8);
+  z-index:10;
+  align-items:center;
+  justify-content:center;
+  padding:15px;
+}
+
+.modal.show {display:flex}
+
+.modal-box {
+  width:100%;
+  max-width:500px;
+  max-height:90vh;
+  overflow-y:auto;
+  padding:23px;
+  background:#172536;
+  border:1px solid var(--gold);
+  border-radius:15px;
+}
+
+.modal-box h2 {
+  color:var(--gold2);
+  margin-top:0;
+}
+
+.modal-box input,
+.modal-box textarea,
+.modal-box select {
+  width:100%;
+  padding:13px;
+  margin:8px 0 14px;
+  border-radius:9px;
+  border:1px solid var(--border);
+  background:#0e1824;
+  color:white;
+  outline:none;
+}
+
+.modal-box textarea {
+  min-height:130px;
+  resize:vertical;
+}
+
+.modal-box label {
+  font-size:12px;
+  color:var(--muted);
+}
+
+.modal-buttons {
+  display:flex;
+  gap:10px;
+}
+
+.cancel {
+  background:#29394b;
+  color:white;
+}
+
+.close {
+  float:right;
+  color:var(--gold);
+  cursor:pointer;
+  font-size:22px;
+}
+
+.detail-body {
+  color:#d1d9e3;
+  line-height:1.7;
+  white-space:pre-wrap;
+}
+
+@media(max-width:650px) {
+  .categories {grid-template-columns:repeat(2,1fr)}
+  .hero h1 {font-size:22px}
+  .actions {flex-direction:column}
+  .stats {gap:12px}
+}
+
+@media(max-width:380px) {
+  .categories {grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">👑 ROYAL CROWN</div>
+  <div class="subtitle">KINGDOM WARS | FANGroup COMMUNITY</div>
+</header>
+
+<div class="container">
+
+<a class="back" href="../index.html">← На главную FANGroup</a>
+
+<section class="hero">
+  <h1>⚔️ Форум сообщества</h1>
+  <p>
+    Обсуждай игру, делись опытом, задавай вопросы,
+    находи союзников и открывай новые стратегии.
+    Здесь формируется сообщество игроков Royal Crown!
+  </p>
+
+  <div class="stats">
+    <span>💬 <b id="topicCount">8</b> тем</span>
+    <span>👑 FANGroup</span>
+    <span>🌍 Сообщество игроков</span>
+  </div>
+</section>
+
+<div class="actions">
+  <input class="search" id="search"
+  placeholder="🔎 Поиск по обсуждениям...">
+
+  <button class="btn" onclick="openCreate()">
+    + Создать тему
+  </button>
+</div>
+
+<h2 class="section-title">📚 Разделы форума</h2>
+
+<div class="categories" id="categories">
+
+  <div class="category" onclick="setCategory('Общение')">
+    <div class="cat-icon">💬</div>
+    <h3>Общение</h3>
+    <p>Новости, знакомства и разговоры об игре.</p>
+    <span class="cat-count">Общий раздел</span>
+  </div>
+
+  <div class="category" onclick="setCategory('Герои')">
+    <div class="cat-icon">🦸</div>
+    <h3>Герои</h3>
+    <p>Прокачка, навыки, сборки и комбинации.</p>
+    <span class="cat-count">Герои и отряды</span>
+  </div>
+
+  <div class="category" onclick="setCategory('PvP')">
+    <div class="cat-icon">⚔️</div>
+    <h3>PvP и битвы</h3>
+    <p>Тактика, сражения и противостояния.</p>
+    <span class="cat-count">Боевые стратегии</span>
+  </div>
+
+  <div class="category" onclick="setCategory('Развитие')">
+    <div class="cat-icon">🏰</div>
+    <h3>Развитие</h3>
+    <p>Город, исследования и ресурсы.</p>
+    <span class="cat-count">Развитие королевства</span>
+  </div>
+
+  <div class="category" onclick="setCategory('Гайды')">
+    <div class="cat-icon">📖</div>
+    <h3>Гайды</h3>
+    <p>Полезные руководства от игроков.</p>
+    <span class="cat-count">База знаний</span>
+  </div>
+
+  <div class="category" onclick="setCategory('Помощь')">
+    <div class="cat-icon">❓</div>
+    <h3>Помощь новичкам</h3>
+    <p>Вопросы и ответы для начинающих.</p>
+    <span class="cat-count">Задай вопрос</span>
+  </div>
+
+</div>
+
+<h2 class="section-title">🔥 Обсуждения игроков</h2>
+
+<div class="filters">
+  <button class="filter active" onclick="setFilter('Все',this)">Все темы</button>
+  <button class="filter" onclick="setFilter('Популярные',this)">Популярные</button>
+  <button class="filter" onclick="setFilter('Новые',this)">Новые</button>
+</div>
+
+<div class="topics" id="topics"></div>
+
+</div>
+
+<footer>
+  ROYAL CROWN: KINGDOM WARS<br>
+  FANGroup Community © 2026
+</footer>
+
+<!-- СОЗДАНИЕ ТЕМЫ -->
+
+<div class="modal" id="createModal">
+  <div class="modal-box">
+    <span class="close" onclick="closeModal('createModal')">×</span>
+
+    <h2>✍️ Новая тема</h2>
+
+    <label>Заголовок</label>
+    <input id="newTitle" placeholder="О чём хочешь поговорить?">
+
+    <label>Раздел</label>
+    <select id="newCategory">
+      <option>Общение</option>
+      <option>Герои</option>
+      <option>PvP</option>
+      <option>Развитие</option>
+      <option>Гайды</option>
+      <option>Помощь</option>
+    </select>
+
+    <label>Текст обсуждения</label>
+    <textarea id="newText"
+    placeholder="Расскажи подробнее..."></textarea>
+
+    <label>Твоё имя</label>
+    <input id="newAuthor" placeholder="Игрок">
+
+    <div class="modal-buttons">
+      <button class="btn" onclick="createTopic()">Опубликовать</button>
+      <button class="btn cancel" onclick="closeModal('createModal')">Отмена</button>
+    </div>
+  </div>
+</div>
+
+<!-- ПРОСМОТР ТЕМЫ -->
+
+<div class="modal" id="detailModal">
+  <div class="modal-box">
+    <span class="close" onclick="closeModal('detailModal')">×</span>
+    <div id="detailContent"></div>
+  </div>
+</div>
+
+<script>
+
+const defaultTopics = [
+{
+ id:1,
+ title:"Какого героя лучше развивать новичку?",
+ category:"Герои",
+ text:"Давайте обсудим, какие герои наиболее полезны на старте игры. Кого стоит развивать в первую очередь?",
+ author:"FANGroup",
+ replies:24,
+ date:"08.11.2026"
+},
+{
+ id:2,
+ title:"Как правильно подготовиться к PvP?",
+ category:"PvP",
+ text:"Делимся тактиками ведения сражений, составами отрядов и опытом боёв.",
+ author:"Воин",
+ replies:18,
+ date:"08.11.2026"
+},
+{
+ id:3,
+ title:"Как быстрее развивать штаб?",
+ category:"Развитие",
+ text:"Какие здания и исследования лучше прокачивать в первую очередь?",
+ author:"Стратег",
+ replies:12,
+ date:"07.11.2026"
+},
+{
+ id:4,
+ title:"Гонка вооружений: ваши стратегии",
+ category:"Гайды",
+ text:"Обсуждаем подготовку к этапам, накопление ресурсов и получение наград.",
+ author:"FANGroup",
+ replies:31,
+ date:"07.11.2026"
+},
+{
+ id:5,
+ title:"Ищу активный альянс",
+ category:"Общение",
+ text:"Расскажите о своих альянсах и условиях вступления.",
+ author:"Игрок",
+ replies:9,
+ date:"06.11.2026"
+},
+{
+ id:6,
+ title:"С чего начать развитие аккаунта?",
+ category:"Помощь",
+ text:"Полезные советы для новых игроков Royal Crown.",
+ author:"Новичок",
+ replies:15,
+ date:"06.11.2026"
+},
+{
+ id:7,
+ title:"Какие комбинации героев используете?",
+ category:"Герои",
+ text:"Делитесь своими любимыми сочетаниями героев и результатами.",
+ author:"Тактик",
+ replies:7,
+ date:"05.11.2026"
+},
+{
+ id:8,
+ title:"Свободное управление отрядами",
+ category:"PvP",
+ text:"Обсуждаем управление войсками на поле боя и различные тактические возможности.",
+ author:"FANGroup",
+ replies:21,
+ date:"05.11.2026"
+}
+];
+
+let topics = JSON.parse(localStorage.getItem("rc_forum_topics"));
+
+if(!Array.isArray(topics)) {
+ topics = defaultTopics;
+ save();
+}
+
+let currentCategory = "Все";
+let currentFilter = "Все";
+
+function save() {
+ localStorage.setItem("rc_forum_topics",JSON.stringify(topics));
+}
+
+function render() {
+
+ let search = document.getElementById("search").value.toLowerCase();
+
+ let list = topics.filter(t => {
+
+  let matchesCategory =
+  currentCategory === "Все" ||
+  t.category === currentCategory;
+
+  let matchesSearch =
+  t.title.toLowerCase().includes(search) ||
+  t.text.toLowerCase().includes(search);
+
+  return matchesCategory && matchesSearch;
+ });
+
+ if(currentFilter === "Популярные") {
+  list.sort((a,b)=>b.replies-a.replies);
+ }
+
+ if(currentFilter === "Новые") {
+  list.sort((a,b)=>b.id-a.id);
+ }
+
+ document.getElementById("topicCount").textContent=topics.length;
+
+ const box=document.getElementById("topics");
+
+ if(!list.length) {
+  box.innerHTML='<div class="empty">Тем пока нет. Создай первое обсуждение!</div>';
+  return;
+ }
+
+ box.innerHTML=list.map(t=>`
+
+  <div class="topic" onclick="openTopic(${t.id})">
+
+   <h3>${escapeHTML(t.title)}</h3>
+
+   <p>${escapeHTML(t.text.slice(0,130))}${t.text.length>130?"...":""}</p>
+
+   <div class="topic-info">
+
+    <span class="tag">📁 ${escapeHTML(t.category)}</span>
+
+    <span>👤 ${escapeHTML(t.author)}</span>
+
+    <span>💬 ${t.replies} ответов</span>
+
+    <span>${escapeHTML(t.date)}</span>
+
+   </div>
+
+  </div>
+
+ `).join("");
+
+}
+
+function escapeHTML(str) {
+ return String(str).replace(/[&<>"']/g, s => ({
+  "&":"&amp;",
+  "<":"&lt;",
+  ">":"&gt;",
+  '"':"&quot;",
+  "'":"&#039;"
+ }[s]));
+}
+
+function setCategory(cat) {
+ currentCategory=cat;
+ render();
+ document.getElementById("topics").scrollIntoView({
+  behavior:"smooth"
+ });
+}
+
+function setFilter(filter,button) {
+ currentFilter=filter;
+
+ document.querySelectorAll(".filter").forEach(b=>{
+  b.classList.remove("active");
+ });
+
+ button.classList.add("active");
+ render();
+}
+
+function openCreate() {
+ document.getElementById("createModal").classList.add("show");
+}
+
+function closeModal(id) {
+ document.getElementById(id).classList.remove("show");
+}
+
+function createTopic() {
+
+ const title=document.getElementById("newTitle").value.trim();
+ const text=document.getElementById("newText").value.trim();
+ const category=document.getElementById("newCategory").value;
+ const author=document.getElementById("newAuthor").value.trim() || "Игрок";
+
+ if(!title || !text) {
+  alert("Заполни заголовок и текст темы!");
+  return;
+ }
+
+ topics.unshift({
+  id:Date.now(),
+  title,
+  text,
+  category,
+  author,
+  replies:0,
+  date:new Date().toLocaleDateString("ru-RU")
+ });
+
+ save();
+
+ document.getElementById("newTitle").value="";
+ document.getElementById("newText").value="";
+
+ closeModal("createModal");
+
+ currentCategory="Все";
+ currentFilter="Новые";
+
+ document.querySelectorAll(".filter").forEach(b=>{
+  b.classList.remove("active");
+ });
+
+ document.querySelectorAll(".filter")[2].classList.add("active");
+
+ render();
+
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function openTopic(id) {
+
+ const t=topics.find(x=>x.id===id);
+
+ if(!t) return;
+
+ document.getElementById("detailContent").innerHTML=`
+
+  <span class="tag">📁 ${escapeHTML(t.category)}</span>
+
+  <h2>${escapeHTML(t.title)}</h2>
+
+  <div class="topic-info">
+   <span>👤 ${escapeHTML(t.author)}</span>
+   <span>📅 ${escapeHTML(t.date)}</span>
+  </div>
+
+  <hr style="border-color:var(--border);margin:18px 0">
+
+  <div class="detail-body">${escapeHTML(t.text)}</div>
+
+  <p style="color:var(--muted);margin-top:25px">
+   💬 Ответов: ${t.replies}
+  </p>
+
+  <p style="color:var(--gold);font-size:12px">
+   Демонстрационная версия форума.
+  </p>
+
+ `;
+
+ document.getElementById("detailModal").classList.add("show");
+}
+
+document.getElementById("search").addEventListener("input",render);
+
+render();
+
+</script>
+
+</body>
+</html>
