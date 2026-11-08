@@ -200,6 +200,46 @@ font-size:13px;
 margin-top:8px
 }
 
+/* ВЫБОР ДНЯ */
+
+.day-selector{
+display:grid;
+grid-template-columns:repeat(7,1fr);
+gap:7px;
+margin-top:13px
+}
+
+.day-button{
+background:#252f40;
+border:1px solid #46546a;
+border-radius:9px;
+padding:12px 3px;
+color:#cbd3df;
+font-size:14px;
+font-weight:bold;
+cursor:pointer;
+transition:.2s
+}
+
+.day-button:hover{
+border-color:#e5bd69;
+color:#f0ce7b
+}
+
+.day-button.active{
+background:linear-gradient(135deg,#f0ce7b,#bd8c38);
+border-color:#f5d993;
+color:#171717;
+box-shadow:0 2px 10px rgba(229,189,105,.2)
+}
+
+.day-description{
+font-size:12px;
+color:#8995a7;
+margin-top:12px;
+line-height:1.5
+}
+
 .schedule-wrap{
 overflow-x:auto
 }
@@ -225,8 +265,7 @@ color:#cbd3df
 }
 
 .schedule tr.active-day{
-background:#3b3321;
-color:#f0ce7b
+background:#3b3321
 }
 
 .schedule tr.active-day td{
@@ -248,6 +287,13 @@ text-align:center
 .timer{font-size:28px}
 
 .event-time{font-size:12px}
+
+.day-selector{gap:5px}
+
+.day-button{
+padding:12px 2px;
+font-size:12px
+}
 
 }
 </style>
@@ -290,6 +336,33 @@ rel="noopener noreferrer">
 </p>
 
 
+<!-- ВЫБОР ИГРОВОГО ДНЯ -->
+
+<div class="event-info">
+
+<div class="event-label">📅 ВЫБЕРИТЕ ДЕНЬ ВАШЕГО СЕРВЕРА</div>
+
+<div class="day-selector" id="daySelector">
+
+<button class="day-button" data-day="1">1</button>
+<button class="day-button" data-day="2">2</button>
+<button class="day-button" data-day="3">3</button>
+<button class="day-button" data-day="4">4</button>
+<button class="day-button" data-day="5">5</button>
+<button class="day-button" data-day="6">6</button>
+<button class="day-button" data-day="7">7</button>
+
+</div>
+
+<div class="day-description" id="dayDescription">
+Выберите игровой день, который сейчас проходит на вашем сервере.
+</div>
+
+</div>
+
+
+<!-- ТЕКУЩИЙ ДЕНЬ -->
+
 <div class="event-info">
 
 <div class="event-label">ТЕКУЩИЙ ДЕНЬ</div>
@@ -300,6 +373,8 @@ rel="noopener noreferrer">
 
 </div>
 
+
+<!-- ТЕКУЩИЙ ЭТАП -->
 
 <div class="event-info">
 
@@ -326,6 +401,8 @@ rel="noopener noreferrer">
 </div>
 
 
+<!-- СОВЕТЫ -->
+
 <div class="event-info">
 
 <h3>🎯 Что делать сейчас?</h3>
@@ -336,6 +413,8 @@ rel="noopener noreferrer">
 
 </div>
 
+
+<!-- СЛЕДУЮЩИЙ ЭТАП -->
 
 <div class="event-info event-next">
 
@@ -356,6 +435,8 @@ style="color:#e5bd69;font-weight:bold">
 
 </div>
 
+
+<!-- РАСПИСАНИЕ -->
 
 <div class="event-info">
 
@@ -438,49 +519,20 @@ rel="noopener noreferrer">
 
 <script>
 
-// =====================================
-// ГОНКА ВООРУЖЕНИЙ
-// ЧАСОВОЙ ПОЯС: МОСКВА (UTC+3)
-// =====================================
+// ========================================
+// ROYAL CROWN — ГОНКА ВООРУЖЕНИЙ
+// МОСКОВСКОЕ ВРЕМЯ UTC+3
+// ========================================
 
-// День 1 — 02.11.2026, 03:00 МСК.
+const STORAGE_KEY = "rc_fangroup_race_day_v2";
 
-const RACE_DAY1_DATE = "2026-11-02";
+const raceHours = [3,7,11,15,19,23];
 
 
-// Порядок пяти мероприятий.
+// Порядок этапов цикла.
+// День 1 начинается с обучения войск.
 
 const raceStages = [
-
-{
-name:"Усиление героев",
-short:"Герои",
-
-advice:`
-<ul>
-<li>Используй опыт героев.</li>
-<li>Улучшай навыки и повышай звёзды.</li>
-<li>Проверяй задания перед использованием редких предметов.</li>
-</ul>
-`,
-
-prep:"Подготовь опыт героев, фрагменты и свитки навыков."
-},
-
-{
-name:"Строительство города",
-short:"Город",
-
-advice:`
-<ul>
-<li>Улучшай здания.</li>
-<li>Используй ускорения строительства.</li>
-<li>Следи за ресурсами и очередями строительства.</li>
-</ul>
-`,
-
-prep:"Подготовь ресурсы и ускорения строительства. Проверь доступные улучшения."
-},
 
 {
 name:"Усиление войск",
@@ -525,17 +577,44 @@ advice:`
 `,
 
 prep:"Сохрани материалы для ковки и заранее проверь экипировку."
+},
+
+{
+name:"Усиление героев",
+short:"Герои",
+
+advice:`
+<ul>
+<li>Используй опыт героев.</li>
+<li>Улучшай навыки и повышай звёзды.</li>
+<li>Проверяй задания перед использованием редких предметов.</li>
+</ul>
+`,
+
+prep:"Подготовь опыт героев, фрагменты и свитки навыков."
+},
+
+{
+name:"Строительство города",
+short:"Город",
+
+advice:`
+<ul>
+<li>Улучшай здания.</li>
+<li>Используй ускорения строительства.</li>
+<li>Следи за ресурсами и очередями строительства.</li>
+</ul>
+`,
+
+prep:"Подготовь ресурсы и ускорения строительства. Проверь доступные улучшения."
 }
 
 ];
 
 
-// Время начала каждого этапа.
-
-const raceHours = [3,7,11,15,19,23];
-
-
-// Получение текущего времени Москвы.
+// ========================================
+// ВРЕМЯ МОСКВЫ
+// ========================================
 
 function moscowNow(){
 
@@ -554,7 +633,7 @@ hourCycle:"h23"
 
 }).formatToParts(new Date());
 
-const out = {};
+const out={};
 
 parts.forEach(p=>{
 
@@ -569,44 +648,166 @@ return out;
 }
 
 
-// Расчёт даты начала текущего игрового дня.
+// ========================================
+// ХРАНЕНИЕ ВЫБРАННОГО ДНЯ
+// ========================================
 
-function getRaceDay(now){
+function loadRaceSettings(){
 
-let date = new Date(Date.UTC(
-now.year,
-now.month-1,
-now.day
-));
+let saved;
 
-// Новый игровой день начинается в 03:00.
-
-if(now.hour<3){
-date.setUTCDate(date.getUTCDate()-1);
+try{
+saved=JSON.parse(localStorage.getItem(STORAGE_KEY));
+}catch(e){
+saved=null;
 }
 
-const anchor = new Date(RACE_DAY1_DATE+"T00:00:00Z");
+if(
+!saved ||
+!Number.isInteger(saved.day) ||
+saved.day<1 ||
+saved.day>7 ||
+!Number.isFinite(saved.selectedAt)
+){
 
-return Math.floor(
-(date.getTime()-anchor.getTime())/86400000
+saved={
+day:1,
+selectedAt:Date.now()
+};
+
+saveRaceSettings(saved);
+
+}
+
+return saved;
+
+}
+
+
+function saveRaceSettings(settings){
+
+localStorage.setItem(
+STORAGE_KEY,
+JSON.stringify(settings)
 );
 
 }
 
 
-// Создание расписания на семь дней.
+// ========================================
+// АВТОМАТИЧЕСКОЕ ОБНОВЛЕНИЕ ДНЯ
+// ========================================
+
+function getCurrentSelectedDay(){
+
+let settings=loadRaceSettings();
+
+const elapsed=Math.max(
+0,
+Date.now()-settings.selectedAt
+);
+
+// Полные прошедшие сутки.
+
+const elapsedDays=Math.floor(
+elapsed/86400000
+);
+
+// Переключение по циклу 1–7.
+
+const currentDay=(
+(settings.day-1+elapsedDays)%7
+)+1;
+
+return currentDay;
+
+}
+
+
+// Ручной выбор дня.
+
+function selectRaceDay(day){
+
+const settings={
+day:day,
+selectedAt:Date.now()
+};
+
+saveRaceSettings(settings);
+
+renderDayButtons();
+
+updateRace();
+buildSchedule();
+
+}
+
+
+// ========================================
+// КНОПКИ ВЫБОРА ДНЯ
+// ========================================
+
+function renderDayButtons(){
+
+const selectedDay=getCurrentSelectedDay();
+
+document.querySelectorAll(".day-button").forEach(button=>{
+
+const day=Number(button.dataset.day);
+
+button.classList.toggle(
+"active",
+day===selectedDay
+);
+
+});
+
+$("dayDescription").textContent=
+"Выбран День "+selectedDay+
+". Следующее автоматическое переключение — через 24 часа после выбора.";
+
+}
+
+
+document.querySelectorAll(".day-button").forEach(button=>{
+
+button.addEventListener("click",()=>{
+
+const day=Number(button.dataset.day);
+
+selectRaceDay(day);
+
+});
+
+});
+
+
+// ========================================
+// ПОЛУЧЕНИЕ ЭТАПА
+// ========================================
+
+function getStage(day,slot){
+
+const index=(
+(day-1)*6+slot
+)%5;
+
+return raceStages[index];
+
+}
+
+
+// ========================================
+// РАСПИСАНИЕ НА 7 ДНЕЙ
+// ========================================
 
 function buildSchedule(){
 
-const tbody = $("raceSchedule");
+const tbody=$("raceSchedule");
 
 tbody.innerHTML="";
 
-const now=moscowNow();
-
-const dayOffset=getRaceDay(now);
-
-const currentDay=((dayOffset%7)+7)%7;
+const selectedDay=getCurrentSelectedDay();
 
 for(let day=0;day<7;day++){
 
@@ -616,17 +817,17 @@ if(day===0){
 tr.className="active-day";
 }
 
-const displayDay=((currentDay+day)%7)+1;
+const displayDay=(
+(selectedDay-1+day)%7
+)+1;
 
 let html=`<td>День ${displayDay}</td>`;
 
 for(let slot=0;slot<6;slot++){
 
-// Учитываем реальное положение текущего игрового дня в цикле.
+const stage=getStage(displayDay,slot);
 
-const stageIndex=((dayOffset+day)*6+slot)%5;
-
-html+=`<td>${raceStages[(stageIndex+5)%5].short}</td>`;
+html+=`<td>${stage.short}</td>`;
 
 }
 
@@ -639,16 +840,18 @@ tbody.appendChild(tr);
 }
 
 
-// Основной таймер.
+// ========================================
+// ОСНОВНОЙ ТАЙМЕР
+// ========================================
 
 function updateRace(){
 
 const now=moscowNow();
 
-const dayOffset=getRaceDay(now);
+const selectedDay=getCurrentSelectedDay();
 
 
-// Определяем игровой слот.
+// Текущий временной слот.
 
 let slot;
 
@@ -659,48 +862,61 @@ slot=Math.floor((now.hour-3)/4);
 }
 
 
-// Определяем текущий и следующий этап.
-
-const currentIndex=(dayOffset*6+slot)%5;
-
-const nextIndex=(dayOffset*6+slot+1)%5;
-
-const currentStage=raceStages[
-(currentIndex+5)%5
-];
-
-const nextStage=raceStages[
-(nextIndex+5)%5
-];
-
-
-// Время начала текущего этапа.
-
-const currentStart=raceHours[slot];
+// Следующий слот.
 
 const nextSlot=(slot+1)%6;
+
+
+// Текущий и следующий этап.
+
+const currentStage=getStage(selectedDay,slot);
+
+let nextDay=selectedDay;
+
+if(nextSlot===0){
+
+nextDay=(selectedDay%7)+1;
+
+}
+
+const nextStage=getStage(nextDay,nextSlot);
+
+
+// Время начала и окончания.
+
+const currentStart=raceHours[slot];
 
 const nextStart=raceHours[nextSlot];
 
 
-// Номер игрового дня.
-
-const raceDayNumber=((dayOffset%7)+7)%7+1;
+// Номер дня.
 
 $("raceDay").textContent=
-"ДЕНЬ "+raceDayNumber+" / 7";
+"ДЕНЬ "+selectedDay+" / 7";
 
 
-// Дата следующего этапа.
+// Дата следующего этапа по московскому времени.
 
-let nextDay=now.day;
+let nextDate=Date.UTC(
+now.year,
+now.month-1,
+now.day
+);
 
-if(nextStart<=now.hour){
-nextDay++;
+// Если сейчас 23:00–02:59,
+// следующий этап начинается в 03:00 текущего или следующего дня.
+
+if(now.hour>=23){
+
+nextDate+=86400000;
+
 }
 
+const nextStamp=nextDate+
+nextStart*3600000;
 
-// Текущий момент.
+
+// Текущий момент в московском времени.
 
 const currentStamp=Date.UTC(
 now.year,
@@ -709,18 +925,6 @@ now.day,
 now.hour,
 now.minute,
 now.second
-);
-
-
-// Следующий этап.
-
-const nextStamp=Date.UTC(
-now.year,
-now.month-1,
-nextDay,
-nextStart,
-0,
-0
 );
 
 
@@ -744,7 +948,9 @@ seconds%60
 ).padStart(2,"0");
 
 
-// Текущий этап.
+// ========================================
+// ОБНОВЛЕНИЕ ИНТЕРФЕЙСА
+// ========================================
 
 $("raceCurrentName").textContent=
 currentStage.name;
@@ -782,22 +988,59 @@ nextStage.prep;
 }
 
 
-// Вспомогательная функция.
+// ========================================
+// ВСПОМОГАТЕЛЬНАЯ ФУНКЦИЯ
+// ========================================
 
 function $(id){
+
 return document.getElementById(id);
+
 }
 
 
-// Запуск.
+// ========================================
+// ЗАПУСК
+// ========================================
+
+renderDayButtons();
 
 buildSchedule();
 
 updateRace();
 
+
+// Обновление таймера каждую секунду.
+
 setInterval(updateRace,1000);
 
-setInterval(buildSchedule,60000);
+
+// Обновление расписания и выбранного дня.
+
+setInterval(()=>{
+
+renderDayButtons();
+
+buildSchedule();
+
+},30000);
+
+
+// Проверка дня при возвращении на вкладку.
+
+document.addEventListener("visibilitychange",()=>{
+
+if(!document.hidden){
+
+renderDayButtons();
+
+buildSchedule();
+
+updateRace();
+
+}
+
+});
 
 </script>
 
