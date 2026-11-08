@@ -62,7 +62,11 @@ async function publishTopic(){if(!currentUser)return showAuth();const category=$
    const {data}=db.storage.from('rc-forum-avatars').getPublicUrl(path);
    avatarUrl=data.publicUrl;
   }
-  const {data,error}=await db.from('rc_forum_profiles').update({nickname,avatar_url:avatarUrl}).eq('id',currentUser.id).select().single();
+  const {data,error}=await db.from('rc_forum_profiles').upsert({
+ id:currentUser.id,
+ nickname:nickname,
+ avatar_url:avatarUrl
+}).select().single();
   if(error)throw error;
   currentProfile=data;
   updateHeader();
