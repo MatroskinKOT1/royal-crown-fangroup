@@ -1,11 +1,735 @@
 <!DOCTYPE html>
-<html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#101722"><meta name="description" content="Герои Royal Crown: Kingdom Wars — навыки, способы получения, тир-лист и рекомендации по Арена от FANGroup."><title>Герои и Арена | Royal Crown: Kingdom Wars — FANGroup</title>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101722">
+<meta name="description" content="Герои Royal Crown: Kingdom Wars — навыки, характеристики, тир-лист и команды для Арены.">
+<title>Герои | Royal Crown: Kingdom Wars — FANGroup</title>
+
 <style>
-:root{--bg:#0d1420;--panel:#172232;--panel2:#1d2b3e;--gold:#e4bd70;--gold2:#f5d99c;--text:#f3f0e8;--muted:#a1adbd;--line:#35445a;--purple:#bd8be8;--green:#8dc8a0}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 50% -15%,#34445b 0%,#172334 35%,#0d1420 75%);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",sans-serif}a{color:inherit;text-decoration:none}.container{width:min(1120px,calc(100% - 30px));margin:auto}header{text-align:center;padding:25px 0 14px}.brand{color:var(--gold);font-size:11px;letter-spacing:4px}.logo{font:600 clamp(28px,6vw,43px) Georgia,serif;margin:8px 0}.logo span{color:var(--gold)}.sub{color:var(--muted);font-size:12px;letter-spacing:2px}nav{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;padding:15px 0 20px;border-bottom:1px solid var(--line)}nav a{padding:9px 13px;border-radius:8px;color:var(--muted);font-size:11px;letter-spacing:1px}nav a:hover{color:var(--gold);background:#e4bd7010}.intro{text-align:center;padding:32px 5px 22px}.eyebrow{color:var(--gold);font-size:11px;letter-spacing:3px;text-transform:uppercase}.intro h1{font:500 clamp(30px,6vw,45px) Georgia,serif;margin:10px 0}.intro h1 span{color:var(--gold)}.intro p{max-width:740px;margin:auto;color:var(--muted);line-height:1.7;font-size:14px}.quicknav{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:18px 0 26px}.quicknav a{border:1px solid var(--line);border-radius:30px;padding:8px 13px;color:var(--muted);font-size:12px}.quicknav a:hover{border-color:var(--gold);color:var(--gold)}section{margin:32px 0 42px;scroll-margin-top:18px}.section-head{display:flex;align-items:center;gap:12px;margin-bottom:8px}.section-head h2{font:500 27px Georgia,serif;margin:0}.section-head:after{content:"";height:1px;flex:1;background:var(--line)}.section-desc{color:var(--muted);font-size:13px;line-height:1.7;margin:0 0 18px}.toolbar{display:grid;grid-template-columns:1fr auto;gap:12px;margin:18px 0 12px}.search{width:100%;padding:13px 15px;border:1px solid var(--line);border-radius:10px;background:#111c2b;color:var(--text);font:inherit;outline:none}.search:focus{border-color:var(--gold)}.count{align-self:center;color:var(--muted);font-size:12px;white-space:nowrap}.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}.filter{border:1px solid var(--line);background:#172232;color:var(--muted);border-radius:30px;padding:8px 14px;font-size:12px;cursor:pointer}.filter.active,.filter:hover{border-color:var(--gold);color:var(--gold);background:#e4bd7010}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.hero-card{overflow:hidden;border:1px solid var(--line);border-radius:13px;background:linear-gradient(145deg,#1d2b3e,#121d2c);cursor:pointer;transition:.2s;min-width:0}.hero-card:hover{transform:translateY(-4px);border-color:#a8874e;box-shadow:0 10px 25px #0003}.portrait{height:190px;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 65%,#385273 0%,#1b2b40 48%,#131e2d 100%);overflow:hidden}.portrait img{width:100%;height:100%;object-fit:contain}.info{padding:13px 14px 15px}.name-row{display:flex;align-items:center;justify-content:space-between;gap:6px}.name{font-size:15px;font-weight:700}.rarity{font-size:10px;font-weight:900;letter-spacing:1px;padding:5px 8px;border-radius:6px;background:#e4bd70;color:#30220d}.rarity.ssr{background:#9e60c8;color:#fff}.role{color:var(--muted);font-size:11px;margin-top:7px}.hint{color:var(--gold);font-size:10px;margin-top:10px;letter-spacing:.8px}.empty{display:none;text-align:center;color:var(--muted);padding:40px 10px}.note{margin:20px 0;padding:14px 16px;border:1px solid #80683f;border-radius:10px;background:#e4bd700b;color:#c5b99f;font-size:12px;line-height:1.7}.modal{position:fixed;inset:0;z-index:10;background:#050a12e8;display:none;align-items:center;justify-content:center;padding:14px}.modal.open{display:flex}.dialog{width:min(760px,100%);max-height:92vh;overflow:auto;background:linear-gradient(145deg,#22334a,#111c2b);border:1px solid #80683f;border-radius:15px;box-shadow:0 20px 70px #0009}.dialog-head{position:sticky;top:0;z-index:2;display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:1px solid var(--line);background:#1b2a3d}.dialog-head strong{font:23px Georgia,serif}.close{border:0;background:none;color:var(--text);font-size:27px;cursor:pointer}.dialog-body{display:grid;grid-template-columns:190px 1fr;gap:18px;padding:18px}.dialog-body>img{width:100%;border-radius:10px;background:#1a2b40}.dialog-body p{color:var(--muted);font-size:13px;line-height:1.7;margin:8px 0}.detail-label{color:var(--gold);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;margin:16px 0 8px}.skills{display:grid;grid-template-columns:1fr 1fr;gap:9px}.skill{padding:12px;border:1px solid var(--line);border-radius:10px;background:#111c2b}.skill b{display:block;color:var(--gold2);font-size:12px;margin-bottom:6px}.skill p{margin:0;font-size:12px}.acq{padding:12px;border:1px solid #4d684f;border-radius:10px;background:#8dc8a00d;color:#c5d7c7;font-size:12px;line-height:1.65}.tier-grid,.arena-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.tier-card,.arena-card,.source-card{padding:16px;border:1px solid var(--line);border-radius:12px;background:linear-gradient(145deg,#1d2b3e,#121d2c)}.tier-card h3,.arena-card h3{margin:0 0 8px;font-size:15px}.tier-card p,.arena-card p,.source-card p{margin:0;color:var(--muted);font-size:12px;line-height:1.65}.tier-tag{display:inline-block;margin-bottom:9px;padding:4px 9px;border-radius:6px;background:#e4bd70;color:#2b210e;font-weight:900;font-size:12px}.tier-tag.a{background:#9bc89e}.tier-tag.b{background:#8baacb}.tier-tag.c{background:#89919f}.tier-caveat{margin-top:14px;color:var(--muted);font-size:12px;line-height:1.7}.formation{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}.rowbox{padding:12px;border-radius:9px;background:#0f1927;border:1px solid var(--line)}.rowbox strong{display:block;color:var(--gold);font-size:10px;letter-spacing:1px;margin-bottom:7px}.slots{display:flex;flex-wrap:wrap;gap:6px}.slot{padding:6px 8px;border-radius:6px;background:#293a50;color:#f3f0e8;font-size:11px}.source-list{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.source-card a{color:var(--gold);font-size:12px;text-decoration:underline}.badge{display:inline-block;padding:3px 7px;border-radius:5px;background:#e4bd7018;color:var(--gold);font-size:10px;margin-bottom:8px}footer{text-align:center;border-top:1px solid var(--line);padding:24px 10px 32px;color:#78869a;font-size:12px;line-height:1.8}footer strong{color:var(--gold)}
-@media(max-width:850px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.tier-grid,.arena-grid{grid-template-columns:1fr 1fr}}@media(max-width:600px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.portrait{height:155px}.info{padding:11px}.name{font-size:13px}.toolbar{grid-template-columns:1fr}.count{padding-left:3px}.dialog-body{grid-template-columns:1fr}.dialog-body>img{max-height:230px;object-fit:contain}.skills{grid-template-columns:1fr}.tier-grid,.arena-grid,.source-list{grid-template-columns:1fr}.formation{grid-template-columns:1fr}.intro{padding-top:26px}}
-</style></head><body><div class="container"><header><div class="brand">БАЗА ЗНАНИЙ FANGROUP</div><div class="logo">ROYAL <span>CROWN</span></div><div class="sub">KINGDOM WARS | ГЕРОИ И АРЕНА</div></header><nav><a href="index.html">ГЛАВНАЯ</a><a href="heroes.html">ГЕРОИ</a><a href="arms-race.html">ГОНКА ВООРУЖЕНИЙ</a><a href="strongest-lord.html">СИЛЬНЕЙШИЙ ЛОРД</a><a href="development.html">РАЗВИТИЕ</a><a href="https://t.me/RC_FANGroup" target="_blank" rel="noopener">TELEGRAM</a></nav><div class="intro"><div class="eyebrow">Энциклопедия персонажей</div><h1>Герои <span>королевства</span></h1><p>Каталог 16 героев Royal Crown: Kingdom Wars: навыки, специализация, редкость и способы получения. Ниже — предварительные оценки, внешние рекомендации и авторские сборки для Арены.</p></div><div class="quicknav"><a href="#catalog">Каталог героев</a><a href="#tier">Тир-лист</a><a href="#arena">Арена · 5 героев</a><a href="#sources">Внешние источники</a></div><section id="catalog"><div class="section-head"><h2>Каталог героев</h2></div><p class="section-desc">Нажми на карточку, чтобы открыть навыки и информацию о получении. Поиск работает по имени, редкости и специализации.</p><div class="toolbar"><input id="search" class="search" type="search" placeholder="⌕  Найти героя..." autocomplete="off"><div class="count" id="count">16 героев</div></div><div class="filters"><button class="filter active" data-filter="all">Все герои</button><button class="filter" data-filter="UR">UR</button><button class="filter" data-filter="SSR">SSR</button><button class="filter" data-filter="Воин">Воины</button><button class="filter" data-filter="Маг">Маги</button><button class="filter" data-filter="Лучник">Лучники</button></div><main class="grid" id="grid"></main><div class="empty" id="empty">По вашему запросу герои не найдены.</div><div class="note"><b>О фрагментах:</b> универсальные фрагменты можно обменивать только на фрагменты уже полученных героев соответствующей редкости. Сначала герой должен быть открыт. После этого универсальные SSR/UR-фрагменты можно направлять на его развитие. Для отдельных UR-героев возможность такого обмена пока не подтверждена.</div><div class="note"><b>О навыках:</b> описания составлены по предоставленным игровым скриншотам. В некоторых группах четвёртый экран навыка не содержит читаемого описания/не отображает разблокированную способность — такие места честно помечены, а не заполнены предположениями. Числовые коэффициенты не приводим: они меняются при прокачке.</div></section>
-<section id="tier"><div class="section-head"><h2>Предварительный тир-лист</h2></div><p class="section-desc">Это аналитическая оценка ChatGPT по видимым эффектам навыков, роли и синергии. Она не является официальным рейтингом и не заменяет проверку на практике.</p><div class="tier-grid"><article class="tier-card"><span class="tier-tag">S · приоритет</span><h3>Валькирия · Артемида · Да Винчи · Дракула</h3><p>Высокий потенциал для PvP по набору контроля, массового/дополнительного урона, выживаемости и ослабления противника. Особенно интересны для тестирования в UR-сборках.</p></article><article class="tier-card"><span class="tier-tag a">A · сильные</span><h3>Кэтрин · Катарина · Ланселот · Ния · Лилит</h3><p>Полезные контроль, поддержка, усиление профильного типа войск и урон. Могут стать основой сильных команд при подходящей прокачке.</p></article><article class="tier-card"><span class="tier-tag b">B · ситуативные</span><h3>Айви · Гринк · Робин · Виктор · Юнь · Белла · Сайрус</h3><p>Есть полезные эффекты для отдельных режимов, типов войск или задач. Их ценность сильно зависит от доступности, звёзд, уровня навыков и состава соперника.</p></article></div><p class="tier-caveat">Ранги предварительные. Они не основаны на официальной статистике побед/использования: в открытых источниках не найден подтверждённый актуальный статистический тир-лист именно для нашего набора из 16 героев. Для F2P особенно важно учитывать не только редкость, но и реальную прокачку.</p></section>
-<section id="arena"><div class="section-head"><h2>Арена · команды по 5 героев</h2></div><p class="section-desc">Ниже — варианты для тестирования. Передний ряд отведён героям, которым полезнее принимать основной удар; задний — стрелкам, магам и поддержке. Проверь фактическую механику расстановки в своём режиме Арены.</p><div class="arena-grid" id="arenaGrid"></div><div class="note"><b>Важно:</b> составы и расстановка в этом разделе — рекомендации ChatGPT, а не официальная мета. Внешние гайды предлагают некоторые связки, но не раскрывают подтверждённую статистику для каждого сервера и уровня развития. Сравнивай результаты на своей Арена и меняй позиции по ситуации.</div></section>
-<section id="sources"><div class="section-head"><h2>Рекомендации из открытых источников</h2></div><p class="section-desc">Внешние материалы используем как ориентир, а не как абсолютную истину. В составах могут встречаться герои, которых пока нет в нашем каталоге.</p><div class="source-list"><article class="source-card"><span class="badge">Внешний гайд</span><p><b>Royal Crown Vault</b><br>Публикует примеры PvP-составов, включая King's Vanguard с Валькирией, Артемидой и Да Винчи, а также оборонительные комбинации.</p><a href="https://www.royalcrownvault.com/" target="_blank" rel="noopener">Открыть источник ↗</a></article><article class="source-card"><span class="badge">Внешний гайд · требует проверки</span><p><b>YSWL — Beginner's Guide</b><br>Приводит F2P-связку Dragon's Will: Айви, Гринк, Робин, Лилит и Ния; также перечисляет атакующий и оборонительный варианты.</p><a href="https://yswl16888.cn/kvk/" target="_blank" rel="noopener">Открыть источник ↗</a></article></div><div class="note"><b>Примечание для игроков:</b> рекомендации индивидуальны. Уровень героев, звёзды, прокачка навыков, состав войск, противник и ваш стиль игры влияют на результат. Эксперименты — это хорошо: нестандартная комбинация может оказаться эффективнее популярной сборки.</div><p class="tier-caveat">Подпись к авторским рекомендациям: «Составы команд, оценки героев и варианты построения разработаны ChatGPT на основе анализа игровых скриншотов, навыков персонажей и доступных открытых материалов».</p></section><footer><strong>ROYAL CROWN: KINGDOM WARS | FANGROUP</strong><br>Неофициальная фанатская база знаний. Не связана с разработчиками игры.<br>Рекомендации и аналитические оценки ChatGPT · © FANGroup 2026</footer></div><div class="modal" id="modal" role="dialog" aria-modal="true"><div class="dialog"><div class="dialog-head"><strong id="modalName">Герой</strong><button class="close" id="close" aria-label="Закрыть">×</button></div><div class="dialog-body"><img id="modalImage" src="" alt=""><div><div id="modalBadges"></div><div class="detail-label">Оценка ChatGPT</div><p id="modalAssessment"></p><div class="detail-label">Способ получения</div><div class="acq" id="modalGet"></div><div class="detail-label">Навыки · порядок по иконкам</div><div class="skills" id="modalSkills"></div></div></div></div></div>
-<script>
-const heroes = [{"name": "Юнь", "rarity": "UR", "role": "Воин", "slug": "yun", "get": "Зал призыва. По наблюдениям игроков, на старте нового сервера герой встречается достаточно часто.", "skills": [["Контратака", "При получении обычной атаки есть шанс ответить атакующему дополнительным уроном."], ["Боевой строй", "При командовании воинами снижает получаемый урон от лучников и повышает атаку и защиту воинов."], ["Удар и щит", "Наносит урон выбранной цели и одновременно создаёт щит для своего отряда."], ["Не подтверждён", "Четвёртый навык на предоставленном скриншоте не удалось надёжно прочитать. Не заполняем догадкой."]], "assessment": "Воин с контратакой, защитными бонусами и щитом. По набору эффектов подходит для устойчивой передней линии."}, {"name": "Ния", "rarity": "SSR", "role": "Маг", "slug": "niya", "get": "Зал призыва. После получения Нии можно обменивать универсальные SSR-фрагменты на её фрагменты.", "skills": [["Поддержка отряда", "Обычные атаки с вероятностью лечат легкораненых солдат."], ["Сбор ресурсов", "При сборе ресурсов отрядом даёт дополнительный бонус к добыче."], ["Командное усиление", "Усиливает до пяти дружественных отрядов поблизости: повышает характеристики разных типов войск и помогает быстрее накапливать ярость."], ["Не подтверждён", "Четвёртый навык на скриншоте не читается; описание не добавлено."]], "assessment": "Полезна для выживаемости и поддержки, а также имеет отдельную экономическую ценность при сборе ресурсов."}, {"name": "Лилит", "rarity": "SSR", "role": "Маг", "slug": "lilith", "get": "Зал призыва. После получения Лилит можно обменивать универсальные SSR-фрагменты на её фрагменты.", "skills": [["Дополнительный урон", "Атаки с вероятностью накладывают дополнительный урон на цель на короткое время."], ["Магический строй", "При командовании магами снижает получаемый урон от воинов и повышает атаку и защиту магов."], ["Призрачный удар", "Наносит урон нескольким отрядам в секторе и снижает их атаку на время действия эффекта."], ["Не подтверждён", "Четвёртый навык на скриншоте не читается; описание не добавлено."]], "assessment": "Маг с уроном по нескольким целям и ослаблением атаки противника. Особенно интересна в составе отряда магов."}, {"name": "Виктор", "rarity": "SSR", "role": "Воин", "slug": "viktor", "get": "Зал призыва. После получения Виктора можно обменивать универсальные SSR-фрагменты на его фрагменты.", "skills": [["Щит после навыка", "После активации навыка армия получает щит. Эффект срабатывает с ограничением по времени."], ["Каменная стойкость", "При командовании воинами снижает получаемый урон от лучников и повышает атаку и защиту воинов."], ["Прямой удар", "Наносит прямой урон текущей цели."], ["Не подтверждён", "Четвёртый навык на скриншоте не читается; описание не добавлено."]], "assessment": "Защитный воин с личным щитом и бонусами для воинского отряда."}, {"name": "Робин", "rarity": "SSR", "role": "Лучник", "slug": "robin", "get": "Зал призыва. После получения Робина можно обменивать универсальные SSR-фрагменты на его фрагменты.", "skills": [["Дополнительный выстрел", "При атаке есть шанс нанести цели дополнительный урон."], ["Рейнджер", "Повышает грузоподъёмность при грабеже ресурсов и скорость передвижения войск."], ["Усиленный залп", "Наносит прямой урон текущей цели и временно повышает урон собственных войск."], ["Залп стрел", "Четвёртый навык по подтверждению пользователя. Текст эффекта на предоставленном снимке недостаточно читаем для надёжного описания."]], "assessment": "Лучник с атакующими эффектами и полезным бонусом к передвижению/грабежу. «Залп стрел» — четвёртый навык по подтверждению пользователя."}, {"name": "Ланселот", "rarity": "SSR", "role": "Воин", "slug": "lancelot", "get": "Зал призыва. После получения Ланселота можно обменивать универсальные SSR-фрагменты на его фрагменты.", "skills": [["Защитный натиск", "Повышает атаку бойцов; обычные атаки с вероятностью дают отряду щит."], ["Меч Арондайта", "При командовании воинами снижает получаемый урон от лучников и повышает атаку и защиту воинов."], ["Атака с укреплением", "Наносит прямой урон цели и усиливает защиту собственного отряда."], ["Не подтверждён", "Четвёртый навык на скриншоте не читается; не додумываем."]], "assessment": "Воин с хорошей защитной синергией: щит, повышение защиты и профильные бонусы отряду воинов."}, {"name": "Катарина", "rarity": "UR", "role": "Лучник", "slug": "katarina", "get": "Событие «Теневая операция — Охота за сокровищами». Возможность улучшения универсальными UR-фрагментами пока не подтверждена.", "skills": [["Элитный прорыв", "Повышает параметры отряда; после применения навыка может накладывать на вражеские войска эффект молчания."], ["Штурм последнего рубежа", "После активации навыка усиливает собственный отряд, повышая наносимый им урон на время действия эффекта."], ["Лучный строй", "При командовании стрелками снижает получаемый урон от магов и повышает атаку и защиту стрелков."], ["Прямой урон и ослабление", "Наносит прямой урон цели и дополнительно наносит периодический урон в течение нескольких секунд."]], "assessment": "Лучник с контролем через молчание, усилением своего отряда и уроном по цели. Потенциально полезна для атакующей команды."}, {"name": "Кэтрин", "rarity": "UR", "role": "Маг", "slug": "katrin", "get": "VIP 1–VIP 8: эксклюзивные сундуки и «Короле
+:root {
+  --bg:#0d1420;
+  --panel:#172232;
+  --panel2:#1d2b3e;
+  --gold:#e4bd70;
+  --gold2:#f5d99c;
+  --text:#f3f0e8;
+  --muted:#a1adbd;
+  --line:#35445a;
+}
+* {box-sizing:border-box}
+html {scroll-behavior:smooth}
+body {
+  margin:0;
+  background:radial-gradient(ellipse at 50% -15%,#34445b 0%,#172334 35%,#0d1420 75%);
+  color:var(--text);
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+a {color:inherit;text-decoration:none}
+.container {width:min(1120px,calc(100% - 30px));margin:auto}
+header {text-align:center;padding:25px 0 14px}
+.brand {color:var(--gold);font-size:11px;letter-spacing:4px}
+.logo {font:600 clamp(28px,6vw,43px) Georgia,serif;margin:8px 0}
+.logo span {color:var(--gold)}
+.sub {color:var(--muted);font-size:12px;letter-spacing:2px}
+nav {
+  display:flex;justify-content:center;gap:8px;
+  flex-wrap:wrap;padding:15px 0 20px;
+  border-bottom:1px solid var(--line)
+}
+nav a {
+  padding:9px 13px;border-radius:8px;
+  color:var(--muted);font-size:11px;letter-spacing:1px
+}
+nav a:hover {color:var(--gold);background:#e4bd7010}
+.intro {text-align:center;padding:32px 5px 22px}
+.eyebrow {color:var(--gold);font-size:11px;letter-spacing:3px}
+.intro h1 {font:500 clamp(30px,6vw,45px) Georgia,serif;margin:10px 0}
+.intro h1 span {color:var(--gold)}
+.intro p {
+  max-width:740px;margin:auto;color:var(--muted);
+  line-height:1.7;font-size:14px
+}
+.quicknav {
+  display:flex;gap:8px;justify-content:center;
+  flex-wrap:wrap;margin:18px 0 26px
+}
+.quicknav a {
+  border:1px solid var(--line);border-radius:30px;
+  padding:8px 13px;color:var(--muted);font-size:12px
+}
+.quicknav a:hover {border-color:var(--gold);color:var(--gold)}
+section {margin:32px 0 42px;scroll-margin-top:18px}
+.section-head {display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.section-head h2 {font:500 27px Georgia,serif;margin:0}
+.section-head:after {content:"";height:1px;flex:1;background:var(--line)}
+.section-desc {color:var(--muted);font-size:13px;line-height:1.7;margin:0 0 18px}
+.toolbar {
+  display:grid;grid-template-columns:1fr auto;
+  gap:12px;margin:18px 0 12px
+}
+.search {
+  width:100%;padding:13px 15px;
+  border:1px solid var(--line);border-radius:10px;
+  background:#111c2b;color:var(--text);font:inherit;outline:none
+}
+.search:focus {border-color:var(--gold)}
+.count {align-self:center;color:var(--muted);font-size:12px}
+.filters {display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.filter {
+  border:1px solid var(--line);background:#172232;
+  color:var(--muted);border-radius:30px;
+  padding:8px 14px;font-size:12px;cursor:pointer
+}
+.filter.active,.filter:hover {
+  border-color:var(--gold);color:var(--gold);
+  background:#e4bd7010
+}
+.grid {
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:14px
+}
+.hero-card {
+  overflow:hidden;border:1px solid var(--line);
+  border-radius:13px;
+  background:linear-gradient(145deg,#1d2b3e,#121d2c);
+  cursor:pointer;transition:.2s;min-width:0
+}
+.hero-card:hover {
+  transform:translateY(-4px);border-color:#a8874e;
+  box-shadow:0 10px 25px #0003
+}
+.portrait {
+  height:190px;display:flex;align-items:center;
+  justify-content:center;
+  background:radial-gradient(ellipse at 50% 65%,#385273,#1b2b40 48%,#131e2d);
+  overflow:hidden
+}
+.portrait img {width:100%;height:100%;object-fit:contain}
+.info {padding:13px 14px 15px}
+.name-row {display:flex;align-items:center;justify-content:space-between;gap:6px}
+.name {font-size:15px;font-weight:700}
+.rarity {
+  font-size:10px;font-weight:900;letter-spacing:1px;
+  padding:5px 8px;border-radius:6px;
+  background:#e4bd70;color:#30220d
+}
+.rarity.ssr {background:#9e60c8;color:#fff}
+.role {color:var(--muted);font-size:11px;margin-top:7px}
+.hint {color:var(--gold);font-size:10px;margin-top:10px}
+.empty {display:none;text-align:center;color:var(--muted);padding:40px 10px}
+.note {
+  margin:20px 0;padding:14px 16px;
+  border:1px solid #80683f;border-radius:10px;
+  background:#e4bd700b;color:#c5b99f;
+  font-size:12px;line-height:1.7
+}
+.modal {
+  position:fixed;inset:0;z-index:10;
+  background:#050a12e8;display:none;
+  align-items:center;justify-content:center;padding:14px
+}
+.modal.open {display:flex}
+.dialog {
+  width:min(760px,100%);max-height:92vh;overflow:auto;
+  background:linear-gradient(145deg,#22334a,#111c2b);
+  border:1px solid #80683f;border-radius:15px;
+  box-shadow:0 20px 70px #0009
+}
+.dialog-head {
+  position:sticky;top:0;z-index:2;
+  display:flex;justify-content:space-between;
+  align-items:center;padding:14px 18px;
+  border-bottom:1px solid var(--line);background:#1b2a3d
+}
+.dialog-head strong {font:23px Georgia,serif}
+.close {border:0;background:none;color:var(--text);font-size:27px;cursor:pointer}
+.dialog-body {display:grid;grid-template-columns:190px 1fr;gap:18px;padding:18px}
+.dialog-body>img {width:100%;border-radius:10px;background:#1a2b40}
+.dialog-body p {color:var(--muted);font-size:13px;line-height:1.7;margin:8px 0}
+.detail-label {color:var(--gold);font-size:10px;letter-spacing:1.5px;margin:16px 0 8px}
+.skills {display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.skill {padding:12px;border:1px solid var(--line);border-radius:10px;background:#111c2b}
+.skill b {display:block;color:var(--gold2);font-size:12px;margin-bottom:6px}
+.skill p {margin:0;font-size:12px}
+.acq {
+  padding:12px;border:1px solid #4d684f;border-radius:10px;
+  background:#8dc8a00d;color:#c5d7c7;font-size:12px;line-height:1.65
+}
+.tier-grid,.arena-grid {display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.tier-card,.arena-card,.source-card {
+  padding:16px;border:1px solid var(--line);border-radius:12px;
+  background:linear-gradient(145deg,#1d2b3e,#121d2c)
+}
+.tier-card h3,.arena-card h3 {margin:0 0 8px;font-size:15px}
+.tier-card p,.arena-card p,.source-card p {
+  margin:0;color:var(--muted);font-size:12px;line-height:1.65
+}
+.tier-tag {
+  display:inline-block;margin-bottom:9px;padding:4px 9px;
+  border-radius:6px;background:#e4bd70;color:#2b210e;
+  font-weight:900;font-size:12px
+}
+.tier-tag.a {background:#9bc89e}
+.tier-tag.b {background:#8baacb}
+.tier-tag.c {background:#89919f}
+.formation {display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+.rowbox {padding:12px;border-radius:9px;background:#0f1927;border:1px solid var(--line)}
+.rowbox strong {display:block;color:var(--gold);font-size:10px;margin-bottom:7px}
+.slots {display:flex;flex-wrap:wrap;gap:6px}
+.slot {padding:6px 8px;border-radius:6px;background:#293a50;font-size:11px}
+.badge {display:inline-block;padding:3px 7px;border-radius:5px;background:#e4bd7018;color:var(--gold);font-size:10px;margin-bottom:8px}
+.source-list {display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.source-card a {color:var(--gold);font-size:12px;text-decoration:underline}
+footer {
+  text-align:center;border-top:1px solid var(--line);
+  padding:24px 10px 32px;color:#78869a;font-size:12px;line-height:1.8
+}
+footer strong {color:var(--gold)}
+@media(max-width:850px) {
+  .grid {grid-template-columns:repeat(3,minmax(0,1fr))}
+  .tier-grid,.arena-grid {grid-template-columns:1fr 1fr}
+}
+@media(max-width:600px) {
+  .grid {grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .portrait {height:155px}
+  .info {padding:11px}
+  .name {font-size:13px}
+  .toolbar {grid-template-columns:1fr}
+  .count {padding-left:3px}
+  .dialog-body {grid-template-columns:1fr}
+  .dialog-body>img {max-height:230px;object-fit:contain}
+  .skills,.tier-grid,.arena-grid,.source-list,.formation {grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <div class="brand">БАЗА ЗНАНИЙ FANGROUP</div>
+  <div class="logo">ROYAL <span>CROWN</span></div>
+  <div class="sub">KINGDOM WARS | ГЕРОИ И АРЕНА</div>
+</header>
+
+<nav>
+  <a href="index.html">ГЛАВНАЯ</a>
+  <a href="heroes.html">ГЕРОИ</a>
+  <a href="arms-race.html">ГОНКА ВООРУЖЕНИЙ</a>
+  <a href="strongest-lord.html">СИЛЬНЕЙШИЙ ЛОРД</a>
+  <a href="development.html">РАЗВИТИЕ</a>
+  <a href="https://t.me/RC_FANGroup" target="_blank">TELEGRAM</a>
+</nav>
+
+<div class="intro">
+  <div class="eyebrow">Энциклопедия персонажей</div>
+  <h1>Герои <span>королевства</span></h1>
+  <p>Каталог героев Royal Crown: Kingdom Wars. Изучай навыки, способы получения, оценки и готовые сочетания для Арены.</p>
+</div>
+
+<div class="quicknav">
+  <a href="#catalog">Каталог героев</a>
+  <a href="#tier">Тир-лист</a>
+  <a href="#arena">Арена</a>
+  <a href="#sources">Внешние рекомендации</a>
+</div>
+
+<section id="catalog">
+  <div class="section-head"><h2>Каталог героев</h2></div>
+  <p class="section-desc">Нажми на карточку героя, чтобы открыть подробную информацию. Поиск работает по имени, редкости и классу.</p>
+
+  <div class="toolbar">
+    <input id="search" class="search" type="search" placeholder="⌕ Найти героя..." autocomplete="off">
+    <div class="count" id="count">Загрузка героев...</div>
+  </div>
+
+  <div class="filters">
+    <button class="filter active" data-filter="all">Все герои</button>
+    <button class="filter" data-filter="UR">UR</button>
+    <button class="filter" data-filter="SSR">SSR</button>
+    <button class="filter" data-filter="Воин">Воины</button>
+    <button class="filter" data-filter="Маг">Маги</button>
+    <button class="filter" data-filter="Лучник">Лучники</button>
+  </div>
+
+  <main class="grid" id="grid"></main>
+  <div class="empty" id="empty">Герои не найдены. Попробуй изменить запрос.</div>
+
+  <div class="note">
+    <b>Универсальные фрагменты:</b> их можно обменивать только на фрагменты уже полученных героев соответствующей редкости. Сначала герой должен быть открыт.
+  </div>
+</section>
+
+<section id="tier">
+  <div class="section-head"><h2>Тир-лист героев</h2></div>
+  <p class="section-desc">Предварительная аналитическая оценка ChatGPT. Это не официальная игровая мета.</p>
+  <div class="tier-grid" id="tierGrid"></div>
+</section>
+
+<section id="arena">
+  <div class="section-head"><h2>Арена · команды по 5 героев</h2></div>
+  <p class="section-desc">Варианты составов и расстановки для тестирования.</p>
+  <div class="arena-grid" id="arenaGrid"></div>
+  <div class="note">
+    <b>Важно:</b> эффективность зависит от прокачки, звёзд, навыков, противника и стиля игры. Эксперименты — это хорошо!
+  </div>
+</section>
+
+<section id="sources">
+  <div class="section-head"><h2>Рекомендации из открытых источников</h2></div>
+  <div class="source-list" id="sourceList"></div>
+  <div class="note">
+    Внешние рекомендации — ориентир, а не обязательное правило. Собственные эксперименты могут привести к более эффективной комбинации.
+  </div>
+  <p class="section-desc">
+    Оценки, авторские сборки и варианты построения разработаны ChatGPT на основе анализа игровых навыков и доступных материалов.
+  </p>
+</section>
+
+<footer>
+  <strong>ROYAL CROWN: KINGDOM WARS | FANGROUP</strong><br>
+  Неофициальная фанатская база знаний. Не связана с разработчиками игры.<br>
+  Аналитические рекомендации ChatGPT · © FANGroup 2026
+</footer>
+
+</div>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true">
+  <div class="dialog">
+    <div class="dialog-head">
+      <strong id="modalName">Герой</strong>
+      <button class="close" id="close" aria-label="Закрыть">×</button>
+    </div>
+    <div class="dialog-body">
+      <img id="modalImage" src="" alt="">
+      <div>
+        <div id="modalBadges"></div>
+        <div class="detail-label">Оценка ChatGPT</div>
+        <p id="modalAssessment"></p>
+        <div class="detail-label">Способ получения</div>
+        <div class="acq" id="modalGet"></div>
+        <div class="detail-label">Навыки · порядок по иконкам</div>
+        <div class="skills" id="modalSkills"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>const heroes = [
+{
+name:"Юнь",rarity:"UR",role:"Воин",slug:"yun",
+get:"Зал призыва. По наблюдениям игроков, на старте нового сервера герой встречается достаточно часто.",
+skills:[
+["Контратака","При получении обычной атаки есть шанс ответить атакующему дополнительным уроном."],
+["Боевой строй","При командовании воинами снижает получаемый урон от лучников и повышает атаку и защиту воинов."],
+["Удар и щит","Наносит урон выбранной цели и одновременно создаёт щит для своего отряда."],
+["Не подтверждён","Описание четвёртого навыка пока не удалось надёжно прочитать."]
+],
+assessment:"Воин с контратакой, защитными бонусами и щитом. По набору эффектов подходит для устойчивой передней линии."
+},
+{
+name:"Ния",rarity:"SSR",role:"Маг",slug:"niya",
+get:"Зал призыва. После получения Нии можно обменивать универсальные SSR-фрагменты на её фрагменты.",
+skills:[
+["Поддержка отряда","Обычные атаки с вероятностью лечат легкораненых солдат."],
+["Сбор ресурсов","При сборе ресурсов отрядом даёт дополнительный бонус к добыче."],
+["Командное усиление","Усиливает до пяти дружественных отрядов поблизости: повышает характеристики разных типов войск и помогает быстрее накапливать ярость."],
+["Не подтверждён","Описание четвёртого навыка пока не удалось надёжно прочитать."]
+],
+assessment:"Полезна для выживаемости и поддержки, а также имеет отдельную экономическую ценность при сборе ресурсов."
+},
+{
+name:"Лилит",rarity:"SSR",role:"Маг",slug:"lilith",
+get:"Зал призыва. После получения Лилит можно обменивать универсальные SSR-фрагменты на её фрагменты.",
+skills:[
+["Дополнительный урон","Атаки с вероятностью накладывают дополнительный урон на цель на короткое время."],
+["Магический строй","При командовании магами снижает получаемый урон от воинов и повышает атаку и защиту магов."],
+["Призрачный удар","Наносит урон нескольким отрядам в секторе и снижает их атаку на время действия эффекта."],
+["Не подтверждён","Описание четвёртого навыка пока не удалось надёжно прочитать."]
+],
+assessment:"Маг с уроном по нескольким целям и ослаблением атаки противника. Особенно интересна в составе отряда магов."
+},
+{
+name:"Виктор",rarity:"SSR",role:"Воин",slug:"viktor",
+get:"Зал призыва. После получения Виктора можно обменивать универсальные SSR-фрагменты на его фрагменты.",
+skills:[
+["Щит после навыка","После активации навыка армия получает щит. Эффект срабатывает с ограничением по времени."],
+["Каменная стойкость","При командовании воинами снижает получаемый урон от лучников и повышает атаку и защиту воинов."],
+["Прямой удар","Наносит прямой урон текущей цели."],
+["Не подтверждён","Описание четвёртого навыка пока не удалось надёжно прочитать."]
+],
+assessment:"Защитный воин с личным щитом и бонусами для воинского отряда."
+},
+{
+name:"Робин",rarity:"SSR",role:"Лучник",slug:"robin",
+get:"Зал призыва. После получения Робина можно обменивать универсальные SSR-фрагменты на его фрагменты.",
+skills:[
+["Дополнительный выстрел","При атаке есть шанс нанести цели дополнительный урон."],
+["Рейнджер","Повышает грузоподъёмность при грабеже ресурсов и скорость передвижения войск."],
+["Усиленный залп","Наносит прямой урон текущей цели и временно повышает урон собственных войск."],
+["Залп стрел","Четвёртый навык по подтверждению пользователя. Текст эффекта пока недостаточно читаем для надёжного описания."]
+],
+assessment:"Лучник с атакующими эффектами и полезным бонусом к передвижению и грабежу ресурсов."
+},
+{
+name:"Ланселот",rarity:"SSR",role:"Воин",slug:"lancelot",
+get:"Зал призыва. После получения Ланселота можно обменивать универсальные SSR-фрагменты на его фрагменты.",
+skills:[
+["Защитный натиск","Повышает атаку бойцов; обычные атаки с вероятностью дают отряду щит."],
+["Меч Арондайта","При командовании воинами снижает получаемый урон от лучников и повышает атаку и защиту воинов."],
+["Атака с укреплением","Наносит прямой урон цели и усиливает защиту собственного отряда."],
+["Не подтверждён","Описание четвёртого навыка пока не удалось надёжно прочитать."]
+],
+assessment:"Воин с хорошей защитной синергией: щит, повышение защиты и профильные бонусы отряду воинов."
+},
+{
+name:"Катарина",rarity:"UR",role:"Лучник",slug:"katarina",
+get:"Событие «Теневая операция — Охота за сокровищами». Возможность улучшения универсальными UR-фрагментами пока не подтверждена.",
+skills:[
+["Элитный прорыв","Повышает параметры отряда; после применения навыка может накладывать на вражеские войска эффект молчания."],
+["Штурм последнего рубежа","После активации навыка усиливает собственный отряд, повышая наносимый им урон на время действия эффекта."],
+["Лучный строй","При командовании стрелками снижает получаемый урон от магов и повышает атаку и защиту стрелков."],
+["Прямой урон и ослабление","Наносит прямой урон цели и дополнительно наносит периодический урон."]
+],
+assessment:"Лучник с контролем через молчание, усилением своего отряда и уроном по цели."
+},
+{
+name:"Кэтрин",rarity:"UR",role:"Маг",slug:"katrin",
+get:"VIP 1–VIP 8: эксклюзивные сундуки и «Королевский рынок».",
+skills:[
+["Укреплённый отряд","Повышает вместимость войск и здоровье; после вступления в бой ослабляет атакующие параметры противника."],
+["Ответное ослабление","После получения обычной атаки с вероятностью снижает атаку цели на несколько секунд."],
+["Магический строй","При командовании магами снижает получаемый урон от воинов и повышает атаку и защиту магов."],
+["Ледяное танго","Наносит прямой урон одной цели; обычные атаки с вероятностью могут замораживать её и лишать возможности действовать."]
+],
+assessment:"Контроль-мага с ослаблением атаки и заморозкой. Сильная сторона — мешать противнику действовать."
+},
+{
+name:"Да Винчи",rarity:"UR",role:"Лучник",slug:"davinci",
+get:"Эксклюзивный сундук VIP 9–VIP 14. Получение связано с покупкой; точные условия стоит сверять в игре.",
+skills:[
+["Боевой импульс","Повышает вместимость и атаку отряда; после вступления в бой увеличивает наносимый собственными войсками урон."],
+["Залп из арбалета","Второй навык по подтверждению пользователя. Наносит прямой урон текущей цели и имеет дополнительный боевой эффект."],
+["Строй стрелков","При командовании стрелками снижает получаемый урон от магов и повышает атаку и защиту стрелков."],
+["Арбалетный залп","Наносит урон нескольким отрядам впереди и снижает их защиту на время действия эффекта."]
+],
+assessment:"Атакующий лучник с усилением отряда и массовым уроном. «Залп из арбалета» — навык 2 по подтверждению пользователя."
+},
+{
+name:"Гринк",rarity:"SSR",role:"Лучник",slug:"grink",
+get:"Зал призыва. После получения Гринка можно обменивать универсальные SSR-фрагменты на его фрагменты.",
+skills:[
+["Побочный продукт","Повышает характеристики отряда; часть эффекта усиливается, когда численность собственных войск становится низкой."],
+["Пороховая сумка","При снижении численности собственного отряда ниже половины повышает наносимый им урон."],
+["Строй стрелков","При командовании стрелками снижает получаемый урон от магов и повышает атаку и защиту стрелков."],
+["Особая бомба","Наносит прямой урон цели и повышает урон, который она получает от последующих атак."]
+],
+assessment:"Лучник с усилением в затяжном бою и дебаффом на получаемый целью урон."
+},
+{
+name:"Айви",rarity:"SSR",role:"Воин",slug:"alvin",
+get:"Зал призыва. После получения Айви можно обменивать универсальные SSR-фрагменты на её фрагменты.",
+skills:[
+["Использовать слабость","Снижает получаемый урон и повышает здоровье воинских отрядов."],
+["Сила в количестве","Даёт дополнительный урон против Легиона Тьмы; после победы может увеличить получаемую награду ресурсами."],
+["Двойной удар","Наносит прямой урон целевому отряду и через короткое время наносит дополнительный урон."],
+["Не подтверждён","Описание четвёртого навыка пока не удалось надёжно прочитать."]
+],
+assessment:"Выносливый воин, особенно полезный для PvE против Легиона Тьмы и добычи наград."
+},
+{
+name:"Белла",rarity:"SSR",role:"Маг",slug:"bella",
+get:"Зал призыва. После получения Беллы можно обменивать универсальные SSR-фрагменты на её фрагменты.",
+skills:[
+["Пламя","Поджигает текущую цель, нанося ей дополнительный периодический урон."],
+["Вдохновлённое изобретение","При командовании магами снижает получаемый урон от воинов и повышает атаку и защиту магов."],
+["Огненный сектор","Наносит урон нескольким отрядам в секторе перед собой."],
+["Не подтверждён","Описание четвёртого навыка пока не удалось надёжно прочитать."]
+],
+assessment:"Маг с уроном по области и периодическим уроном от поджога."
+},
+{
+name:"Валькирия",rarity:"UR",role:"Воин",slug:"valkyrie",
+get:"Выдаётся за любое первое пополнение.",
+skills:[
+["Удар Северного ветра","Наносит урон цели и замораживает её, временно предотвращая атаки. Это навык 1 — верхний левый."],
+["Ответное ослабление","При получении атаки есть шанс снизить урон, наносимый атакующим отрядом."],
+["Боевой строй воинов","При командовании воинами снижает получаемый урон от лучников и повышает атаку и защиту воинов."],
+["Не подтверждён","Описание четвёртого навыка пока не удалось надёжно прочитать."]
+],
+assessment:"Воин с контролем и защитными эффектами. Может быть опорой передней линии и мешать вражескому урону."
+},
+{
+name:"Артемида",rarity:"UR",role:"Лучник",slug:"artemida",
+get:"Набор за первое пополнение, «Ежедневное специальное предложение» и событие «Теневая операция». Возможность применения универсальных UR-фрагментов пока не подтверждена.",
+skills:[
+["Натиск","Повышает вместимость и атаку отряда; при нанесении урона увеличивает урон собственных войск на короткое время."],
+["Мощный контрудар","Обычная атака с вероятностью запускает дополнительный удар по цели."],
+["Символ Ветроступа","При командовании стрелками снижает получаемый урон от магов и повышает атаку и защиту стрелков."],
+["Дождь","Наносит прямой урон текущей цели и немедленно восстанавливает ярость."]
+],
+assessment:"Атакующий лучник с дополнительными ударами и быстрым набором ярости."
+},
+{
+name:"Дракула",rarity:"UR",role:"Маг",slug:"dracula",
+get:"«Контракт героя» (разблокировка продвинутых наград за донат), «Счастливое колесо» (впервые становится доступно после 6 дней игры) и «Теневая операция».",
+skills:[
+["Кровавое восстановление","Повышает вместимость и здоровье; при получении урона от навыков есть шанс немедленно вылечить повреждённые войска."],
+["Ответная атака","Снижает получаемый урон контратаки; обычная атака с вероятностью наносит прямой урон атакующему."],
+["Ночное благословение","При командовании магами снижает получаемый урон от воинов и повышает атаку и защиту магов."],
+["Тёмный сектор","Наносит урон нескольким отрядам в секторе и снижает получаемое ими лечение на короткое время."]
+],
+assessment:"Маг с самовосстановлением, ответным уроном и антихилом. Особенно интересен против команд, зависящих от лечения."
+},
+{
+name:"Сайрус",rarity:"UR",role:"Маг",slug:"cyrus",
+get:"На данный момент подтверждён только первый ивент «Сильнейший лорд». Другие способы получения пока не обнаружены.",
+skills:[
+["Дикая охота на ветре","Повышает вместимость и здоровье; базовые атаки могут накладывать на цель дополнительный эффект."],
+["Песчаные ступени","При начале сбора повышает вместимость отряда и его атаку; эффект не складывается."],
+["Магическая эрозия","При командовании магами снижает получаемый урон от воинов и повышает атаку и защиту магов."],
+["Полумесячная песчаная буря","Наносит урон нескольким отрядам в конусе перед собой и снижает их атаку, защиту и здоровье."]
+],
+assessment:"Маг с массовым уроном и ослаблением нескольких характеристик. Часть эффектов направлена на сбор ресурсов, а не только на арену."
+}
+];const tierGroups = [
+{
+tag:"S",className:"",
+title:"Приоритетные герои",
+text:"Валькирия, Кэтрин, Да Винчи, Дракула. Предварительная оценка ChatGPT: интересные боевые эффекты, контроль, выживаемость и массовый урон."
+},
+{
+tag:"A",className:"a",
+title:"Сильные кандидаты",
+text:"Артемида, Катарина, Сайрус, Ланселот, Лилит. Имеют полезные атакующие, защитные или контрольные эффекты."
+},
+{
+tag:"B",className:"b",
+title:"Ситуативные герои",
+text:"Юнь, Виктор, Гринк, Робин, Белла, Айви, Ния. Могут быть полезны в зависимости от режима, прокачки и состава команды."
+}
+];
+
+const formations = [
+{
+title:"Доступный состав · SSR",
+badge:"Вариант ChatGPT",
+front:["Айви"],
+back:["Гринк","Робин","Лилит","Ния"],
+text:"Вариант для игроков, которые развивают героев SSR. Передняя линия — Айви, остальные обеспечивают поддержку и урон."
+},
+{
+title:"Атакующий состав · UR",
+badge:"Вариант ChatGPT",
+front:["Валькирия"],
+back:["Артемида","Да Винчи","Катарина","Дракула"],
+text:"Сочетание контроля Валькирии, атакующих возможностей лучников и дополнительных эффектов Дракулы."
+},
+{
+title:"Контроль и выживаемость",
+badge:"Вариант ChatGPT",
+front:["Ланселот","Виктор"],
+back:["Кэтрин","Дракула","Лилит"],
+text:"Вариант с двумя героями передней линии и магами, способными наносить урон, ослаблять и контролировать противника."
+}
+];
+
+const externalSources = [
+{
+title:"Royal Crown Vault",
+text:"Внешний справочный ресурс по игре. Используйте как дополнительный источник информации.",
+url:"https://www.royalcrownvault.com/"
+},
+{
+title:"YSWL · Руководства",
+text:"Внешний ресурс с игровыми сборками и рекомендациями. Составы могут отличаться от доступного вам ростера.",
+url:"https://yswl16888.cn/kvk/"
+}
+];
+
+const grid = document.getElementById("grid");
+const search = document.getElementById("search");
+const count = document.getElementById("count");
+const empty = document.getElementById("empty");
+const modal = document.getElementById("modal");
+
+let activeFilter = "all";
+
+function heroImage(hero) {
+return "assets/heroes/" + hero.slug + ".jpg";
+}
+
+function renderHeroes() {
+const query = search.value.trim().toLowerCase();
+
+const filtered = heroes.filter(hero => {
+const matchesSearch =
+(hero.name + " " + hero.rarity + " " + hero.role)
+.toLowerCase().includes(query);
+
+const matchesFilter =
+activeFilter === "all" ||
+hero.rarity === activeFilter ||
+hero.role === activeFilter;
+
+return matchesSearch && matchesFilter;
+});
+
+grid.innerHTML = filtered.map(hero => {
+const index = heroes.indexOf(hero);
+
+return `
+<article class="hero-card" data-index="${index}" tabindex="0">
+  <div class="portrait">
+    <img src="${heroImage(hero)}"
+         alt="${hero.name}"
+         loading="lazy"
+         onerror="this.style.display='none'">
+  </div>
+  <div class="info">
+    <div class="name-row">
+      <span class="name">${hero.name}</span>
+      <span class="rarity ${hero.rarity.toLowerCase()}">${hero.rarity}</span>
+    </div>
+    <div class="role">${hero.role}</div>
+    <div class="hint">Открыть информацию →</div>
+  </div>
+</article>`;
+}).join("");
+
+count.textContent = `Найдено: ${filtered.length} из ${heroes.length}`;
+empty.style.display = filtered.length ? "none" : "block";
+}
+
+function openHero(index) {
+const hero = heroes[index];
+if (!hero) return;
+
+document.getElementById("modalName").textContent = hero.name;
+
+const image = document.getElementById("modalImage");
+image.src = heroImage(hero);
+image.alt = hero.name;
+image.style.display = "block";
+image.onerror = () => {
+image.style.display = "none";
+};
+
+document.getElementById("modalBadges").innerHTML = `
+<span class="rarity ${hero.rarity.toLowerCase()}">${hero.rarity}</span>
+<span class="badge">${hero.role}</span>
+`;
+
+document.getElementById("modalAssessment").textContent =
+hero.assessment;
+
+document.getElementById("modalGet").textContent =
+hero.get;
+
+document.getElementById("modalSkills").innerHTML =
+hero.skills.map((skill, i) => `
+<div class="skill">
+  <b>Навык ${i + 1} · ${skill[0]}</b>
+  <p>${skill[1]}</p>
+</div>
+`).join("");
+
+modal.classList.add("open");
+document.body.style.overflow = "hidden";
+}
+
+function closeModal() {
+modal.classList.remove("open");
+document.body.style.overflow = "";
+}
+
+grid.addEventListener("click", event => {
+const card = event.target.closest(".hero-card");
+if (!card) return;
+openHero(Number(card.dataset.index));
+});
+
+grid.addEventListener("keydown", event => {
+if (event.key !== "Enter" && event.key !== " ") return;
+
+const card = event.target.closest(".hero-card");
+if (!card) return;
+
+event.preventDefault();
+openHero(Number(card.dataset.index));
+});
+
+document.getElementById("close").addEventListener("click", closeModal);
+
+modal.addEventListener("click", event => {
+if (event.target === modal) closeModal();
+});
+
+document.addEventListener("keydown", event => {
+if (event.key === "Escape") closeModal();
+});
+
+search.addEventListener("input", renderHeroes);
+
+document.querySelectorAll(".filter").forEach(button => {
+button.addEventListener("click", () => {
+document.querySelectorAll(".filter").forEach(item => {
+item.classList.remove("active");
+});
+
+button.classList.add("active");
+activeFilter = button.dataset.filter;
+renderHeroes();
+});
+});
+
+document.getElementById("tierGrid").innerHTML =
+tierGroups.map(item => `
+<div class="tier-card">
+  <span class="tier-tag ${item.className}">${item.tag}</span>
+  <h3>${item.title}</h3>
+  <p>${item.text}</p>
+</div>
+`).join("");
+
+document.getElementById("arenaGrid").innerHTML =
+formations.map(item => `
+<div class="arena-card">
+  <span class="badge">${item.badge}</span>
+  <h3>${item.title}</h3>
+  <div class="formation">
+    <div class="rowbox">
+      <strong>ПЕРЕДНЯЯ ЛИНИЯ</strong>
+      <div class="slots">
+        ${item.front.map(name => `<span class="slot">${name}</span>`).join("")}
+      </div>
+    </div>
+    <div class="rowbox">
+      <strong>ЗАДНЯЯ ЛИНИЯ</strong>
+      <div class="slots">
+        ${item.back.map(name => `<span class="slot">${name}</span>`).join("")}
+      </div>
+    </div>
+  </div>
+  <p>${item.text}</p>
+</div>
+`).join("");
+
+document.getElementById("sourceList").innerHTML =
+externalSources.map(source => `
+<div class="source-card">
+  <h3>${source.title}</h3>
+  <p>${source.text}</p>
+  <p style="margin-top:10px">
+    <a href="${source.url}" target="_blank" rel="noopener">
+      Открыть источник →
+    </a>
+  </p>
+</div>
+`).join("");
+
+renderHeroes();
+</script>
+</body>
+</html>
